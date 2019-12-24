@@ -1,0 +1,274 @@
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body {
+    margin: 0px auto;
+    padding: 0px;
+    background-color: #FFF;
+    text-align: center;
+}
+
+#content {
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+/*    background-image: url('../material/mountain.png');*/
+    background-image: url('../material/wooden_table.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#question {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    margin-left: 330px;
+    width:130px;
+    height:130px;
+}
+#earth {
+    position: absolute;
+    top: 77%;
+    left: 48%;
+    margin-left: -450px;
+    width:140px;
+    height:140px;
+}
+#earth,#question,#sound:hover{
+    transition: .7s;
+    transform: scale(1.2); 
+}
+
+#title_en {
+    color:  rgb(122,45,38);
+    font-size: 30px;
+    font-weight: 900;
+}
+
+#title_ch {
+    color:  rgb(122,45,38);
+    font-size: 40px;
+    font-weight: 900;
+    font-family: 'support';
+    margin: 10px;
+}
+
+#picture {
+    border-radius: 25px;
+    border: 3px #666 solid;
+    width: 300px;
+    height: 300px;
+}
+
+#context {
+    position: absolute;
+    right: 140px;
+    top: 205px;
+    background-color: #CCDDFF;
+    border-radius: 30px;
+    border: 6px #666 dashed;
+    width: 500px;
+    padding: 15px;
+}
+
+#word {
+    color: black;
+    font-weight: 900;
+    font-size: 30px;
+    margin: 10px;
+}
+
+#partOfSpeech {
+    color: black;
+    font-weight: 900;
+    font-size: 20px;
+    margin: 10px;
+
+}
+#definition{
+    color: black;
+    font-family: 'support';
+    font-weight: 900;
+    font-size: 30px;
+}
+#recordButton{
+    display: block;
+}
+#pauseButton{
+    display: none;
+}
+#stopButton{
+    display: none;
+}
+.record_btns{
+    margin: 10px auto;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+#confirm {
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    float: right;
+}
+
+#sound {
+    position: absolute;
+    top:215px;
+    left: 250px;
+    width: 70px;
+    z-index: 1;
+    height: auto;
+}
+
+#information {
+    position: relative;
+    display:inline-block;
+    vertical-align: middle;
+    margin: 20px 20px 20px 0px;
+}
+
+
+
+
+
+
+.container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    position:absolute;
+    top: 250px;
+    left: 50%;
+    margin-left: -150px;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+}
+.card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+}
+.card div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 140px;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.card .front {
+}
+.card .back {
+    background: #666;
+    border-radius: 25px;
+    border: 3px #666 solid;
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+.card.flipped {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+
+#learn_title_ch {
+    color:  black;
+    font-size: 60px;
+    font-weight: 900;
+    font-family: 'support';
+}
+
+#learn_title_en {
+    color:  #DDD;
+    font-size: 35px;
+    font-weight: 300;
+}
+
+.title {
+    position:absolute;
+    top: 80px;
+    left: 50%;
+    margin-left: -225px;
+}
+
+#flashcard_word {
+    font-weight: 600;
+    font-size: 40px;
+    color: aliceblue;
+    margin-top: 70px;
+    margin-bottom: 0px;
+}
+
+#flashcard_partOfSpeech {
+    font-weight: 600;
+    font-size: 40px;
+    font-family: 'support';
+    color: aliceblue;
+}
+
+#flashcard_definition {
+    font-weight: 600;
+    font-size: 40px;
+    font-family: 'support';
+    color: aliceblue;
+}
+
+#speak_again {
+    width: 20vw;
+    height: auto;
+    margin-right: 100px;
+}
+
+#next_step {
+    width: 20vw;
+    height: auto;
+    margin-left: 100px;
+}
+#speak_again:hover,#next_step:hover{
+    transform: scale(1.1);
+    transition: .5s;
+}
+
+
+#react_btn {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    margin-left: -306.795px;
+    vertical-align: top;
+}
+
+.space {
+    width: 3000px;
+}

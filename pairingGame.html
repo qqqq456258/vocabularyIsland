@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island - 配對遊戲</title>
+    <link rel="stylesheet" href="css/pairingGame.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="plugin/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="plugin/jquery.color.js"></script>
+    <script src="js/pairingGame.js"></script>
+    
+</head>
+<body>
+   <script>
+        function tip(){
+            alert("使用簡介。")
+        }
+        function back(){
+            alert("返回功能。")
+        }
+
+   </script>
+    <div id="content">
+       <audio id="correct_sound" src="material/correct.mp3" preload="auto">不支援此瀏覽器。</audio>
+       <audio id="wrong_sound" src="material/wrong.mp3" preload="auto">不支援此瀏覽器。</audio>
+        <p id="title">Pair pictures and words</p>
+        <p id="time">Time : <span id="control_time" class="number">60.0</span> s</p>
+        <p id="chance">Chance : <span id="control_chance" class="number">3</span></p>
+        
+        <div id="game_zone">
+            <div id="img_zone">
+                <input id="img_1" class="image" type="image">
+                <input id="img_2" class="image" type="image">
+                <input id="img_3" class="image" type="image">
+                <input id="img_4" class="image" type="image">
+            </div>
+            <div id="word_zone">
+                <div id="word_1" class="word"></div>
+                <div id="word_2" class="word"></div>
+                <div id="word_3" class="word"></div>
+                <div id="word_4" class="word"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

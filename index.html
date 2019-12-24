@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island 登入頁面</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+
+</head>
+
+<body>
+   <script>
+       $(document).ready(function(){
+            var w = $(window).width();
+            var h = $(window).height();
+            $("#SIZE").html(w+":"+h);
+           $(window).resize(function(){
+              var w = $(window).width();
+              var h = $(window).height();
+              $("#SIZE").html(w+":"+h);
+               
+           });
+       });
+
+    </script>
+    
+    <div id='content'>
+        <form id='loginZone'>
+            帳號 ( Account ) :
+            <input type="text" name="account" class='other'><br><br>
+            密碼 ( Password ) :
+            <input type="password" name="psw" class='other'><br><br>
+            <input type="image" src="material/btn_login.png" id='btn_login'>
+        </form>
+    </div>
+
+
+    
+    <div id="SIZE"></div>
+</body>
+
+</html>

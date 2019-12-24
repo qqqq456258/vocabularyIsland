@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island 關卡頁面</title>
+    <link rel="stylesheet" type="text/css" href="css/challenge_index.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="js/challenge_index.js"></script>
+</head>
+<body>
+    <div id="content">
+      <p id="stage">Pet & Farm Animals</p>
+       <div id="cards_of_collection">
+        <div class="card">
+            <span id="word_name_1" class="name"></span><br>
+            <input type="image" id="word_sound_1" class="sound" src="material/speaker.png">
+            <span id="word_partOfSpeech_1" class="partOfSpeech"></span>
+            <span id="word_definition_1" class="definition"></span><br>
+            <image id="word_picture_1" class="picture"></image>
+        </div>
+        <div class="card">
+            <span id="word_name_2" class="name"></span><br>
+            <input type="image" id="word_sound_2" class="sound" src="material/speaker.png">
+            <span id="word_partOfSpeech_2" class="partOfSpeech"></span>
+            <span id="word_definition_2" class="definition"></span><br>
+            <image id="word_picture_2" class="picture"></image>
+        </div>
+        <div class="card">
+            <span id="word_name_3" class="name"></span><br>
+            <input type="image" id="word_sound_3" class="sound" src="material/speaker.png">
+            <span id="word_partOfSpeech_3" class="partOfSpeech"></span>
+            <span id="word_definition_3" class="definition"></span><br>
+            <image id="word_picture_3" class="picture"></image>
+        </div>
+        <div class="card">
+            <span id="word_name_4" class="name"></span><br>
+            <input type="image" id="word_sound_4" class="sound" src="material/speaker.png">
+            <span id="word_partOfSpeech_4" class="partOfSpeech"></span>
+            <span id="word_definition_4" class="definition"></span><br>
+            <image id="word_picture_4" class="picture"></image>
+        </div>
+       </div>
+       <div id="selections">
+           <input type="image" id="makeFlahscard" class="select" src="material/makeFlahscard_0.png" alt="製作字卡" disabled>
+           <input type="image" id="dictatingGame" class="select" alt="聽寫遊戲">
+           <input type="image" id="fillingGame" class="select" alt="填空遊戲">
+           <input type="image" id="pairingGame" class="select" alt="配對遊戲">
+           <input type="image" id="pronouncing" class="select" alt="發音練習">
+       </div>
+        
+       <input type="image" src="material/earth.png" id="earth" onclick="back()">
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* 外部引入 index.css */
+
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body {
+    margin: 0px auto;
+    padding: 0px;
+    background-color: #FFF;
+    text-align: center;
+}
+
+#content{
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+    background-image: url('../material/login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#loginZone{
+    position: absolute;
+    left: 50%;
+    margin-left: -190px;
+    margin-top: 440px;
+    padding: 0px;
+    width:380px;
+    text-align: right;
+    font-size: 23px;
+    font-weight: 600;
+    font-family: 'support';
+    
+}
+.other{
+    width: 100px; 
+    height: 25px;
+    border-radius: 12px;
+    padding: 5px;
+    font-size: 19px;
+}
+
+#btn_login{
+    text-align: center;
+    margin: 0px auto;
+    width: 164px;
+    width: 113px;
+    
+}
+#btn_login:hover{
+    transition: .7s;
+    transform: scale(1.2); 
+}
+#SIZE{
+    margin: auto;
+    background-color: transparent;
+}

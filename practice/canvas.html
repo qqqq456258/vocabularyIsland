@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <title>你畫我猜</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.js">
+    </script>
+    <style>
+        body,input { font-size: 9pt; }
+        #dCanvas,#dLine { clear: both; }
+        .option
+        {
+            float: left; width: 20px; height: 20px; border: 2px solid #cccccc;
+            margin-right: 4px; margin-bottom: 4px;
+        }
+        .active { border: 2px solid black; }
+        .lw { text-align: center; vertical-align: middle; }
+        img.output { border: 1px solid green; }
+        #cSketchPad { cursor: arrow; }
+    </style>
+	
+	<div id="dQues">
+	<?
+		mysql_connect("localhost", "root", "cjo4hjp6") or die("無法連結主機");
+		mysql_select_db("test") or die("無法連結資料庫"); 
+		$sql =  mysql_query("select * from vacabulary_3 ");
+		$rows = mysql_num_rows($sql);
+		if($rows==""){
+		 echo "查無資料！";
+	}else{
+		 echo "有資料喔！";
+	?>
+	</div>
+    <script>		
+        $(function () {
+            //產生不同顏色的div方格當作調色盤選項
+            var colors =
+            "#FF3333;#FF44AA;#FFAA33;#FFFF00;#33FF33;#227700;#33FFFF;#0000FF;#550088;#9900FF;#AA7700;#000000;#FFFFFF".split(';');
+            var sb = [];
+            $.each(colors, function (i, v) {
+                sb.push("<div class='option' style='background-color:" + v + "'></div>");
+            });
+            $("#dPallete").html(sb.join("\n"));
+            //產生不同尺寸的方格當作線條粗細選項
+            sb = [];
+            for (var i = 1; i <= 10; i++)
+                sb.push("<div class='option lw'>" +
+         "<div style='margin-top:#px;margin-left:#px;width:%px;height:%px'></div></div>"
+                .replace(/%/g, i).replace(/#/g, 10 - i / 2));
+            $("#dLine").html(sb.join('\n'));
+            var $clrs = $("#dPallete .option");
+            var $lws = $("#dLine .option");
+            //點選調色盤時切換焦點並取得顏色存入p_color，
+            //同時變更線條粗細選項的方格的顏色
+            $clrs.click(function () {
+                $clrs.removeClass("active");
+                $(this).addClass("active");
+                p_color = this.style.backgroundColor;
+                $lws.children("div").css("background-color", p_color);
+            }).first().click();
+            //點選線條粗細選項時切換焦點並取得寬度存入p_width
+            $lws.click(function () {
+                $lws.removeClass("active");
+                $(this).addClass("active");
+                p_width =
+                    $(this).children("div").css("width").replace("px", "");
+ 
+            }).eq(3).click();
+			
+            //取得canvas context
+            var $canvas = $("#cSketchPad");
+            var ctx = $canvas[0].getContext("2d");
+            ctx.lineCap = "round";
+            ctx.fillStyle = "white"; //整個canvas塗上白色背景避免PNG的透明底色效果
+            ctx.fillRect(0, 0, $canvas.width(), $canvas.height());
+            var drawMode = false;
+            //canvas點選、移動、放開按鍵事件時進行繪圖動作
+            $canvas.mousedown(function (e) {
+                ctx.beginPath();
+                ctx.strokeStyle = p_color;
+                ctx.lineWidth = p_width;
+                ctx.moveTo(e.pageX - $canvas.position().left, e.pageY - $canvas.position().top);
+                drawMode = true;
+            })
+            .mousemove(function (e) {
+                if (drawMode) {
+                    ctx.lineTo(e.pageX - $canvas.position().left, e.pageY - $canvas.position().top);
+                    ctx.stroke();
+                }
+            })
+            .mouseup(function (e) {
+                drawMode = false;
+            });
+            //利用.toDataURL()將繪圖結果轉成圖檔
+            $("#bGenImage").click(function () {
+                $("#dOutput").html(
+                $("<img />", { src: $canvas[0].toDataURL(),
+                    "class": "output"
+                }));
+            });
+			
+			//重畫
+			$("#bReset").click(function () {
+			ctx.fillRect(0, 0, $canvas.width(), $canvas.height());
+			});
+			
+			//確認完成後的處理
+			$("#bGenImage").click(function () {
+				//將圖片資料編碼
+				//$fileContents = base64_encode($fileContents);
+				//document.all.bSendImage.disabled=false;
+				document.getElementById("bSendImage").disabled=false;				
+			});
+			
+			//存回資料庫
+				
+			
+        });
+		
+		
+		
+    </script>
+</head>
+<body>
+
+<div id="dPallete"></div>
+<div id="dLine"></div>
+<div id="dCanvas">
+	<canvas id="cSketchPad" width="500" height="500" style="border: 2px solid gray" />
+</div>
+
+<div id = "dreset">
+<input type="reset" id="bReset" value="我要重畫" />
+<input type="button" id="bGenImage" value="確認完成" />
+</div>
+<div id="dOutput"></div> 
+<input type="submit" id="bSendImage" value="出題考同學" disabled="true" />
+</body>
+</html>

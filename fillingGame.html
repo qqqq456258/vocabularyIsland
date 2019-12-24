@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island - 填空遊戲</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/fillingGame.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="plugin/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="js/fillingGame.js"></script>
+    
+</head>
+<body>
+    <div id="content">
+        <audio id="correct_sound" src="material/correct.mp3" preload="auto">不支援此瀏覽器。</audio>
+        <audio id="wrong_sound" src="material/wrong.mp3" preload="auto">不支援此瀏覽器。</audio>
+        <p id="title">Click a letter and Spell the Word</p>
+        <p id="time">Time : <span id="control_time" class="number">60.0</span> s</p>
+        <p id="chance">Chance : <span id="control_chance" class="number">3</span></p>
+        <input type="image" id="word_sound" src="material/speaker.png">
+        <div id="game_zone">
+            <div id="Q_zone">
+                <img id='picture'>
+                <p id="vocabulary"><span id="speechOfPart"></span>&ensp;<span id="definition"></span></p>
+            </div>
+            <br>
+            <div id="A_zone">
+                <div id="input_zone"></div>
+                <div id="btn_zone"></div>
+            </div><br>
+        <button id='confirm'>Confirm</button>
+        </div>
+    </div>
+</body>
+</html>

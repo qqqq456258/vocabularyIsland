@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island 主題關卡選擇頁面</title>
+    <link rel="stylesheet" type="text/css" href="css/topic_challenge_pick.css">
+    <link rel="stylesheet" type="text/css" href="plugin/fullPage.js-master/dist/fullpage.css"/>
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="plugin/fullPage.js-master/dist/fullpage.js"></script>
+
+    
+</head>
+<body>
+  
+   <script>
+       $(function(){
+            $("#stages").fullpage({
+                resize:true,
+                slidesNavigation: true,
+                slidesNavPosition: "bottom",
+                lazyLoad: true
+            });
+               $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height","auto");
+               $(".section.fp-section.active.fp-completely").css("padding-bottom","40px");
+               $(".section.fp-section.active.fp-completely").css("padding-top","10px");
+
+           
+           $(window).resize(function(){
+                location.reload();  //重新整理
+           });
+       });
+       
+       
+        function tip(){
+            alert("使用簡介。")
+        }
+        function back(){
+            alert("返回功能。")
+        }
+
+    </script>
+    
+    <div id="content">
+        <h1>LEVEL *</h1>
+        <h2>Category *</h2>
+       <input type="image" src="material/question.png" id="question" onclick="tip()">
+        <div id="stages">
+           <div class="section">
+               <div class="slide">
+                    <div id="level_3_1" class="each_level">3-1</div>
+                    <div id="level_3_2" class="each_level">3-2</div>
+                    <div id="level_3_3" class="each_level">3-3</div>
+                    <br>
+                    <div id="level_3_4" class="each_level">3-4</div>
+                    <div id="level_3_5" class="each_level">3-5</div>
+                    <div id="level_3_6" class="each_level">3-6</div>
+               </div>
+               <div class="slide">
+                    <div id="level_3_7" class="each_level">3-7</div>
+                    <div id="level_3_8" class="each_level">3-8</div>
+                    <div id="level_3_9" class="each_level">3-9</div>
+                    <br>
+                    <div id="level_3_10" class="each_level">3-10</div>
+                    <div id="level_3_11" class="each_level">3-11</div>
+               </div>
+           </div>
+        </div>
+        
+       <input type="image" src="material/earth.png" id="earth" onclick="back()">
+    </div>
+    
+</body>
+</html>

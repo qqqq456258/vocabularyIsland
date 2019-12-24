@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get_Picture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style type="text/css">
+        #picture_zone{
+            width: 300px;
+            height: 300px;
+        }
+        #voice_zone{
+            width: 300px;
+            height: 300px;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 30px;
+            border: 6px solid rgb(212, 238, 227);
+            margin: 9px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    $(function(){
+            $.ajax({
+                type: "get",
+                async: false,//async設定false會變成同步請求 要完成ajax後才會繼續執行
+                url: "http://localhost/vocabulary_island_20191021/practice/getSomeThings.php",
+                data:{
+                  value:  "apple",
+                },
+                dataType: "json",
+                success: function(json){
+                    //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                    console.log(json);
+                    $('#test_pic').attr('src',json[0].images[0].fileName);
+                    $('#test_voice').attr('src',json[0].sounds[0].fileName);
+                    
+                },
+                error: function(){
+                    alert('fail');
+                }
+            });
+        
+        
+//        $('#testBtn').on('click',function(){
+//            $.ajax({
+//                type: "get",
+//                async: false,//async設定false會變成同步請求 要完成ajax後才會繼續執行
+//                url: "http://localhost/vocabulary_island_20191021/practice/getSomeThings.php",
+//                data:{
+//                  value:  $('#something').val(),
+//                },
+//                dataType: "json",
+//                success: function(json){
+//                    //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+//                    console.log(json);
+//                    $('#test_pic').attr('src',json[0].images[0].fileName);
+//                    $('#test_voice').attr('src',json[0].sounds[0].fileName);
+//                    
+//                },
+//                error: function(){
+//                    alert('fail');
+//                }
+//            });
+//        });
+    });
+</script>
+   
+    <input type="text" id="something">
+    <button id='testBtn'> O K </button>
+    
+    <div id='picture_zone'>
+        <img src="" id='test_pic'>
+    </div>
+    
+    <div id='voice_zone'>
+        <audio src="" controls="controls" id="test_voice"></audio>
+    </div>
+</body>
+</html>
