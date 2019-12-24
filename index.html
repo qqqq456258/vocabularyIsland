@@ -6,33 +6,21 @@
     <title>Vocabulary Island 登入頁面</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="js/index.js"></script>
 
 </head>
 
 <body>
-   <script>
-       $(document).ready(function(){
-            var w = $(window).width();
-            var h = $(window).height();
-            $("#SIZE").html(w+":"+h);
-           $(window).resize(function(){
-              var w = $(window).width();
-              var h = $(window).height();
-              $("#SIZE").html(w+":"+h);
-               //又
-           });
-       });
-
-    </script>
-    
     <div id='content'>
-        <form id='loginZone'>
+        <div id='loginZone'>
             帳號 ( Account ) :
-            <input type="text" name="account" class='other'><br><br>
+            <input type="text" name="account" class='other' id='account' autocomplete="new-password"><br><br>
             密碼 ( Password ) :
-            <input type="password" name="psw" class='other'><br><br>
+            <input type="password" name="psw" class='other' id='password' autocomplete="new-password"><br><br>
             <input type="image" src="material/btn_login.png" id='btn_login'>
-        </form>
+        </div>
     </div>
 
 
