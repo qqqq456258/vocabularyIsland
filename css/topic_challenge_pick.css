@@ -21,19 +21,20 @@ body {
 #stages .each_level {
     display: inline-block;
     vertical-align: top;
-    background-color: white;
-    margin:15px;
-    border: 10px;
+    background-color: rgb(212,238,227);
+    border: 8px solid rgb(45,113,84);
     border-radius: 30px;
-    width: 200px;
-    height: 110px;
+    margin: 12px;
+    width: 250px;
+    height: 105px;
+    padding-top: 10px;
 }
 
 h1 {
     color: black;
-    font-size: 120px;
+    font-size: 80px;
     margin: 0px; 
-    padding: 30px 0px 0px 0px;
+    padding: 60px 0px 30px 0px;
 }
 
 h2 {
@@ -81,4 +82,37 @@ h2 {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.star {
+    width: 40px;
+    height: 40px;
+}
+
+.word_zone {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: 900;
+    font-family: 'support';
+    font-size: 22px;
+    color: rgb(45,113,84);
+    height: 30px;
+}
+
+.star_zone {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.title_zone {
+    margin: auto;
+    margin-bottom: 15px;
+    background-color: rgb(45,113,84);
+    border-radius: 10px;
+    font-weight: 400;
+    color: white;
+    padding: 5px;
+    width: 200px;
+    line-height: 30px;
+    height: 30px;
 }
