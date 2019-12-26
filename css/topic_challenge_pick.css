@@ -21,14 +21,20 @@ body {
 #stages .each_level {
     display: inline-block;
     vertical-align: top;
-    background-color: rgb(212,238,227);
-    border: 8px solid rgb(45,113,84);
+    background-color: rgb(217,217,217);
+    border: 8px solid rgb(0,0,0);
     border-radius: 30px;
     margin: 12px;
     width: 250px;
     height: 105px;
     padding-top: 10px;
 }
+
+#stages .each_level:hover{
+    transition: .6s;
+    transform:scale(1.1);
+}
+
 
 h1 {
     color: black;
@@ -95,7 +101,7 @@ h2 {
     font-weight: 900;
     font-family: 'support';
     font-size: 22px;
-    color: rgb(45,113,84);
+    color: rgb(0,0,0);
     height: 30px;
 }
 
@@ -107,7 +113,7 @@ h2 {
 .title_zone {
     margin: auto;
     margin-bottom: 15px;
-    background-color: rgb(45,113,84);
+    background-color: rgb(0,0,0);
     border-radius: 10px;
     font-weight: 400;
     color: white;
