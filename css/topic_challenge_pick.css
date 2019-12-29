@@ -19,6 +19,7 @@ body {
 }
 
 #stages .each_level {
+    position: relative;
     display: inline-block;
     vertical-align: top;
     background-color: rgb(217,217,217);
@@ -28,6 +29,7 @@ body {
     width: 250px;
     height: 105px;
     padding-top: 10px;
+    pointer-events: none;
 }
 
 #stages .each_level:hover{
@@ -121,4 +123,13 @@ h2 {
     width: 200px;
     line-height: 30px;
     height: 30px;
+}
+
+.level_icon {
+    position: absolute;
+    top: -20px;
+    left: -22px;
+    width: 45px;
+    height: 45px;
+    z-index: 1;
 }
