@@ -83,11 +83,7 @@ body {
 }
 
 #vocabulary {
-    margin: 0px;
-    padding: 10px;
-    font-family: 'support';
-    font-weight: 700;
-    font-size: 35px;
+    background-color: white;
 }
 
 #A_zone {

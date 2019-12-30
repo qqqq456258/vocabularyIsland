@@ -55,7 +55,7 @@ $(function () {
                 })
                 .then((result) => {
                     if(result.value){
-                        window.location.assign('practice/getSomeThings.html');
+                        window.location.assign('basic_practices.html');
                         /* 進入自主練習。 */
                         console.log("進入自主練習。");
                     }else{

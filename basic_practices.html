@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Island - 基礎練習</title>
+    <link rel="stylesheet" type="text/css" href="css/basic_practices.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="plugin/jquery.color.js"></script>
+    <script src="plugin/Recorderjs-master/dist/recorder.js"></script>
+    <script src="js/basic_practices.js"></script>
+</head>
+<body>
+
+    <div id="content">
+    
+<!--       標題-->
+        <div class='title'>
+            <span id="title_en">Listen to the pronunciation</span><br>
+        </div>
+                   
+            &emsp;
+            &emsp;
+<!--       單字相關資訊及錄音按鈕-->
+        <div id="vocabulary">
+            <p id="word"></p>
+            <p id="info">
+                <span id="part_speech"></span>
+                <span id="definition"></span>
+            </p>
+            <input type="image" id="sound" src="material/speaker.png">
+            <br>
+            <input type="image" id="record" src="material/record_1.png">
+            <input type="image" id="stop" src="material/stop_0.png" disabled>
+        </div>
+           
+            &emsp;
+            &emsp;
+            
+<!--       錄音存放處-->
+        <div id="voice_zone">
+           <div id="voice_zone_1">
+               <input type="image" id="voice_1" class="voice" src="material/voice1.png">
+           </div>
+           <div id="voice_zone_2">
+               <input type="image" id="voice_2" class="voice" src="material/voice2.png">
+           </div>
+           <div id="voice_zone_3">
+               <input type="image" id="voice_3" class="voice" src="material/voice3.png">
+           </div>
+        </div>
+                    
+<!--       「下一步」的按鈕-->
+        <div id="click_zone">
+            <img id="next_btn" src="material/next_step.png">
+        </div>
+
+       
+    </div>
+</body>
+</html>

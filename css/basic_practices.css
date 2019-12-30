@@ -1,0 +1,139 @@
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body,div,span,a,img{
+    padding:0;
+    margin:0;
+}
+
+body {
+    margin: 0px auto;
+    background-color: #FFF;
+    text-align: center;
+}
+
+#content {
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+    background-image: url('../material/wood.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+#title_en {
+    color:  #9c453d;
+    font-size: 60px;
+    font-weight: 700;
+    text-shadow: #ffe5e5 0.1em 0.1em 0.2em;
+}
+
+#word {
+    color: black;
+    font-weight: 900;
+    font-size: 55px;
+    margin: 10px;
+}
+
+#info{
+    color: black;
+    font-weight: 900;
+}
+#partOfSpeech {
+    font-size: 20px;
+    margin: 10px;
+}
+#definition{
+    font-family: 'support';
+    font-size: 30px;
+}
+
+#sound {
+    width: 70px;
+    z-index: 1;
+    height: auto;
+}
+
+#record,#stop,#sound:hover{
+    transition: .7s;
+    transform: scale(1.2); 
+}
+
+.title {
+    padding-top: 60px;
+}
+
+#vocabulary {
+    background-color: white;
+    width: 45%;
+    margin: 20px auto;
+    height: 250px;
+    margin-top: 90px;
+    border-radius: 20px;
+    border: 5px solid gray;
+    display: inline-block;
+}
+
+#part_speech {
+    color: black;
+    font-weight: 900;
+    font-size: 30px;
+    margin: 10px;
+}
+
+#record {
+    width:170px;
+    margin-top:30px;
+    margin-right:10px;
+    display: none;
+}
+
+#stop {
+    width:170px;
+    margin-top:30px;
+    margin-left:30px;
+    display: none;
+}
+
+.voice {
+    width: 287px;
+}
+
+#voice_zone {
+    background-color: #FFF;
+    border: 6px solid #FFBF1D;
+    border-radius: 20px;
+    width: 31%;
+    margin: 20px auto;
+    margin-top: 90px;
+    padding: 30px;
+    display: none;
+}
+
+#voice_zone_1,#voice_zone_2,#voice_zone_3{
+    margin: 10px;
+    border: 5px dashed gray;
+    border-radius: 20px;
+    width: 290px;
+    height: 82px;
+}
+
+#click_zone {
+    margin: auto;
+    margin-top: 20px;
+    display: none;
+}
+
+#next_btn {
+    width: 200px;
+}
+
+#audio_zone {
+    display: none;
+}
