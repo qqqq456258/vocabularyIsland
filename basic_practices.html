@@ -18,9 +18,7 @@
         <div class='title'>
             <span id="title_en">Listen to the pronunciation</span><br>
         </div>
-                   
-            &emsp;
-            &emsp;
+            
 <!--       單字相關資訊及錄音按鈕-->
         <div id="vocabulary">
             <p id="word"></p>
@@ -33,9 +31,6 @@
             <input type="image" id="record" src="material/record_1.png">
             <input type="image" id="stop" src="material/stop_0.png" disabled>
         </div>
-           
-            &emsp;
-            &emsp;
             
 <!--       錄音存放處-->
         <div id="voice_zone">
@@ -49,12 +44,24 @@
                <input type="image" id="voice_3" class="voice" src="material/voice3.png">
            </div>
         </div>
-                    
+       
+<!--       「練習拼字的部分」-->
+       <div id="spell_zone">
+           <input type="image" src="material/tips.png" id="hint">
+           <input type="image" src="material/speaker.png" id="spell_sound"><br><br>
+           <span id="spell_title">Answer&ensp;:</span><br>
+           <input type="text" id="answer"><br><br>
+           <span id="tip"></span>
+        </div>
+       
 <!--       「下一步」的按鈕-->
         <div id="click_zone">
-            <img id="next_btn" src="material/next_step.png">
+            <input type="image" id="next_btn" src="material/next_step.png">
         </div>
-
+       
+       
+        <il id='recordingslist'></il>
+       
        
     </div>
 </body>
