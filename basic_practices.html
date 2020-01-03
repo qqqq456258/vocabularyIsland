@@ -5,13 +5,13 @@
     <title>Vocabulary Island - 基礎練習</title>
     <link rel="stylesheet" type="text/css" href="css/basic_practices.css">
     <script src="plugin/development_jQuery_3.4.1.js"></script>
-    <script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="plugin/jquery.color.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="plugin/Recorderjs-master/dist/recorder.js"></script>
     <script src="js/basic_practices.js"></script>
 </head>
 <body>
-
+   
     <div id="content">
     
 <!--       標題-->
@@ -50,7 +50,7 @@
            <input type="image" src="material/tips.png" id="hint">
            <input type="image" src="material/speaker.png" id="spell_sound"><br><br>
            <span id="spell_title">Answer&ensp;:</span><br>
-           <input type="text" id="answer"><br><br>
+           <input type="text" id="answer" autocomplete="off"><br><br>
            <span id="tip"></span>
         </div>
        

@@ -1,9 +1,9 @@
 $(function () {
     let topic = 0;              // 將單字主題以數字來辨別，這裡 0 是表示測試系列。
     let total_level = 4;        // 總關卡數。
-    let locked_level = 2;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
+    let locked_level = 1;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
     var title_array = ["Fruit - 0","Fruit - 1","Pet & Farm Animals - 0","Pet & Farm Animals - 1"];                               // 每個解鎖自主練習的標題。
-    var star_array = [3,1,0,0]; // 每個解鎖自主練習的星數。
+    var star_array = [0,0,0,0]; // 每個解鎖自主練習的星數。
     let content = "";           // 生成自主練習所需的字串。
     
     /*生成每個自主練習。*/

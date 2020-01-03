@@ -1,19 +1,146 @@
 $(function(){
-    let title = "Listen to the pronunciation";
+    let title = "Listen to the pronunciation";                  // 宣告標題。
     var word = ["apple", "banana", "cranberry", "honeydew"];    // 宣告陣列放入 4 個單字。
     var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"];        // 宣告陣列放入 4 個單字詞性。
     var definition = ["蘋果", "香蕉", "蔓越莓", "蜜瓜"];           // 宣告陣列放入 4 個單字翻譯。
+    let hint = "";          // 存放去除字母的提示部分。
     var sound = [];         // 宣告陣列放入 4 個語音檔。
     var order = [];         // 宣告陣列放入排序。
     let listen_num = 0;     // 存放聆聽次數。
     let record_num = 0;     // 存放按擊錄音次數。
     let stop_num = 0;       // 存放按擊暫停次數。
+    let choose_audio = "";  // 存放三個錄音中所選擇的audio ID，可以再去 audio_base64 陣列中找 base64。
     var audio_base64 = [];  // 存放3次語音的 base64。
     let step = 1;           // 第幾步驟。
     
+         /*sweetAlert2 的功能。*/
+    function dialog(situation){
+        if(situation == 0){ //遊戲開始前說明。
+            swal.fire({         
+                    icon: "info",
+                    title: "Basic Practice",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;text-align: left;padding-left: 10px;'>1. 試著練習發音<b>三次</b>。<br>2. 與標準發音比較，<b>挑出最滿意的錄音結果</b>。<br>3. 最後，試著聆聽發音並<b>拼出</b>單字。</p>",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:" O K "
+                })
+                .then((result) => {
+                    if(result.value){
+                        console.log("進入基礎練習。");
+                    }
+                });
+        }else if(situation == 1){ // 未挑選單字發音的提示。
+            swal.fire({         
+                    icon: "error",
+                    title: "Error",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>請將三個錄音與標準發音比較，<br><b>挑出一個最滿意的</b>。</p>",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:"O K"
+                })
+                .then((result) => {
+                    if(result.value){
+                        console.log("忘記挑選錄音。");
+                    }
+                });
+        }else if(situation == 2){ // STEP 2 的提示。
+            swal.fire({
+                    title: $("#word").text(),
+                    html: "<p style='font-family:support;font-size:22px;font-weight: 900;'>"+$("#part_speech").text()+" "+$("#definition").text()+"</p>",
+                    imageUrl:'material/animat-pencil-color.gif',
+                    imageWidth: 64,
+                    imageHeight: 64,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:"O K"
+                })
+                .then((result) => {
+                    if(result.value){
+                        console.log("在 Step 2 使用提示。");
+                    }
+                });
+        }else if(situation == 3){ // STEP 3 的提示。
+            swal.fire({
+                    title: hint,
+                    html: "<p style='font-family:support;font-size:22px;font-weight: 900;'>"+$("#part_speech").text()+" "+$("#definition").text()+"</p>",
+                    imageUrl:'material/animat-pencil-color.gif',
+                    imageWidth: 64,
+                    imageHeight: 64,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:"O K"
+                })
+                .then((result) => {
+                    if(result.value){
+                        console.log("在 Step 3 使用提示。");
+                    }
+                });
+        }else if(situation == 4){ // 完成後給的存檔回應。
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 700
+            })
+        }else{//STEP 2,3 的結果提示。 
+            let icon = "";
+            $('#sound_' + $('#word').text()).get(0).play();
+            if($('#tip').text() == "Correct."){
+                icon = "success";
+            }else{
+                icon = "error";
+            }
+            swal.fire({
+                    icon: icon,
+                    title: $("#word").text(),
+                    html: "<p style='font-family:support;font-size:22px;font-weight: 900;'>"+$("#part_speech").text()+" "+$("#definition").text()+"</p>",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:"O K"
+                })
+                .then((result) => {
+                    if(result.value){
+                        if(step == 3){
+                            /*播放語音*/
+                            play_sound();
+                        }else{
+                            /*初始化*/
+                        }
+                    }
+                });
+        } 
+    }
     
+        /*播放語音*/
+    function play_sound(){
+        let vocabulary = $('#word').text();
+        
+        var timeout_0 = setTimeout(function(){
+            $('#sound_' + vocabulary).get(0).play();    /*播放第一次語音*/
+        },1000);
+        
+        var timeout_1 = setTimeout(function(){
+            $('#sound_' + vocabulary).get(0).play();    /*播放第二次語音*/
+        },2300);
+        
+        var timeout_2 = setTimeout(function(){
+            $('#sound_' + vocabulary).get(0).play();    /*播放第三次語音*/
+        },4200);
+    }
     
-    function getRandomArray(){    //隨機產生不重覆的4個數字。
+        /*隨機產生不重覆的4個數字。*/
+    function getRandomArray(){
         var rdmArray = [4];     //儲存產生的陣列。
 
         for(var i=0; i<4; i++) {
@@ -33,9 +160,9 @@ $(function(){
         return rdmArray;
     }
     
+        /*四個單字的順序洗牌。*/
     function prepare() {
 
-        /*四個單字的順序洗牌。*/
         order = getRandomArray();
 
         for (var i = 0; i < 1; i++) {
@@ -47,6 +174,11 @@ $(function(){
             $("#word").text(word[order[i]]);
             $("#part_speech").text(partOfSpeech[order[i]]);
             $("#definition").text(definition[order[i]]);
+            
+            /*去除母音字母的提示。*/
+            var regex = /[^aeiouAEIOU]/gi;
+            let vocabulary = $("#word").text();
+            hint = vocabulary.replace(regex, ' _ ');
             
 
             /*載入聲音檔。*/
@@ -81,37 +213,34 @@ $(function(){
 
     }
     
+    dialog(0);
     prepare();
     
     
-    /*點擊聽單字發音*/
+    
+    /*練習發音時，點擊聽單字發音*/
     $('#sound').click(function () {
-        let vocabulary = $('#word').text();
-        console.log("vocabulary:" + vocabulary);
-        if(listen_num == 1){
-            $("#title_en").text("Record your voice 3 times");//變更標題。
-        }
         
-        $('#sound_' + vocabulary).get(0).play();        /*播放第一次語音*/
+        /*播放語音*/
+        play_sound();
         
-        var timeout_0 = setTimeout(function(){
-            $('#sound_' + vocabulary).get(0).play();    /*播放第二次語音*/
-        },2000);
-        
-        var timeout_1 = setTimeout(function(){
-            $('#sound_' + vocabulary).get(0).play();    /*播放第三次語音*/
-        },4000);
-
-        /* css 變化 */
-        $('#vocabulary').css('height','350px');//單字區塊變長。
-        $('#record,#stop').css('display','inline-block');//將錄音與暫停按鈕並排。
-        listen_num++;//按聲音次數。
-        if(listen_num == 1){
+        if(listen_num == 0){    //僅有第一次點擊才變化。
             $("#title_en").text("Record your voice ( 0 / 3 )");//變更標題。
+            $('#vocabulary').css('height','350px');//單字區塊變長。
+            $('#record,#stop').css('display','inline-block');//將錄音與暫停按鈕並排。
             $('#voice_zone').css('display','block');//錄音的結果出現。
+            listen_num++;
         }
-
+        
     });
+    
+    
+    /*練習拼字時，點擊聽單字發音*/
+    $('#spell_sound').click(function(){
+        /*播放語音*/
+        play_sound();
+    });
+    
     
     /*  調整錄音按鈕的顯示與隱藏、效果。 */
     $('#record').click(function () {
@@ -121,6 +250,7 @@ $(function(){
         $('#stop').removeAttr('disabled');//暫停按鈕開啟。
         record_num++;//錄音按鈕點擊次數。
     });
+    
     
     /*  錄音結束按鈕的顯示與隱藏、效果。 */
     $('#stop').click(function () {
@@ -148,40 +278,61 @@ $(function(){
     $('.voice').click(function (){
         var audio_num = $(this).attr('id').split("_");
         console.log('Play - #audio_' + audio_num[1]);
+        choose_audio = 'audio_' + audio_num[1]; // 選擇錄音的對象。
         $('#audio_' + audio_num[1]).get(0).play();
         for(let i = 1 ; i<4 ; i++ ){
             $('#voice_zone_'+i).css('border','5px dashed gray');
         }
         $('#voice_zone_'+audio_num[1]).css('border','5px solid red');
+        
     });
     
     /*點擊下一步。*/
     $('#next_btn').click(function(){
         step++;
+        if(choose_audio.length == 0){ //忘了挑選錄音。
+            step--;
+            dialog(1);
+        }
         console.log("step:"+step);
+        
         if(step == 2){
+            dialog(4);
             $('#title_en').text('Spell the word in English');//變更標題。
             $('#vocabulary').css('display','none');//單字區塊隱藏。
             $("#voice_1,#voice_2,#voice_3").removeAttr('disabled');//將錄完音的按鈕解鎖。
             $("#voice_1,#voice_2,#voice_3").css('visibility','hidden');//將錄完音的按鈕隱藏。
             $('#voice_zone').css('display','none');//錄音區塊隱藏。
+            $('#answer').attr('placeholder', hint);//幫助學生拼字。
             $('#spell_zone').css('display','block');//拼字區塊出現。
             $('#next_btn').attr('src','material/done.png');
+            /*播放語音*/
+            play_sound();
+            
         }else if(step == 3){
+            dialog(2020);
             $('#title_en').text('Try again');//變更標題。
             $('#tip').text(''); //清空內容。
             $('#answer').val(''); //清空內容。
+            
+            /*去所有字母的提示。*/
+            var regex = /[a-zA-Z]/gi;
+            let vocabulary = $("#word").text();
+            let vocabulary_length = vocabulary.replace(regex, ' _ ');
+            
+            $('#answer').attr('placeholder', vocabulary_length);//幫助學生拼字。
             $('#hint').attr('src','material/tips_again.png');//換一個暗示圖形，表示內容變更。
             $('#next_btn').attr('src','material/done.png');
-        }else{
             
+        }else{
+            dialog(2020);
         }
         
     });
     
     /*即時字元檢測。*/
     $('#answer').keyup(function(){
-        let vocabulary = "apple";
+        let vocabulary = $('#word').text();
         let input_value = $(this).val();
         console.log('vocabulary:'+vocabulary);
         console.log('input_value:'+input_value);
@@ -200,6 +351,14 @@ $(function(){
         }
     });
     
+    /*點擊暗示按鈕時。*/
+    $('#hint').click(function(){
+        if($(this).attr('src') == "material/tips.png"){
+            dialog(2);
+        }else{
+            dialog(3);
+        }
+    })
     
     
     window.onload=function(){
