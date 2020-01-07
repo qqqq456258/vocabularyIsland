@@ -9,6 +9,7 @@ $(function(){
     let word_length = 0;
     let target = '';
     let answer = '';
+    
     let round = 0;
     let letter_position_situation;
     
@@ -30,7 +31,7 @@ $(function(){
             rdmArray[i] = rdm;
          }
         return rdmArray;
-    }
+    } 
     function StartTime(){
         time_element = setInterval(setTime,10);
     }
@@ -139,8 +140,6 @@ $(function(){
         $('.space').off('click');
         $('#confirm').off('click');
         $('#word_sound').off('click');
-
-        
     }
     
     function together(){    // 事件重新綁定。

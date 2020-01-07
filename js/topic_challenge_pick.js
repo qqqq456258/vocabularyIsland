@@ -1,31 +1,31 @@
 $(function () {
     let topic = 0;              // 將單字主題以數字來辨別，這裡 0 是表示測試系列。
-    let total_level = 4;        // 總關卡數。
+    let total_level = 7;        // 總關卡數。
     let locked_level = 1;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
-    var title_array = ["Fruit - 0","Fruit - 1","Pet & Farm Animals - 0","Pet & Farm Animals - 1"];                               // 每個解鎖自主練習的標題。
-    var star_array = [0,0,0,0]; // 每個解鎖自主練習的星數。
+    var title_array = ["Pet & Farm Animals - 0","Pet & Farm Animals - 1","Pet & Farm Animals - 2","Pet & Farm Animals - 3","Pet & Farm Animals - 4","Pet & Farm Animals - 5","Pet & Farm Animals - 6"]; // 每個解鎖自主練習的標題。
+    var star_array = [0,0,0,0,0,0,0]; // 每個解鎖自主練習的星數。
     let content = "";           // 生成自主練習所需的字串。
     
     /*生成每個自主練習。*/
-    for(let i=0;i<total_level;i++){
-        
-        content = "<div id='level_"+topic+"_"+i+"' class='each_level'><h3 id='title_"+topic+"_"+i+"' class='title_zone'>"+title_array[i]+"</h3><div id='word_"+topic+"_"+i+"' class='word_zone'>評分：</div><div id='star_"+topic+"_"+i+"' class='star_zone'>";
-        
+    for (let i = 0; i < total_level; i++) {
+        content = "<div id='level_" + topic + "_" + i + "' class='each_level'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
+
         /*亮星數*/
-        for(let t=0;t<star_array[i];t++){
+        for (let t = 0; t < star_array[i]; t++) {
             content = content + "<img class='star' src='material/star_shine.png'>";
         }
         /*暗星數*/
-        for(let f=0;f<(3-star_array[i]);f++){
+        for (let f = 0; f < (3 - star_array[i]); f++) {
             content = content + "<img class='star' src='material/star_dark.png'>";
         }
         /*關卡鎖頭*/
-        if(i>=locked_level){
+        if (i >= locked_level) {
             content = content + "<img class='level_icon' src='material/lock.png'>";
         }
         content = content + "</div></div>";
-        
-        $("#slide_0").append(content);
+
+        $("#slide_" + Math.floor(i / 6)).append(content);
+        console.log(Math.floor(i / 6));
     }
     
     /* css 部分，關卡的顏色以及鎖住未解鎖關卡之 click 功能。*/

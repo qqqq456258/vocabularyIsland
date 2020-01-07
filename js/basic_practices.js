@@ -1,8 +1,7 @@
 $(function(){
-    let title = "Listen to the pronunciation";                  // 宣告標題。
-    var word = ["apple", "banana", "cranberry", "honeydew"];    // 宣告陣列放入 4 個單字。
+    var word = ["cat", "hamster", "guinea pig", "rabbit"];    // 宣告陣列放入 4 個單字。
     var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"];        // 宣告陣列放入 4 個單字詞性。
-    var definition = ["蘋果", "香蕉", "蔓越莓", "蜜瓜"];           // 宣告陣列放入 4 個單字翻譯。
+    var definition = ["貓", "倉鼠", "天竺鼠", "兔子"];           // 宣告陣列放入 4 個單字翻譯。
     let hint = "";          // 存放去除字母的提示部分。
     var sound = [];         // 宣告陣列放入 4 個語音檔。
     var order = [];         // 宣告陣列放入排序。
@@ -11,10 +10,13 @@ $(function(){
     let stop_num = 0;       // 存放按擊暫停次數。
     let choose_audio = "";  // 存放三個錄音中所選擇的audio ID，可以再去 audio_base64 陣列中找 base64。
     var audio_base64 = [];  // 存放3次語音的 base64。
-    let step = 1;           // 第幾步驟。
+    let step = 1;           // 控制步驟的參數。
+    let round = 0;          // 控制下一個單字出現。
+    let move = 0;     // 基礎練習總共步驟。
     
          /*sweetAlert2 的功能。*/
     function dialog(situation){
+        console.log("Dialog:"+situation);
         if(situation == 0){ //遊戲開始前說明。
             swal.fire({         
                     icon: "info",
@@ -32,6 +34,7 @@ $(function(){
                     }
                 });
         }else if(situation == 1){ // 未挑選單字發音的提示。
+            $('#sound_wrong').get(0).play();
             swal.fire({         
                     icon: "error",
                     title: "Error",
@@ -91,13 +94,32 @@ $(function(){
               showConfirmButton: false,
               timer: 700
             })
+        }else if(situation == 5){ // 完成基礎練習。
+            swal.fire({         
+                    icon: "success",
+                    title: "完成",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成基礎練習！！</p>",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    confirmButtonColor: 'rgb(136,169,203)',
+                    confirmButtonText:"O K"
+                })
+                .then((result) => {
+                    if(result.value){
+                        console.log("前往下一個訓練，Picking");
+                    }
+                });
         }else{//STEP 2,3 的結果提示。 
             let icon = "";
-            $('#sound_' + $('#word').text()).get(0).play();
             if($('#tip').text() == "Correct."){
+                $('#sound_correct').get(0).play();  //播放正確音效。
                 icon = "success";
+                console.log("Correct");
             }else{
+                $('#sound_wrong').get(0).play();
                 icon = "error";
+                console.log("Wrong");
             }
             swal.fire({
                     icon: icon,
@@ -114,8 +136,15 @@ $(function(){
                         if(step == 3){
                             /*播放語音*/
                             play_sound();
+                            progress();
                         }else{
-                            /*初始化*/
+                            progress();
+                            if(move < 20){
+                                init_content();//初始化。
+                                prepare(round);//載入單字。
+                            }else{
+                                dialog(5);
+                            }
                         }
                     }
                 });
@@ -132,11 +161,37 @@ $(function(){
         
         var timeout_1 = setTimeout(function(){
             $('#sound_' + vocabulary).get(0).play();    /*播放第二次語音*/
-        },2300);
+        },2600);
         
         var timeout_2 = setTimeout(function(){
             $('#sound_' + vocabulary).get(0).play();    /*播放第三次語音*/
         },4200);
+    }
+        /*初始化*/
+    function init_content() { //here
+        round++; //下一個。
+        step = 1;
+        listen_num = 0;
+        record_num = 0;
+        stop_num = 0;
+        $('#tip').text(''); //清空內容。
+        $('#answer').val(''); //清空內容。
+        $('#answer').removeAttr('placeholder');
+        $('#hint').attr('src', 'material/tips.png'); //換暗示圖形，表示內容變更。
+        $('#next_btn').attr('src', 'material/next_step.png'); //換下一步的按鈕。
+        $('#spell_zone').css('display','none');
+        $('#click_zone').css('display','none');
+        
+        $('#vocabulary').css('marginTop','90px');
+        $('#vocabulary').css('display','block');
+        $('#record,#stop').css('display','none');
+        choose_audio = "";
+        for(let i = 1 ; i<4 ; i++ ){
+            $('#voice_zone_'+i).css('border','5px dashed gray');
+        }
+        
+        console.log("初始化");
+        
     }
     
         /*隨機產生不重覆的4個數字。*/
@@ -160,17 +215,24 @@ $(function(){
         return rdmArray;
     }
     
+    function progress(){
+        let total_move = 20;
+        move++;
+        percentage = move/20*100;
+        $('#progress_bar').css('width',percentage+'%');
+        console.log("百分比："+percentage+"%");
+        console.log("總共："+move+"步。");
+    }
+    
         /*四個單字的順序洗牌。*/
-    function prepare() {
-
-        order = getRandomArray();
-
-        for (var i = 0; i < 1; i++) {
+    function prepare(round) {
+        let i = round;
             console.log("order:" + order);
             console.log("word:" + word[order[i]]);
+            console.log("round:"+round);
 
             /*放入這次學習的單字。*/
-            $("#title_en").text(title);
+            $("#title_en").text("Listen to the pronunciation");
             $("#word").text(word[order[i]]);
             $("#part_speech").text(partOfSpeech[order[i]]);
             $("#definition").text(definition[order[i]]);
@@ -209,12 +271,13 @@ $(function(){
                     alert('fail');
                 }
             });
-        }
-
     }
     
     dialog(0);
-    prepare();
+    order = getRandomArray(); // 重新排序。
+    prepare(round); // round = 0;
+    
+    
     
     
     
@@ -230,6 +293,7 @@ $(function(){
             $('#record,#stop').css('display','inline-block');//將錄音與暫停按鈕並排。
             $('#voice_zone').css('display','block');//錄音的結果出現。
             listen_num++;
+            progress();
         }
         
     });
@@ -244,6 +308,7 @@ $(function(){
     
     /*  調整錄音按鈕的顯示與隱藏、效果。 */
     $('#record').click(function () {
+        startRecording();
         $(this).attr('src', 'material/record_0.png');//錄音按鈕關閉。
         $(this).attr('disabled','disabled');//錄音按鈕關閉。
         $('#stop').attr('src', 'material/stop_1.png');//暫停按鈕開啟。
@@ -254,6 +319,7 @@ $(function(){
     
     /*  錄音結束按鈕的顯示與隱藏、效果。 */
     $('#stop').click(function () {
+        stopRecording();
         $(this).attr('src', 'material/stop_0.png');//暫停按鈕關閉。
         $(this).attr('disabled','disabled');//暫停按鈕關閉。
         $('#record').attr('src', 'material/record_1.png');//錄音按鈕開啟。
@@ -271,15 +337,16 @@ $(function(){
             $('#vocabulary').css('marginTop','70px');//往上調整單字區塊位置。
             $("#title_en").text("Listen and pick the best one");//變更標題。
             $('#click_zone').css('display','block');
+            progress();
         }
     });
     
     /*  錄音結束後，點擊自己的聲音，並呈現選擇錄音的變化效果。*/
     $('.voice').click(function (){
         var audio_num = $(this).attr('id').split("_");
-        console.log('Play - #audio_' + audio_num[1]);
-        choose_audio = 'audio_' + audio_num[1]; // 選擇錄音的對象。
-        $('#audio_' + audio_num[1]).get(0).play();
+        choose_audio = 'audio_'+$("#word").text()+'_'+audio_num[1]; // 選擇錄音的對象。
+        console.log('Play - #' + choose_audio);
+        $('#' + choose_audio).get(0).play();
         for(let i = 1 ; i<4 ; i++ ){
             $('#voice_zone_'+i).css('border','5px dashed gray');
         }
@@ -287,16 +354,15 @@ $(function(){
         
     });
     
+    
     /*點擊下一步。*/
     $('#next_btn').click(function(){
         step++;
         if(choose_audio.length == 0){ //忘了挑選錄音。
             step--;
             dialog(1);
-        }
-        console.log("step:"+step);
-        
-        if(step == 2){
+            
+        }else if(step == 2){
             dialog(4);
             $('#title_en').text('Spell the word in English');//變更標題。
             $('#vocabulary').css('display','none');//單字區塊隱藏。
@@ -308,6 +374,7 @@ $(function(){
             $('#next_btn').attr('src','material/done.png');
             /*播放語音*/
             play_sound();
+            progress();
             
         }else if(step == 3){
             dialog(2020);
@@ -326,6 +393,7 @@ $(function(){
             
         }else{
             dialog(2020);
+            console.log("下一個單字。");
         }
         
     });
@@ -372,13 +440,26 @@ $(function(){
     // shim for AudioContext when it's not avb. 
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioContext //audio context to help us record
+    
+    navigator.permissions.query({name:'microphone'}).then(function(result) {
+      if (result.state == 'granted') {
+          
+      } else if (result.state == 'prompt') {
+          navigator.permissions.query({name:'microphone'});
+      } else if (result.state == 'denied') {
+          navigator.permissions.query({name:'microphone'});
+      }
+      result.onchange = function() {
 
-    var recordButton = document.getElementById("record");
-    var stopButton = document.getElementById("stop");
+      };
+    });
 
-    //add events to those 2 buttons
-    recordButton.addEventListener("click", startRecording);
-    stopButton.addEventListener("click", stopRecording);
+//    var recordButton = document.getElementById("record");
+//    var stopButton = document.getElementById("stop");
+
+//    //add events to those 2 buttons
+//    recordButton.addEventListener("click", startRecording);
+//    stopButton.addEventListener("click", stopRecording);
 
 }
     //webkitURL is deprecated but nevertheless
@@ -473,7 +554,7 @@ $(function(){
     }
     function createDownloadLink(blob) {
         var au = document.createElement('audio');
-        au.setAttribute('id','audio_'+stop_num);
+        au.setAttribute('id','audio_'+$('#word').text()+'_'+stop_num);
         var url = URL.createObjectURL(blob);  
         
         /*

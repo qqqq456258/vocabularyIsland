@@ -3,7 +3,7 @@
     src: url(../font/support.ttf);
 }
 
-bodya,img{
+body,a,img{
     padding:0;
     margin:0;
 }
@@ -217,4 +217,26 @@ body {
     font-size: 22px;
     margin: 10px;
     padding: 10px;
+}
+
+
+#progress {
+    margin: 0px auto;
+    padding: 0px;
+    color: black;
+    font-weight: 600;
+    font-size: 23px;
+    background-color: #DDD;
+    height:24px;
+    width:100%;
+}
+
+#progress_bar {
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    background-color: #5B9EFF;
+    height:24px;
+    width:0%;
+    transition: 1.5s;
 }

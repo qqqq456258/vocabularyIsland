@@ -13,6 +13,10 @@
 <body>
    
     <div id="content">
+    <div id="progress">
+        <div id="progress_bar">  </div>
+    </div>
+
     
 <!--       標題-->
         <div class='title'>
@@ -59,7 +63,11 @@
             <input type="image" id="next_btn" src="material/next_step.png">
         </div>
        
+<!--       正確及錯誤的音效    -->
+       <audio src="material/correct.mp3" id="sound_correct"></audio>
+       <audio src="material/wrong.mp3" id="sound_wrong"></audio>
        
+<!--       存放錄音的區塊-->
         <il id='recordingslist'></il>
        
        
