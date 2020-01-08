@@ -3,8 +3,8 @@ $(function(){
     var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"];        // 宣告陣列放入 4 個單字詞性。
     var definition = ["貓", "倉鼠", "天竺鼠", "兔子"];           // 宣告陣列放入 4 個單字翻譯。
     let hint = "";          // 存放去除字母的提示部分。
-    var sound = [];         // 宣告陣列放入 4 個語音檔。
     var order = [];         // 宣告陣列放入排序。
+    var sound = [];         // 宣告陣列放入 4 個語音檔。
     let listen_num = 0;     // 存放聆聽次數。
     let record_num = 0;     // 存放按擊錄音次數。
     let stop_num = 0;       // 存放按擊暫停次數。
@@ -152,20 +152,23 @@ $(function(){
     }
     
         /*播放語音*/
-    function play_sound(){
-        let vocabulary = $('#word').text();
+    function play_sound() {
+        /*替換空格的提示。*/
+        var regex = /\s/;
+        let vocabulary = $("#word").text();
+        vocabulary = vocabulary.replace(regex, '');
         
-        var timeout_0 = setTimeout(function(){
-            $('#sound_' + vocabulary).get(0).play();    /*播放第一次語音*/
-        },1000);
-        
-        var timeout_1 = setTimeout(function(){
-            $('#sound_' + vocabulary).get(0).play();    /*播放第二次語音*/
-        },2600);
-        
-        var timeout_2 = setTimeout(function(){
-            $('#sound_' + vocabulary).get(0).play();    /*播放第三次語音*/
-        },4200);
+        var timeout_0 = setTimeout(function () {
+            $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
+        }, 1000);
+
+        var timeout_1 = setTimeout(function () {
+            $('#sound_' + vocabulary).get(0).play(); /*播放第二次語音*/
+        }, 2600);
+
+        var timeout_2 = setTimeout(function () {
+            $('#sound_' + vocabulary).get(0).play(); /*播放第三次語音*/
+        }, 4200);
     }
         /*初始化*/
     function init_content() { //here
@@ -214,11 +217,23 @@ $(function(){
          }
         return rdmArray;
     }
-    
+        
+        /*進度條*/
     function progress(){
         let total_move = 20;
         move++;
-        percentage = move/20*100;
+        percentage = Math.floor(move/20*100);
+        if (percentage < 25) {
+            $('#progress_bar').css('backgroundColor', '#5C9DFF');
+        } else if (percentage >= 25 && percentage < 50) {
+            $('#progress_bar').css('backgroundColor', '#58E8D3');
+        } else if (percentage >= 50 && percentage < 75) {
+            $('#progress_bar').css('backgroundColor', '#6EFF77');
+        } else if (percentage >= 75 && percentage < 100) {
+            $('#progress_bar').css('backgroundColor', '#FFCA5F');
+        }else{
+            $('#progress_bar').css('backgroundColor', '#E73F32');
+        }
         $('#progress_bar').css('width',percentage+'%');
         console.log("百分比："+percentage+"%");
         console.log("總共："+move+"步。");
@@ -227,58 +242,62 @@ $(function(){
         /*四個單字的順序洗牌。*/
     function prepare(round) {
         let i = round;
-            console.log("order:" + order);
-            console.log("word:" + word[order[i]]);
-            console.log("round:"+round);
+        console.log("order:" + order);
+        console.log("word:" + word[order[i]]);
+        console.log("round:" + round);
 
-            /*放入這次學習的單字。*/
-            $("#title_en").text("Listen to the pronunciation");
-            $("#word").text(word[order[i]]);
-            $("#part_speech").text(partOfSpeech[order[i]]);
-            $("#definition").text(definition[order[i]]);
-            
-            /*去除母音字母的提示。*/
-            var regex = /[^aeiouAEIOU]/gi;
-            let vocabulary = $("#word").text();
-            hint = vocabulary.replace(regex, ' _ ');
-            
+        /*放入這次學習的單字。*/
+        $("#title_en").text("Listen to the pronunciation");
+        $("#word").text(word[order[i]]);
+        $("#part_speech").text(partOfSpeech[order[i]]);
+        $("#definition").text(definition[order[i]]);
 
-            /*載入聲音檔。*/
-            $.ajax({
-                type: "get",
-                async: false, //async設定false會變成同步請求 要完成ajax後才會繼續執行
-                url: "php/get_data_from_LearningChocolate.php",
-                data: {
-                    value: word[order[i]],
-                },
-                dataType: "json",
-                success: function (json) {
-                    //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
-                    console.log(json);
+        /*去除母音字母的提示。*/
+        var regex = /[^aeiouAEIOU]/gi;
+        let vocabulary = $("#word").text();
+        hint = vocabulary.replace(regex, ' _ ');
 
-                    sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-                    sound[order[i]].setAttribute("id", "sound_" + word[order[i]]);
-                    sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
-                    sound[order[i]].setAttribute("preload", "auto");
-                    document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
 
-                    //                $('#test_pic').attr('src', json[0].images[0].fileName);
-                    //                $('#sound').attr('src', json[0].sounds[0].fileName);
-                    //                audio = document.getElementById("test_voice");
+        /*載入聲音檔。*/
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/get_data_from_LearningChocolate.php",
+            data: {
+                value: word[order[i]],
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+                /*替換空格的提示。*/
+                var regex = /\s/;
+                let vocabulary = $("#word").text();
+                vocabulary = vocabulary.replace(regex, '');
 
-                },
-                error: function () {
-                    alert('fail');
-                }
-            });
+                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                sound[order[i]].setAttribute("id", "sound_" + vocabulary);//問題點
+                sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
+                sound[order[i]].setAttribute("preload", "auto");
+                document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
+                
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:"+XMLHttpRequest);
+                console.log("textStatus:"+textStatus);
+                console.log("errorThrown:"+errorThrown);
+                alert("異常！");  
+            }
+        });
     }
+    
     
     dialog(0);
     order = getRandomArray(); // 重新排序。
     prepare(round); // round = 0;
-    
-    
-    
     
     
     /*練習發音時，點擊聽單字發音*/
@@ -344,7 +363,12 @@ $(function(){
     /*  錄音結束後，點擊自己的聲音，並呈現選擇錄音的變化效果。*/
     $('.voice').click(function (){
         var audio_num = $(this).attr('id').split("_");
-        choose_audio = 'audio_'+$("#word").text()+'_'+audio_num[1]; // 選擇錄音的對象。
+        /*替換空格的提示。*/
+        var regex = /\s/;
+        let vocabulary = $("#word").text();
+        vocabulary = vocabulary.replace(regex, '');
+        
+        choose_audio = 'audio_'+vocabulary+'_'+audio_num[1]; // 選擇錄音的對象。
         console.log('Play - #' + choose_audio);
         $('#' + choose_audio).get(0).play();
         for(let i = 1 ; i<4 ; i++ ){
@@ -554,7 +578,11 @@ $(function(){
     }
     function createDownloadLink(blob) {
         var au = document.createElement('audio');
-        au.setAttribute('id','audio_'+$('#word').text()+'_'+stop_num);
+        /*替換空格的提示。*/
+        var regex = /\s/;
+        let vocabulary = $("#word").text();
+        vocabulary = vocabulary.replace(regex, '');
+        au.setAttribute('id','audio_'+vocabulary+'_'+stop_num);
         var url = URL.createObjectURL(blob);  
         
         /*

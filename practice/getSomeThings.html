@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Get_Picture</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style type="text/css">
-        #picture_zone{
+        #picture_zone {
             max-width: 300px;
         }
-        #voice_zone{
+
+        #voice_zone {
             width: 300px;
             height: 300px;
         }
+
         img {
             width: 200px;
             height: 200px;
@@ -21,46 +24,48 @@
         }
     </style>
 </head>
+
 <body>
-<script>
-    $(function(){
-        var audio;
-    $.ajax({
-    type: "get",
-    async: false,//async設定false會變成同步請求 要完成ajax後才會繼續執行
-    url: "getSomeThings.php",
-    data:{
-    value: "apple",
-    },
-    dataType: "json",
-    success: function(json){
-    //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
-    console.log(json);
-    $('#test_pic').attr('src',json[0].images[0].fileName);
-    $('#test_voice').attr('src',json[0].sounds[0].fileName);
-    audio = document.getElementById("test_voice");
-    },
-    error: function(){
-        alert('fail');
-    }
-    });
+    <script>
+//        $(function() {
+//            var audio;
+//            $.ajax({
+//                type: "get",
+//                async: true, //async設定false會變成同步請求 要完成ajax後才會繼續執行
+//                url: "../php/get_data_from_LearningChocolate.php",
+//                data: {
+//                    value: "guinea pig",
+//                },
+//                dataType: "json",
+//                success: function(json) {
+//                    //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+//                    console.log(json);
+//                    $('#test_voice').attr('src', json[0].sounds[0].fileName);
+//                    audio = document.getElementById("test_voice");
+//                },
+//                error: function(XMLHttpRequest, textStatus, errorThrown) {
+//                    console.log("XMLHttpRequest:" + XMLHttpRequest);
+//                    console.log("textStatus:" + textStatus);
+//                    console.log("errorThrown:" + errorThrown);
+//                    alert("異常！");
+//                }
+//            });
+//
+//            $("#testBtn").on("click", function() {
+//                audio.play();
+//            });
+//
+//        });
+    </script>
     
-    $("#testBtn").on("click",function(){
-        audio.play();
-    });
-        
-    });
-</script>
-   
-    <input type="text" id="something">
-    <button id='testBtn'> O K </button>
-    
-    <div id='picture_zone'>
-        <img src="" id='test_pic'>
-    </div>
-    
+    <form action="../php/get_data_from_LearningChocolate.php" method="get">
+    <input type="text" id='testBtn' name="value">
+    <input type="submit" value="OK">
+    </form>
+
     <div id='voice_zone'>
         <audio src="" controls="controls" id="test_voice"></audio>
     </div>
 </body>
+
 </html>
