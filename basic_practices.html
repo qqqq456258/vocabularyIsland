@@ -16,13 +16,13 @@
     <div id="progress">
         <div id="progress_bar">  </div>
     </div>
-
+    
     
 <!--       標題-->
         <div class='title'>
             <span id="title_en">Listen to the pronunciation</span><br>
         </div>
-            
+        
 <!--       單字相關資訊及錄音按鈕-->
         <div id="vocabulary">
             <p id="word"></p>
@@ -30,7 +30,8 @@
                 <span id="part_speech"></span>
                 <span id="definition"></span>
             </p>
-            <input type="image" id="sound" src="material/speaker.png">
+            <input type="image" id="sound" src="material/speaker.png" onerror="alert('The sound could not be loaded.')">
+            <p id='sounds'></p>
             <br>
             <input type="image" id="record" src="material/record_1.png">
             <input type="image" id="stop" src="material/stop_0.png" disabled>
@@ -44,22 +45,20 @@
            <div id="voice_zone_2">
                <input type="image" id="voice_2" class="voice" src="material/voice2.png">
            </div>
-           <div id="voice_zone_3">
-               <input type="image" id="voice_3" class="voice" src="material/voice3.png">
-           </div>
         </div>
        
 <!--       「練習拼字的部分」-->
        <div id="spell_zone">
            <input type="image" src="material/tips.png" id="hint">
            <input type="image" src="material/speaker.png" id="spell_sound"><br><br>
-           <span id="spell_title">Answer&ensp;:</span><br>
+           <span id="spell_title"></span><br>
            <input type="text" id="answer" autocomplete="off"><br><br>
            <span id="tip"></span>
         </div>
        
 <!--       「下一步」的按鈕-->
         <div id="click_zone">
+            <input type="image" id="clear" src="material/clear.png">
             <input type="image" id="next_btn" src="material/next_step.png">
         </div>
        

@@ -12,6 +12,7 @@ body {
     margin: 0px auto;
     background-color: #FFF;
     text-align: center;
+    cursor: pointer;
 }
 
 #content {
@@ -24,6 +25,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    cursor: pointer;
 }
 
 
@@ -57,14 +59,16 @@ body {
     width: 70px;
     z-index: 1;
     height: auto;
+    cursor: pointer;
 }
 #sound{
     width: 70px;
     z-index: 1;
     height: auto;
+    cursor: pointer;
 }
 
-#record,#stop,#sound,#next_btn,#standard_sound:hover{
+#record,#stop,#sound,#next_btn,#clear,#standard_sound:hover{
     transition: .7s;
     transform: scale(1.2); 
 }
@@ -96,6 +100,7 @@ body {
     margin-top:30px;
     margin-right:10px;
     display: none;
+    cursor: pointer;
 }
 
 #stop {
@@ -103,6 +108,7 @@ body {
     margin-top:30px;
     margin-left:30px;
     display: none;
+    cursor: pointer;
 }
 
 .voice {
@@ -118,6 +124,7 @@ body {
     margin: auto;
     padding: 10px 10px 10px 10px;
     display: none;
+    cursor: pointer;
 }
 
 #voice_zone_1,#voice_zone_2,#voice_zone_3{
@@ -127,20 +134,24 @@ body {
     width: 290px;
     height: 82px;
     display: inline-block;
+    cursor: pointer;
 }
 
 #click_zone {
     margin: 0 auto;
     margin-top: 25px;
     display: none;
+    cursor: pointer;
 }
 
 #next_btn {
-    width: 200px;
+    width: 125px;
+    cursor: pointer;
 }
 
 #audio_zone {
     display: none;
+    cursor: pointer;
 }
 
 #recordingslist {
@@ -149,12 +160,15 @@ body {
 
 #voice_1 {
     visibility: hidden;
+    cursor: pointer;
 }
 #voice_2 {
     visibility:hidden;
+    cursor: pointer;
 }
 #voice_3 {
     visibility:hidden;
+    cursor: pointer;
 }
 
 #spell_zone {
@@ -168,6 +182,7 @@ body {
     display: inline-block;
     position: relative;
     display: none;
+    cursor: pointer;
 }
 
 #hint {
@@ -177,6 +192,7 @@ body {
     width: 70px;
     z-index: 1;
     height: auto;
+    cursor: pointer;
 }
 
 #spell_sound {
@@ -186,14 +202,16 @@ body {
     width: 70px;
     z-index: 1;
     height: auto;
+    cursor: pointer;
 }
 
 #spell_title {
     font-weight: 800;
     color: #ffb100;
-    font-size: 55px;
-    text-shadow: black 0.1em 0.1em 0.2em;
-    margin-top: 20px;
+    font-size: 38px;
+    white-space: pre;
+    border: 1px solid black;
+    padding: 5px;
 }
 
 #answer {
@@ -207,6 +225,7 @@ body {
     border: 2px solid #E1E1E1;
     border-radius: 8px;
     color: #B27B7B;
+    cursor: pointer;
 }
 #answer:focus{
     border: 2px solid #FFBDBD;
@@ -239,4 +258,11 @@ body {
     height:24px;
     width:0%;
     transition: 1.5s;
+}
+
+#clear {
+    width: 60px;
+    cursor: pointer;
+    margin-right: 200px;
+    display: inline-block;
 }
