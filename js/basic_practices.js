@@ -22,7 +22,25 @@ $(function () {
     */
     
     
-    
+    /*錄音授權詢問。*/
+    function mic_permission() {
+        navigator.permissions.query({
+            name: 'microphone'
+        }).then(function (result) {
+            console.log("microphone permission state is " + result.state);
+            if (result.state == 'granted') {
+                // 已授予對麥克風的訪問權
+            } else if (result.state == 'prompt') {
+                // 尚未授予訪問權，調用 getUserMedia 時將會收到提示
+            } else if (result.state == 'denied') {
+                // 系統或用戶已拒絕對麥克風的訪問權
+            }
+            result.onchange = function () {
+                console.log("microphone permission state is " + this.state);
+                // 授權有變化時的處理 ...
+            };
+        });
+    }
     /*sweetAlert2 的功能。*/
     function dialog(situation) {
         console.log("Dialog:" + situation);
@@ -249,24 +267,6 @@ $(function () {
     /*播放語音*/
     function play_sound() {
         
-        // Does not work in Safari/mobile
-        // var blob = new Blob([arrayBuffer]);
-        // var url = URL.createObjectURL(blob);
-
-        // Should work in Safari/on mobile
-        var blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
-        // All browsers, except Firefox
-        try {
-            url = webkitURL.createObjectURL(blob);
-        }
-        // Firefox
-        catch(err) {
-            url = URL.createObjectURL(blob);
-        }
-        
-        
-        
-        
         /*替換空格的提示。*/
         var regex = /\s/;
         let vocabulary = $("#word").text();
@@ -428,8 +428,7 @@ $(function () {
                 sound[order[i]].setAttribute("id", "sound_" + vocabulary); //問題點
                 sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
                 sound[order[i]].setAttribute("preload", "auto");
-                document.getElementById('sounds').appendChild(sound[order[i]]); //把它添加到頁面上。
-                console.log($('#sound_' + vocabulary).css('display'));
+                document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
 
 
             },
@@ -441,13 +440,15 @@ $(function () {
             }
         });
     }
-
+    
 
     dialog(0);
-    order = getRandomArray(); // 重新排序。
-    prepare(round); // round = 0;
+    order = getRandomArray();
+    prepare(round);
+    mic_permission();
 
-
+    
+    
     /*練習發音時，點擊聽單字發音*/
     $('#sound').on('click', function () {
         event.preventDefault();
@@ -621,24 +622,7 @@ $(function () {
         var AudioContext = window.AudioContext || window.webkitAudioContext;
         var audioContext //audio context to help us record
 
-        navigator.permissions.query({
-            name: 'microphone'
-        }).then(function (result) {
-            if (result.state == 'granted') {
-
-            } else if (result.state == 'prompt') {
-                navigator.permissions.query({
-                    name: 'microphone'
-                });
-            } else if (result.state == 'denied') {
-                navigator.permissions.query({
-                    name: 'microphone'
-                });
-            }
-            result.onchange = function () {
-
-            };
-        });
+        mic_permission();
 
         //    var recordButton = document.getElementById("record");
         //    var stopButton = document.getElementById("stop");

@@ -1,0 +1,71 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="UTF-8">
+     <title>Vocabulary Island - Picking</title>
+     <link rel="stylesheet" type="text/css" href="css/picking.css">
+     <script src="plugin/development_jQuery_3.4.1.js"></script>
+     <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+     <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+     <script src="plugin/Recorderjs-master/dist/recorder.js"></script>
+     <script src="js/picking.js"></script>
+ </head>
+
+ <body>
+
+     <div id="content">
+
+         <!--    進度條-->
+         <div id="progress">
+             <div id="progress_bar"></div>
+         </div>
+
+         <!--       標題-->
+         <div class='title'>
+             <span id="title_en">Which one is ”<span id='title_word'></span>”?</span><br>
+         </div>
+
+         <!--       單字相關資訊及錄音按鈕-->
+         <div id="select_zone">
+             <div id="select_0" class="select">
+                 <p id='word_0' class="word">hamster</p>
+                 <div class="ima_bg">
+                     <img src="word_image/hamster_1.jpg" alt="" id='img_0' class="image">
+                 </div>
+             </div>
+             <div id="select_1" class="select">
+                 <p id='word_1' class="word">cat</p>
+                 <div class="ima_bg">
+                     <img src="word_image/cat_1.jpg" alt="" id='img_1' class="image">
+                 </div>
+             </div>
+             <div id="select_2" class="select">
+                 <p id='word_2' class="word">rabbit</p>
+                 <div class="ima_bg">
+                     <img src="word_image/rabbit_0.jpg" alt="" id='img_2' class="image">
+                 </div>
+             </div>
+             <div id="select_3" class="select">
+                 <p id='word_3' class="word">guinea pig</p>
+                 <div class="ima_bg">
+                     <img src="word_image/guineapig_1.jpg" alt="" id='img_3' class="image">
+                 </div>
+             </div>
+         </div>
+
+         <!--       「下一步」的按鈕-->
+         <div id="click_zone">
+             <input type="image" id="done" src="material/done.png">
+         </div>
+
+         <!--       正確及錯誤的音效    -->
+         <audio src="material/correct.mp3" id="sound_correct"></audio>
+         <audio src="material/wrong.mp3" id="sound_wrong"></audio>
+
+
+
+     </div>
+ </body>
+
+ </html>

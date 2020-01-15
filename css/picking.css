@@ -1,0 +1,256 @@
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body,a,img{
+    padding:0;
+    margin:0;
+}
+
+body {
+    margin: 0px auto;
+    background-color: #FFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+#content {
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+    background-image: url('../material/wood.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+
+#title_en {
+    color:  #9c453d;
+    font-size: 60px;
+    font-weight: 700;
+    text-shadow: #ffe5e5 0.1em 0.1em 0.2em;
+}
+
+#word {
+    color: black;
+    font-weight: 900;
+    font-size: 55px;
+    margin: 10px;
+}
+
+#partOfSpeech {
+    font-size: 20px;
+    margin: 10px;
+}
+#definition{
+    font-family: 'support';
+    font-size: 30px;
+}
+#standard_sound{
+    width: 70px;
+    z-index: 1;
+    height: auto;
+    cursor: pointer;
+}
+#sound{
+    width: 70px;
+    z-index: 1;
+    height: auto;
+    cursor: pointer;
+}
+
+#record,#stop,#sound,#next_btn,#clear,#standard_sound:hover{
+    transition: .7s;
+    transform: scale(1.2); 
+}
+
+.title {
+    padding-top: 60px;
+}
+
+#select_zone {
+    background-color: white;
+    max-width: 83%;
+    margin: 20px auto;
+    height: 360px;
+    margin-top: 50px;
+    border-radius: 20px;
+    border: 5px solid gray;
+    display: block;
+    cursor: pointer;
+}
+
+#part_speech {
+    color: black;
+    font-weight: 900;
+    font-size: 30px;
+    margin: 10px;
+}
+
+#record {
+    width:170px;
+    margin-top:30px;
+    margin-right:10px;
+    display: none;
+    cursor: pointer;
+}
+
+#stop {
+    width:170px;
+    margin-top:30px;
+    margin-left:30px;
+    display: none;
+    cursor: pointer;
+}
+
+.voice {
+    width: 287px;
+}
+
+#voice_zone {
+    background-color: #FFF;
+    border: 6px solid #FFBF1D;
+    border-radius: 20px;
+    width: 90%;
+    margin-top: 10px;
+    margin: auto;
+    padding: 10px 10px 10px 10px;
+    display: none;
+    cursor: pointer;
+}
+
+#voice_zone_1,#voice_zone_2,#voice_zone_3{
+    margin: 5px auto;
+    border: 5px dashed gray;
+    border-radius: 20px;
+    width: 290px;
+    height: 82px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#click_zone {
+    margin: 0 auto;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#done {
+    width: 125px;
+    cursor: pointer;
+}
+
+#audio_zone {
+    display: none;
+    cursor: pointer;
+}
+
+#voice_1 {
+    visibility: hidden;
+    cursor: pointer;
+}
+#voice_2 {
+    visibility:hidden;
+    cursor: pointer;
+}
+#voice_3 {
+    visibility:hidden;
+    cursor: pointer;
+}
+
+#progress {
+    margin: 0px auto;
+    padding: 0px;
+    color: black;
+    font-weight: 600;
+    font-size: 23px;
+    background-color: #DDD;
+    height:24px;
+    width:100%;
+}
+
+#progress_bar {
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    background-color: #5B9EFF;
+    height:24px;
+    width:0%;
+    transition: 1.5s;
+}
+
+
+/*題目變化*/
+#title_word {
+    font-family: 'support';
+    font-weight: 900;
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+/*選項容器*/
+.select {
+    width: 180px;
+    height: 230px;
+    border-radius: 20px;
+    background-color: #acd6ff;
+    display: inline-block;
+    border: 3px dashed grey;
+    overflow:hidden;
+    display: none;
+}
+
+/*圖片背景*/
+.ima_bg {
+    width: 180px;
+    height: 174px;
+    background-color: white;
+    overflow:hidden; /*若超出容器，直接隱藏。*/
+    
+    /*以下三個屬性為文字或圖像水平、垂直置中的方法中最沒問題的寫法。*/
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/*單字*/
+.word {
+    font-size: 20px;
+    font-weight: 600;
+    font-family:'Microsoft JhengHei';
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/*圖片限制最大寬度:180px;最大高度:174px*/
+.image {
+    max-width: 180px;
+    max-height: 174px;
+}
+
+/*選項客製化位置*/
+#select_0 {
+    position: absolute;
+    top: 270px;
+    left: 120px;
+}
+#select_1 {
+    position: absolute;
+    top: 270px;
+    left: 320px;
+}
+#select_2 {
+    position: absolute;
+    top: 270px;
+    left: 520px;
+}
+#select_3 {
+    position: absolute;
+    top: 270px;
+    left: 720px;
+}
