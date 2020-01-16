@@ -135,6 +135,7 @@ $(function () {
                 .then((result) => {
                     if (result.value) {
                         console.log("前往下一個訓練，Picking");
+                        location.replace('picking.html');
                     }
                 });
         } else if (situation == 6) { // 重新複誦步驟。
@@ -309,8 +310,6 @@ $(function () {
         }
 
         /*
-        /*
-        
             $('#sound').off('click');
             $('#spell_sound').off('click');
             $('#record').off('click');
@@ -318,25 +317,6 @@ $(function () {
             $('.voice').off('click');
             $('#next_btn').off('click');
             $('#hint').off('click');
-        
-        */
-            $('#sound').off('click');
-            $('#spell_sound').off('click');
-            $('#record').off('click');
-            $('#stop').off('click');
-            $('.voice').off('click');
-            $('#next_btn').off('click');
-            $('#hint').off('click');
-        /*
-        
-            $('#sound').off('click');
-            $('#spell_sound').off('click');
-            $('#record').off('click');
-            $('#stop').off('click');
-            $('.voice').off('click');
-            $('#next_btn').off('click');
-            $('#hint').off('click');
-        
         */
 
         console.log("初始化");
