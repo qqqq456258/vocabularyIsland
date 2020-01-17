@@ -125,7 +125,7 @@ $(function () {
             swal.fire({
                     icon: "success",
                     title: "完成",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成基礎練習！！</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>挑選練習</b><br>前往下一個訓練 go!!</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,

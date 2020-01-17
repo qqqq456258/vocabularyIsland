@@ -51,22 +51,21 @@ body {
     font-family: 'support';
     font-size: 30px;
 }
-#standard_sound{
-    width: 70px;
-    z-index: 1;
-    height: auto;
-    cursor: pointer;
-}
+
 #sound{
-    width: 70px;
+    position: absolute;
+    top: 180px;
+    right: 481px;
+    width: 60px;
     z-index: 1;
     height: auto;
     cursor: pointer;
+    display: none;
 }
 
-#record,#stop,#sound,#next_btn,#clear,#standard_sound:hover{
+#sound,#done,.select:hover{
     transition: .7s;
-    transform: scale(1.2); 
+    transform: scale(1.1); 
 }
 
 .title {
@@ -92,48 +91,6 @@ body {
     margin: 10px;
 }
 
-#record {
-    width:170px;
-    margin-top:30px;
-    margin-right:10px;
-    display: none;
-    cursor: pointer;
-}
-
-#stop {
-    width:170px;
-    margin-top:30px;
-    margin-left:30px;
-    display: none;
-    cursor: pointer;
-}
-
-.voice {
-    width: 287px;
-}
-
-#voice_zone {
-    background-color: #FFF;
-    border: 6px solid #FFBF1D;
-    border-radius: 20px;
-    width: 90%;
-    margin-top: 10px;
-    margin: auto;
-    padding: 10px 10px 10px 10px;
-    display: none;
-    cursor: pointer;
-}
-
-#voice_zone_1,#voice_zone_2,#voice_zone_3{
-    margin: 5px auto;
-    border: 5px dashed gray;
-    border-radius: 20px;
-    width: 290px;
-    height: 82px;
-    display: inline-block;
-    cursor: pointer;
-}
-
 #click_zone {
     margin: 0 auto;
     margin-top: 25px;
@@ -145,23 +102,6 @@ body {
     cursor: pointer;
 }
 
-#audio_zone {
-    display: none;
-    cursor: pointer;
-}
-
-#voice_1 {
-    visibility: hidden;
-    cursor: pointer;
-}
-#voice_2 {
-    visibility:hidden;
-    cursor: pointer;
-}
-#voice_3 {
-    visibility:hidden;
-    cursor: pointer;
-}
 
 #progress {
     margin: 0px auto;
@@ -203,7 +143,8 @@ body {
     border: 3px solid grey;
     box-shadow:3px 3px 12px black;
     overflow:hidden;
-    display: none;    
+    display: none;
+    cursor: pointer;  
 }
 
 /*圖片背景*/

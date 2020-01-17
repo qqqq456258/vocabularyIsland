@@ -36,7 +36,7 @@ $(function () {
             $('#sound_correct').get(0).play();
             var timeout = setTimeout(function () {
                 $('#sound_' + file_word[order[step]]).get(0).play();
-            }, 800);
+            }, 500);
             swal.fire({
                     icon: "success",
                     title: word[order[step]],
@@ -55,8 +55,14 @@ $(function () {
                             $('#title_en').hide(1500,function(){
                                 /* 內容變化。 */
                                 change_content();
-                                $(this).show(1000);
+                                if(move<8){ // 第一第二階段。
+                                    $(this).show(1000);
+                                }else{ // 第三階段，一開始要撥語音。
+                                    $(this).show(1000,play_sound());
+                                    $('#sound').show(1000);
+                                }
                             });
+                            $('#sound').hide(1500);
                             $('#done').hide(1500);
                             $('#select_0,#select_1,#select_2,#select_3').fadeOut(1500,function(){
                                 $(this).fadeIn(1500);
@@ -89,7 +95,7 @@ $(function () {
             $('#sound_wrong').get(0).play();
             var timeout = setTimeout(function () {
                 $('#sound_' + file_word[order[step]]).get(0).play();
-            }, 1000);
+            }, 500);
             swal.fire({
                     icon: "error",
                     title: word[order[step]],
@@ -108,8 +114,14 @@ $(function () {
                             $('#title_en').hide(1500,function(){
                                 /* 內容變化。 */
                                 change_content();
-                                $(this).show(1000);
+                                if(move<8){
+                                    $(this).show(1000);
+                                }else{ // 第三階段，一開始要撥語音。
+                                    $(this).show(1000,play_sound());
+                                    $('#sound').show(1000);
+                                }
                             });
+                            $('#sound').hide(1500);
                             $('#done').hide(1500);
                             $('#select_0,#select_1,#select_2,#select_3').fadeOut(1500,function(){
                                 $(this).fadeIn(1500);
@@ -125,7 +137,7 @@ $(function () {
             swal.fire({
                     icon: "success",
                     title: "完成",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成基礎練習！！</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>挑選練習</b><br>前往下一個訓練 go!!</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,
@@ -142,11 +154,20 @@ $(function () {
     }
     /*播放語音*/
     function play_sound() {
-        /*替換空格的提示。*/
-        var regex = /\s/;
-        let vocabulary = $("#word").text();
-        vocabulary = vocabulary.replace(regex, '');
-        $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
+        var timeout_0 = setTimeout(function () {
+            $('#sound_' + file_word[order[step]]).get(0).play(); /*播放第一次語音*/
+            console.log('放第一次語音。');
+        }, 1000);
+
+        var timeout_1 = setTimeout(function () {
+            $('#sound_' + file_word[order[step]]).get(0).play(); /*播放第二次語音*/
+            console.log('放第二次語音。');
+        }, 2600);
+
+        var timeout_2 = setTimeout(function () {
+            $('#sound_' + file_word[order[step]]).get(0).play(); /*播放第三次語音*/
+            console.log('放第三次語音。');
+        }, 4200);
     }
     /*初始化*/
     function init_content() { //here
@@ -321,8 +342,8 @@ $(function () {
         
         prepare();
         
-        if( round == 0 ){
-        }else if( round == 1 ){
+        if( round == 0 ){//第一階段
+        }else if( round == 1 ){//第二階段
             $('.ima_bg').remove();
             
             /*以下三個屬性為文字或圖像水平、垂直置中的方法中最沒問題的寫法。*/
@@ -333,11 +354,10 @@ $(function () {
             $('#select_0,#select_1,#select_2,#select_3').css('height','150px');
             $('#select_0,#select_1,#select_2,#select_3').css('top','310px');
             
-        }else{
+        }else{//第三階段
             $('.word').css('font-family','support');
             $('.word').css('font-weight','900');
             $('.word').css('font-size','26px');
-            
         }
         
         
@@ -381,10 +401,10 @@ $(function () {
     $('#done').on('click',function(){
         event.preventDefault();
         event.stopPropagation();
-        if($('#'+focus_option).data('answer') == word[order[step]]){ // 答對。
-            dialog(1);
-        }else if(focus_option == ""){ //沒選擇選項回答。
+        if(focus_option == ""){ //沒選擇選項回答。 
             dialog(2);
+        }else if($('#'+focus_option).data('answer') == word[order[step]]){// 答對。
+            dialog(1);
         }else{ // 答錯。
             dialog(3);
         }
