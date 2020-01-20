@@ -154,6 +154,20 @@ $(function () {
     }
     /*播放語音*/
     function play_sound() {
+          // Show loading animation.
+          var playPromise = $('#sound_' + file_word[order[step]]).get(0).play();
+
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              $('#sound_' + file_word[order[step]]).get(0).pause();
+            })
+            .catch(error => {
+                console.log(error);
+              // Auto-play was prevented
+              // Show paused UI.
+            });
+          }
+        
         var timeout_0 = setTimeout(function () {
             $('#sound_' + file_word[order[step]]).get(0).play(); /*播放第一次語音*/
             console.log('放第一次語音。');

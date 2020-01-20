@@ -14,33 +14,14 @@ $(function () {
     let round = 0; // 控制下一個單字出現。
     let move = 0; // 基礎練習總共步驟。
 
-    /*
-        1. [Error] Unhandled Promise Rejection: NotAllowedError: The request is not allowed by the user agent or the platform in the current context, possibly because the user denied permission.
-
-        2. [Error] ReferenceError: Can't find variable: rec stopRecording
+    var URL = window.URL || window.webkitURL;
+    var gumStream = null; //stream from getUserMedia()
+    var rec = null; //Recorder.js object
+    var input = null; //MediaStreamAudioSourceNode we'll be recording
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext = null;//audio context to help us record
     
-    */
     
-    
-    /*錄音授權詢問。*/
-    function mic_permission() {
-        navigator.permissions.query({
-            name: 'microphone'
-        }).then(function (result) {
-            console.log("microphone permission state is " + result.state);
-            if (result.state == 'granted') {
-                // 已授予對麥克風的訪問權
-            } else if (result.state == 'prompt') {
-                // 尚未授予訪問權，調用 getUserMedia 時將會收到提示
-            } else if (result.state == 'denied') {
-                // 系統或用戶已拒絕對麥克風的訪問權
-            }
-            result.onchange = function () {
-                console.log("microphone permission state is " + this.state);
-                // 授權有變化時的處理 ...
-            };
-        });
-    }
     /*sweetAlert2 的功能。*/
     function dialog(situation) {
         console.log("Dialog:" + situation);
@@ -232,6 +213,8 @@ $(function () {
 
                             } else { // 答錯，就繼續拼字。
                                 $('#title_en').text('Try again'); //變更標題。
+                                $('#answer').val('');
+                                $('#tip').text('Keep going.');
                                 move = move - 2;
                                 progress();
                                 step--;
@@ -254,6 +237,8 @@ $(function () {
 
                             } else { // 答錯，就繼續拼字。
                                 $('#title_en').text('Try again'); //變更標題。
+                                $('#answer').val('');
+                                $('#tip').text('Keep going.');
                                 move = move - 2;
                                 progress();
                                 step--;
@@ -272,7 +257,22 @@ $(function () {
         var regex = /\s/;
         let vocabulary = $("#word").text();
         vocabulary = vocabulary.replace(regex, '');
+        
+          // Show loading animation.
+          var playPromise = $('#sound_' + vocabulary).get(0).play();
 
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              $('#sound_' + vocabulary).get(0).pause();
+            })
+            .catch(error => {
+                console.log(error);
+              // Auto-play was prevented
+              // Show paused UI.
+            });
+          }
+
+        
         var timeout_0 = setTimeout(function () {
             $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
         }, 1000);
@@ -284,6 +284,7 @@ $(function () {
         var timeout_2 = setTimeout(function () {
             $('#sound_' + vocabulary).get(0).play(); /*播放第三次語音*/
         }, 4200);
+        
     }
     /*初始化*/
     function init_content() { //here
@@ -416,7 +417,13 @@ $(function () {
                 console.log("XMLHttpRequest:" + XMLHttpRequest);
                 console.log("textStatus:" + textStatus);
                 console.log("errorThrown:" + errorThrown);
-                alert("異常！");
+                console.log('error, use the plan B.');
+                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                
+                sound[order[i]].setAttribute("id", "sound_" + vocabulary);
+                sound[order[i]].setAttribute("src", "word_sound/" + vocabulary + ".mp3");
+                sound[order[i]].setAttribute("preload", "auto");
+                document.body.appendChild(sound[order[i]]);
             }
         });
     }
@@ -425,17 +432,13 @@ $(function () {
     dialog(0);
     order = getRandomArray();
     prepare(round);
-    mic_permission();
-
-    
     
     /*練習發音時，點擊聽單字發音*/
-    $('#sound').on('click', function () {
+    $('#sound,#spell_sound').on('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
         /*播放語音*/
         play_sound();
-
         if (listen_num == 0) { //僅有第一次點擊才變化。
             $("#title_en").text("Record your voice ( 0 / 2 )"); //變更標題。
             $('#vocabulary').css('height', '350px'); //單字區塊變長。
@@ -447,13 +450,6 @@ $(function () {
 
     });
 
-    /*練習拼字時，點擊聽單字發音*/
-    $('#spell_sound').on('click', function () {
-        event.preventDefault();
-        event.stopPropagation();
-        /*播放語音*/
-        play_sound();
-    });
 
     /*  調整錄音按鈕的顯示與隱藏、效果。 */
     $('#record').on('click', function () {
@@ -590,106 +586,39 @@ $(function () {
     })
 
 
-    window.onload = function () {
-
-        URL = window.URL || window.webkitURL;
-
-        var gumStream; //stream from getUserMedia()
-        var rec; //Recorder.js object
-        var input; //MediaStreamAudioSourceNode we'll be recording
-
-        // shim for AudioContext when it's not avb. 
-        var AudioContext = window.AudioContext || window.webkitAudioContext;
-        var audioContext //audio context to help us record
-
-        mic_permission();
-
-        //    var recordButton = document.getElementById("record");
-        //    var stopButton = document.getElementById("stop");
-
-        //    //add events to those 2 buttons
-        //    recordButton.addEventListener("click", startRecording);
-        //    stopButton.addEventListener("click", stopRecording);
-
-    }
-    //webkitURL is deprecated but nevertheless
-
     function startRecording() {
         console.log("recordButton clicked");
-
         var constraints = {
             audio: true,
             video: false
-        }
+        };
+        
+        (async () => {
+            try {
+                gumStream = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: false
+                });
+                console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+                audioContext = new AudioContext();
+                audioContext.resume();
+                input = audioContext.createMediaStreamSource(gumStream);
+                rec = new Recorder(input, {
+                    numChannels: 1
+                });
+                rec.record();
+                console.log("Recording started");
 
-        /*
-            Disable the record button until we get a success or fail from getUserMedia() 
-        */
-
-        //        recordButton.disabled = true;
-        //        stopButton.disabled = false;
-        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-            console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-
-            /*
-                create an audio context after getUserMedia is called
-                sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-                the sampleRate defaults to the one set in your OS for your playback device
-            */
-
-            audioContext = new AudioContext();
-            gumStream = stream;
-
-            /* use the stream */
-            input = audioContext.createMediaStreamSource(stream);
-
-            /* 
-                Create the Recorder object and configure to record mono sound (1 channel)
-                Recording 2 channels  will double the file size
-            */
-            rec = new Recorder(input, {
-                numChannels: 1
-            });
-            //
-
-            //start the recording process
-            rec.record();
-            console.log("Recording started");
-
-        }).catch(function (err) {
-            console.log(err);
-            //enable the record button if getUserMedia() fails
-            //            recordButton.disabled = false;
-            //            stopButton.disabled = true;
-        });
-    }
-
-    function pauseRecording() {
-        console.log("pauseButton clicked rec.recording=", rec.recording);
-        if (rec.recording) {
-            //pause
-            rec.stop();
-            //            pauseButton.innerHTML="Resume";
-        } else {
-            //resume
-            rec.record()
-            //            pauseButton.innerHTML="Pause";
-
-        }
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+        
     }
 
     function stopRecording() {
         console.log("stopButton clicked");
 
-        //disable the stop button, enable the record too allow for new recordings
-        //        stopButton.disabled = true;
-        //        recordButton.disabled = true;
-        //        pauseButton.disabled = true;
-
-        //reset button just in case the recording is stopped while paused
-        //        pauseButton.innerHTML="Pause";
-
-        //tell the recorder to stop the recording
         rec.stop();
 
         //stop microphone access
