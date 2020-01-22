@@ -97,7 +97,7 @@ body {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: aquamarine;
+    background-color: #eff2f7;
     margin: auto;
     padding: 10px;
 }
@@ -125,7 +125,7 @@ body {
     position: absolute;
     top: 230px;
     left: 10px;
-    background-color: darkgrey;
+    background-color: #eff2f7;
     margin: auto;
     padding: 10px;
 }
@@ -152,7 +152,17 @@ body {
 
 
 #btn_zone{
-    background-color: yellowgreen;
+    position: absolute;
+    top: 30px;
+    left: 320px;
+    background-color: #eff2f7;
     margin: auto;
-    
+}
+#undo,#redo,#clear {
+    font-size: 25px;
+    padding: 20px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

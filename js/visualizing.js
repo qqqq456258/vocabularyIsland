@@ -9,11 +9,25 @@ $(function () {
     let step = 0; // 表示目前階段的步驟，每階段有4個步驟。
     let move = 0; // 表示總共步驟。
     let focus_option = ""; //目前所選擇的選項。
-    
-
-    //產生不同顏色的div方格當作調色盤選項
+    var canvas = $('#canvas_draw');
+    var ctx = canvas.get(0).getContext("2d");
+    var cPushArray = new Array();
+    var cStep = -1;
     var colors = "red;#ab0000;#da7f01;yellow;#7fccab;darkgreen;#61b9ff;#0059a0;#9155fb;#b7b7b7;white;black".split(';');
     var sb = [];
+    
+
+    function cPush() {
+        console.log('cStep:'+cStep);
+        console.log('cPushArray.length:'+cPushArray.length);
+        cStep++;
+         if (cStep < cPushArray.length) {
+             cPushArray.length = cStep;
+         }
+         cPushArray.push(canvas.get(0).toDataURL());
+     }
+    
+    
     $.each(colors, function (i, v) {
         if(i%4 == 0 == i>0){
             sb.push("<br>");
@@ -21,7 +35,7 @@ $(function () {
         sb.push("<div class='option' style='background-color:" + v + "'></div>");
     });
     $("#palette").html(sb.join("\n"));
-    //產生不同尺寸的方格當作線條粗細選項
+    //線條粗細選項
     sb = [];
     for (var i = 8; i <= 15; i++){
         if(i%4 == 0 == i>0){
@@ -51,14 +65,15 @@ $(function () {
 
     }).eq(3).click();
 
-    //取得canvas context
-    var canvas = $('#canvas_draw');
-    var ctx = canvas.get(0).getContext("2d");
+
+    
     //ctx 屬性。
     ctx.fillStyle = "white"; //整個canvas塗上白色背景避免PNG的透明底色效果
     ctx.fillRect(0, 0, canvas.width(), canvas.height()); //Canvas 2D API 绘制填充矩形的方法。
     ctx.lineCap = "round"; //圓滑軌跡。
-
+    
+    cPush();
+    
     /*辨別是手指或是滑鼠，而決定何種事件。*/
     const clickEvent_start = (function () {
         if ('ontouchstart' in document.documentElement === true)
@@ -70,7 +85,7 @@ $(function () {
         if ('ontouchmove' in document.documentElement === true)
             return 'touchmove';
         else
-            return 'mouseover';
+            return 'mousemove';
     })();
     const clickEvent_end = (function () {
         if ('ontouchend' in document.documentElement === true)
@@ -81,40 +96,80 @@ $(function () {
     
     /*用事件綁定，繪出畫筆軌跡*/
     var drawMode = false;
+    var position = null;
     canvas.on(clickEvent_start,function (e) {
+            drawMode = true;
             ctx.beginPath();
             ctx.strokeStyle = p_color;
             ctx.lineWidth = p_width;
-            ctx.touch = e.targetTouches[0];
-//            ctx.moveTo(e.changedTouches[0].pageX - canvas.position().left, e.changedTouches[0].pageY - canvas.position().top);
         
-            ctx.moveTo(e.changedTouches[0].pageX - canvas.position().left, e.changedTouches[0].pageY - canvas.position().top);
-            console.log("X:"+e.changedTouches[0].pageX+" / Y:"+e.changedTouches[0].pageY);
-            drawMode = true;
+            if(clickEvent_start == 'touchstart'){
+                position = e.changedTouches[0];
+            }else{
+                position = e;
+            }
+        
+            ctx.moveTo(position.pageX-canvas.offset().left,position.pageY-canvas.offset().top);
             e.preventDefault();
         })
         .on(clickEvent_move,function (e) {
             if (drawMode) {
-//                ctx.lineTo(e.changedTouches[0].pageX - canvas.position().left, e.changedTouches[0].pageY - canvas.position().top);
-                ctx.lineTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-                console.log("X:"+e.changedTouches[0].pageX+" / Y:"+e.changedTouches[0].pageY);
+                
+                if(clickEvent_move == 'touchmove'){
+                    position = e.changedTouches[0];
+                }else{
+                    position = e;
+                }
+                
+                
+                ctx.lineTo(position.pageX-canvas.offset().left,position.pageY-canvas.offset().top);
                 ctx.stroke();
+                
+//                console.log("X:"+position.pageX-canvas.offset().left);
+//                console.log("Y:"+position.pageY-canvas.offset().top);
+                
                 e.preventDefault();
             }
         })
         .on(clickEvent_end,function (e) {
             drawMode = false;
+            cPush();
             e.preventDefault();
         });
     
 
-
-    function clearPad() {
+    $('#undo').on('click',function(){
+         if (cStep > 0) {
+             cStep--;
+             var canvasPic = new Image();
+             canvasPic.src = cPushArray[cStep];
+             canvasPic.onload = function () {
+                 ctx.drawImage(canvasPic, 0, 0);
+             }
+         }
+    });
+    $('#redo').on('click',function(){
+         if (cStep < cPushArray.length - 1) {
+             cStep++;
+             var canvasPic = new Image();
+             canvasPic.src = cPushArray[cStep];
+             canvasPic.onload = function () {
+                 ctx.drawImage(canvasPic, 0, 0);
+             }
+         }
+    });
+    $('#clear').on('click',function(){
         ctx.clearRect(0, 0, canvas.width, canvas.height); // 將canvas內清除成透明png。
         ctx.fillStyle = "white"; //整個canvas塗上白色背景避免PNG的透明底色效果。
         ctx.fillRect(0, 0, canvas.width(), canvas.height()); //Canvas 2D API ，繪畫出矩形的方法。
-    }
+    });
 
+    
+    
+    
+    
+    
+    
     
     
     
