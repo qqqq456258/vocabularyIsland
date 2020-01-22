@@ -1,10 +1,109 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vocabulary Island - Visualizing</title>
+    <title>Vocabulary Island - Visualize</title>
+    <link rel="stylesheet" type="text/css" href="css/visualizing.css">
+    <script src="plugin/development_jQuery_3.4.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="plugin/Recorderjs-master/dist/recorder.js"></script>
+    <script src="js/visualizing.js"></script>
 </head>
 <body>
+   
+    <div id="content">
     
+<!--       學習進度條-->
+        <div id="progress">
+            <div id="progress_bar"></div>
+        </div>
+    
+<!--       標題-->
+        <div class='title'>
+            <span id="title_en">Pick up a your Favorite Word</span><br>
+        </div>
+        
+<!--       建立自己的 flashcard 區塊-->
+        <div id="user_zone">
+<!--            「挑選單字」- 步驟-->
+            <div id="word_pick_0" class="word"></div>
+            <div id="word_pick_1" class="word"></div><br>
+            <div id="word_pick_2" class="word"></div>
+            <div id="word_pick_3" class="word"></div>
+            
+<!--            「挑選圖片」- 步驟-->
+            <div id="picture_pick_0" class="picture"></div>
+            <div id="picture_pick_1" class="picture"></div>
+            <div id="picture_pick_2" class="picture"></div>
+            
+<!--            「畫圖」- 步驟-->
+            <div id="palette"></div>
+            <div id="line"></div>  
+            <div id="canvas_position">
+                <canvas id="canvas_draw" width='350' height='350'></canvas>
+            </div>
+<!--
+            <div id='btn_zone'>
+                <button >image</button>
+                <button >redo</button>
+                <button >clean</button>
+            </div>
+-->
+        </div>
+
+
+<!--
+        <div id="vocabulary">
+            <p id="word"></p>
+            <p id="info">
+                <span id="part_speech"></span>
+                <span id="definition"></span>
+            </p>
+            <input type="image" id="sound" src="material/speaker.png">
+            <br>
+            <input type="image" id="record" src="material/record_1.png">
+            <input type="image" id="stop" src="material/stop_0.png" disabled>
+        </div>
+-->
+            
+<!--       錄音存放處-->
+<!--
+        <div id="voice_zone">
+           <div id="voice_zone_1">
+               <input type="image" id="voice_1" class="voice" src="material/voice1.png">
+           </div>
+           <div id="voice_zone_2">
+               <input type="image" id="voice_2" class="voice" src="material/voice2.png">
+           </div>
+        </div>
+-->
+       
+<!--       「練習拼字的部分」-->
+<!--
+       <div id="spell_zone">
+           <input type="image" src="material/tips.png" id="hint">
+           <input type="image" src="material/speaker.png" id="spell_sound"><br><br>
+           <span id="spell_title"></span><br>
+           <input type="text" id="answer" autocomplete="off"><br><br>
+           <span id="tip"></span>
+        </div>
+-->
+       
+<!--       「下一步」的按鈕-->
+        <div id="click_zone">
+<!--            <input type="image" id="clear" src="material/clear.png">-->
+            <input type="image" id="next_btn" src="material/next_step.png">
+        </div>
+       
+<!--       正確及錯誤的音效    -->
+       <audio src="material/correct.mp3" id="sound_correct"></audio>
+       <audio src="material/wrong.mp3" id="sound_wrong"></audio>
+       
+<!--       存放錄音的區塊-->
+<!--        <il id='recordingslist'></il>-->
+       
+       
+    </div>
 </body>
 </html>

@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body,a,img{
+    padding:0;
+    margin:0;
+}
+
+body {
+    margin: 0px auto;
+    background-color: #FFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+#content {
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+    background-image: url('../material/wood.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+#progress {
+    margin: 0px auto;
+    padding: 0px;
+    color: black;
+    font-weight: 600;
+    font-size: 23px;
+    background-color: #DDD;
+    height:24px;
+    width:100%;
+}
+
+#progress_bar {
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    background-color: #5B9EFF;
+    height:24px;
+    width:0%;
+    transition: 1.5s;
+}
+.title{
+    padding-top: 60px;
+}
+
+#title_en {
+    color: #9c453d;
+    font-size: 60px;
+    font-weight: 700;
+    text-shadow: #ffe5e5 0.1em 0.1em 0.2em;
+}
+
+.word {
+    display: none;
+}
+
+.picture {
+    display: none;
+}
+
+#user_zone {
+    position: relative;
+    background-color: #eff2f7;
+    max-width: 83%;
+    margin: 20px auto;
+    height: 400px;
+    margin-top: 50px;
+    border-radius: 20px;
+    border: 8px solid gray;
+    display: block;
+    cursor: pointer;
+}
+
+#click_zone {
+    margin: 0 auto;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#done,
+#next_btn {
+    width: 125px;
+    cursor: pointer;
+}
+
+/*色盤*/
+#palette {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: aquamarine;
+    margin: auto;
+    padding: 10px;
+}
+.option {
+    width: 20px;
+    height: 20px;
+    border: 4px solid white;
+    display:inline-flex;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    align-items:center;
+    justify-content:space-around;
+}
+.active {
+    border: 4px solid grey;
+}
+.active:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+/*筆觸寬度*/
+#line {
+    position: absolute;
+    top: 230px;
+    left: 10px;
+    background-color: darkgrey;
+    margin: auto;
+    padding: 10px;
+}
+.lw {
+    width: 20px;
+    height: 20px;
+    border: 4px solid white;
+    display:inline-flex;
+    padding: 10px;
+    border-radius: 5px;
+    align-items:center;
+    justify-content:space-around;
+}
+
+
+#canvas_draw {
+    position: absolute;
+    top: 24px;
+    right: 25px;
+    border: 2px solid gray;
+    cursor: pointer;
+    margin: auto;
+}
+
+
+#btn_zone{
+    background-color: yellowgreen;
+    margin: auto;
+    
+}
