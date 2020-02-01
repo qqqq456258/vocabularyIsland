@@ -2,6 +2,7 @@ $(function () {
     var word = ["cat", "hamster", "guinea pig", "rabbit"]; // 宣告陣列放入 4 個單字。
     var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"]; // 宣告陣列放入 4 個單字詞性。
     var definition = ["貓", "倉鼠", "天竺鼠", "兔子"]; // 宣告陣列放入 4 個單字翻譯。
+    var file_word = []; // 宣告陣列放入 4 個去除空格的單字，來命名檔案名稱。
     let hint = ""; // 存放去除字母以外的單字提示。
     var order = []; // 宣告陣列放入排序。
     var sound = []; // 宣告陣列放入 4 個語音檔。
@@ -150,10 +151,10 @@ $(function () {
                             $('#voice_zone_' + i).css('border', '5px dashed gray');
                             $("#voice_" + i).attr('disabled', 'disabled'); //將錄完音的結果鎖起來，不給播放。
                             $('#audio_' + vocabulary + '_' + i).remove();
-                            $("#voice_" + i).css('visibility', 'hidden'); //錄完音的結果出現。
+                            $("#voice_" + i).css('visibility', 'hidden'); //錄完音的結果隱藏。
                         }
                         $('#stop,#record').css('display', 'inline-block');
-                        $('#vocabulary').css('height', '350px');
+                        $('#vocabulary').css('height', '320px');
                         $('#vocabulary').css('marginTop', '90px');
                         $('#click_zone').css('display', 'none');
                         move = move - 2;
@@ -275,15 +276,8 @@ $(function () {
         
         var timeout_0 = setTimeout(function () {
             $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
-        }, 1000);
+        }, 500);
 
-        var timeout_1 = setTimeout(function () {
-            $('#sound_' + vocabulary).get(0).play(); /*播放第二次語音*/
-        }, 2600);
-
-        var timeout_2 = setTimeout(function () {
-            $('#sound_' + vocabulary).get(0).play(); /*播放第三次語音*/
-        }, 4200);
         
     }
     /*初始化*/
@@ -345,9 +339,9 @@ $(function () {
     }
     /*進度條*/
     function progress() {
-        let total_move = 20;
+        let total_move = 28;
         move++;
-        percentage = Math.floor(move / 20 * 100);
+        percentage = Math.floor(move / 28 * 100);
         if (percentage < 25) {
             $('#progress_bar').css('backgroundColor', '#5C9DFF');
         } else if (percentage >= 25 && percentage < 50) {
@@ -371,11 +365,12 @@ $(function () {
         console.log("round:" + round);
 
         /*放入這次學習的單字。*/
-        $("#title_en").text("Listen to the pronunciation");
+        $("#title_en").text("Listen three times pronunciation");
         $("#word").text(word[order[i]]);
+        $('#img').attr('src','word_image/'+file_word[order[i]]+'_'+Math.floor(Math.random() * 3)+'.jpg');
         $("#part_speech").text(partOfSpeech[order[i]]);
         $("#definition").text(definition[order[i]]);
-
+        
         /*加強空白寬度的提示。*/
         var regex = /\s/;
         let vocabulary = $("#word").text();
@@ -400,18 +395,11 @@ $(function () {
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
                 console.log(json);
 
-                /*替換空格的提示。*/
-                var regex = /\s/;
-                let vocabulary = $("#word").text();
-                vocabulary = vocabulary.replace(regex, '');
-
                 sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-                sound[order[i]].setAttribute("id", "sound_" + vocabulary); //問題點
+                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]); //問題點
                 sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
                 sound[order[i]].setAttribute("preload", "auto");
                 document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
-
-
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("XMLHttpRequest:" + XMLHttpRequest);
@@ -420,34 +408,56 @@ $(function () {
                 console.log('error, use the plan B.');
                 sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
                 
-                sound[order[i]].setAttribute("id", "sound_" + vocabulary);
-                sound[order[i]].setAttribute("src", "word_sound/" + vocabulary + ".mp3");
+                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
+                sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
                 sound[order[i]].setAttribute("preload", "auto");
                 document.body.appendChild(sound[order[i]]);
             }
         });
     }
     
+dialog(0);
+order = getRandomArray();
 
-    dialog(0);
-    order = getRandomArray();
-    prepare(round);
+for (let k = 0; k < 4; k++) {
+    /*去除空格。*/
+    var regex = /\s/;
+    file_word[k] = word[k].replace(regex, '');
+}
+    
+prepare(round);
     
     /*練習發音時，點擊聽單字發音*/
-    $('#sound,#spell_sound').on('click', function (event) {
+    $('#sound').on('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
         /*播放語音*/
         play_sound();
         if (listen_num == 0) { //僅有第一次點擊才變化。
+            $('#image_zone').css('display','flex');
+            progress();
+            listen_num++;
+            
+        }else if(listen_num == 1){
+            $('#info_zone').css('display','flex');
+            progress();
+            listen_num++;
+            
+        }else{
             $("#title_en").text("Record your voice ( 0 / 2 )"); //變更標題。
-            $('#vocabulary').css('height', '350px'); //單字區塊變長。
+            $('#vocabulary').css('height', '320px'); //單字區塊變長。
             $('#record,#stop').css('display', 'inline-block'); //將錄音與暫停按鈕並排。
             $('#voice_zone').css('display', 'block'); //錄音的結果出現。
             listen_num++;
             progress();
         }
-
+    });
+    
+    $('#spell_sound').on('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        /*播放語音*/
+        play_sound();
     });
 
 
@@ -462,7 +472,6 @@ $(function () {
         $('#stop').removeAttr('disabled'); //暫停按鈕開啟。
         record_num++; //錄音按鈕點擊次數。
     });
-
 
     /*  錄音結束按鈕的顯示與隱藏、效果。 */
     $('#stop').on('click', function () {
@@ -531,7 +540,9 @@ $(function () {
             dialog(4);
             $('#clear').css('display', 'none');
             $('#title_en').text('Spell the word in English'); //變更標題。
-            $('#vocabulary').css('display', 'none'); //單字區塊隱藏。
+            $('#vocabulary').css('display', 'none');    // 單字區塊隱藏。
+            $('#image_zone').css('display', 'none');    // 圖片區塊隱藏。
+            $('#info_zone').css('display', 'none');     // 單字資訊區塊隱藏。
             $("#voice_1,#voice_2,#voice_3").removeAttr('disabled'); //將錄完音的按鈕解鎖。
             $("#voice_1,#voice_2,#voice_3").css('visibility', 'hidden'); //將錄完音的按鈕隱藏。
             $('#voice_zone').css('display', 'none'); //錄音區塊隱藏。

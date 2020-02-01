@@ -41,6 +41,7 @@ body {
     font-weight: 900;
     font-size: 55px;
     margin: 10px;
+    margin-bottom: 20px;
 }
 
 #partOfSpeech {
@@ -54,7 +55,7 @@ body {
 
 #sound{
     position: absolute;
-    top: 180px;
+    top: 220px;
     right: 481px;
     width: 60px;
     z-index: 1;

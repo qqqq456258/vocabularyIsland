@@ -20,22 +20,29 @@
     
 <!--       標題-->
         <div class='title'>
-            <span id="title_en">Listen to the pronunciation</span><br>
+            <span id="title_en">Listen three times pronunciation</span><br>
         </div>
         
 <!--       單字相關資訊及錄音按鈕-->
         <div id="vocabulary">
             <p id="word"></p>
-            <p id="info">
-                <span id="part_speech"></span>
-                <span id="definition"></span>
-            </p>
             <input type="image" id="sound" src="material/speaker.png">
             <br>
             <input type="image" id="record" src="material/record_1.png">
             <input type="image" id="stop" src="material/stop_0.png" disabled>
         </div>
-            
+           
+<!--       單字的圖像區塊-->
+        <div id="image_zone">
+            <img src="" alt="" id='img'>
+        </div>  
+        
+<!--       單字的資訊區塊-->
+        <div id="info_zone">
+            <p id="part_speech"></p>
+            <p id="definition"></p>
+        </div>  
+        
 <!--       錄音存放處-->
         <div id="voice_zone">
            <div id="voice_zone_1">

@@ -21,10 +21,7 @@ body {
     text-align: center;
     width: 1024px;
     height: 768px;
-    background-image: url('../material/wood.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-color: #ffefde;
     cursor: pointer;
 }
 
@@ -43,18 +40,6 @@ body {
     margin: 10px;
 }
 
-#info{
-    color: black;
-    font-weight: 900;
-}
-#partOfSpeech {
-    font-size: 20px;
-    margin: 10px;
-}
-#definition{
-    font-family: 'support';
-    font-size: 30px;
-}
 #standard_sound{
     width: 70px;
     z-index: 1;
@@ -62,6 +47,7 @@ body {
     cursor: pointer;
 }
 #sound{
+    margin: 10px;
     width: 70px;
     z-index: 1;
     height: auto;
@@ -81,32 +67,26 @@ body {
     background-color: white;
     width: 45%;
     margin: 20px auto;
-    height: 250px;
+    height: 200px;
     margin-top: 90px;
     border-radius: 20px;
     border: 5px solid gray;
     display: block;
 }
 
-#part_speech {
-    color: black;
-    font-weight: 900;
-    font-size: 30px;
-    margin: 10px;
-}
 
 #record {
-    width:170px;
-    margin-top:30px;
-    margin-right:10px;
+    width:60px;
+    margin-top:50px;
+    margin-right:20px;
     display: none;
     cursor: pointer;
 }
 
 #stop {
-    width:170px;
-    margin-top:30px;
-    margin-left:30px;
+    width:60px;
+    margin-top:50px;
+    margin-left:40px;
     display: none;
     cursor: pointer;
 }
@@ -265,4 +245,64 @@ body {
     cursor: pointer;
     margin-right: 200px;
     display: inline-block;
+}
+
+
+/*選項容器*/
+#image_zone {
+    position: absolute;
+    top: 255px;
+    left: 50px;
+    width: 180px;
+    height: 174px;
+    border-radius: 20px;
+    border: 3px solid grey;
+    box-shadow:3px 3px 12px black;
+    overflow:hidden;
+    background-color: white;
+    
+    /*以下三個屬性為文字或圖像水平、垂直置中的方法中最沒問題的寫法。*/
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+
+/*圖片限制最大寬度:180px;最大高度:174px*/
+#img {
+    max-width: 180px;
+    max-height: 174px;
+}
+
+
+#info_zone{
+    position: absolute;
+    top: 255px;
+    right: 50px;
+    width: 180px;
+    height: 174px;
+    border-radius: 20px;
+    border: 3px solid grey;
+    box-shadow:3px 3px 12px black;
+    overflow:hidden;
+    background-color: white;
+    
+    /*以下三個屬性為文字或圖像水平、垂直置中的方法中最沒問題的寫法。*/
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+#definition{
+    font-family: 'support';
+    color: black;
+    font-weight: 900;
+    font-size: 30px;
+}
+#part_speech {
+    font-family: 'support';
+    color: black;
+    font-weight: 900;
+    font-size: 30px;
+    margin: 5px;
 }
