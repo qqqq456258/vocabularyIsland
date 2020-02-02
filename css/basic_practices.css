@@ -156,8 +156,9 @@ body {
     width: 45%;
     margin: 20px auto;
     height: 300px;
-    margin-top: 90px;
+    margin-top: 100px;
     border-radius: 20px;
+    padding: 20px;
     border: 5px solid gray;
     display: inline-block;
     position: relative;
@@ -167,9 +168,9 @@ body {
 
 #hint {
     position: absolute;
-    top: -35px;
-    left: -35px;
-    width: 70px;
+    bottom: 15px;
+    left: 220px;
+    width: 60px;
     z-index: 1;
     height: auto;
     cursor: pointer;
@@ -177,9 +178,9 @@ body {
 
 #spell_sound {
     position: absolute;
-    top: -35px;
-    right: -35px;
-    width: 70px;
+    top: -70px;
+    left: 200px;
+    width: 100px;
     z-index: 1;
     height: auto;
     cursor: pointer;
@@ -190,7 +191,6 @@ body {
     color: #ffb100;
     font-size: 38px;
     white-space: pre;
-    border: 1px solid black;
     padding: 5px;
 }
 
