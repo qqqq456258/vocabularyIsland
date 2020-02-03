@@ -52,6 +52,7 @@ body {
     z-index: 1;
     height: auto;
     cursor: pointer;
+    display: none;
 }
 
 #record,#stop,#sound,#next_btn,#clear,#standard_sound:hover{
@@ -169,7 +170,7 @@ body {
 #hint {
     position: absolute;
     bottom: 15px;
-    left: 220px;
+    right: 15px;
     width: 60px;
     z-index: 1;
     height: auto;
@@ -190,20 +191,23 @@ body {
     font-weight: 800;
     color: #ffb100;
     font-size: 38px;
+    font-weight: 700;
     white-space: pre;
     padding: 5px;
 }
 
 #answer {
-    width: 80%;
+    width: 95%;
     height: 50px;
     padding: 5px;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 36px;
     background-color: #FEF4F4;
     margin-top: 30px;
     border: 2px solid #E1E1E1;
     border-radius: 8px;
+    text-align: center;
+    letter-spacing: 9px; /*文字間隔*/
     color: #B27B7B;
     cursor: pointer;
 }

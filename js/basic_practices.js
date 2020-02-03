@@ -107,7 +107,7 @@ $(function () {
             swal.fire({
                     icon: "success",
                     title: "完成",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>挑選練習</b><br>前往下一個訓練 go!!</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>挑選練習</b><br>前往製作自己的字卡吧！！</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,
@@ -116,8 +116,8 @@ $(function () {
                 })
                 .then((result) => {
                     if (result.value) {
-                        console.log("前往下一個訓練，Picking");
-                        location.replace('picking.html');
+                        console.log("前往製作自己的字卡吧！！");
+                        location.replace('visualizing.html');
                     }
                 });
         } else if (situation == 6) { // 重新複誦步驟。
@@ -159,7 +159,7 @@ $(function () {
                         $('#click_zone').css('display', 'none');
                         move = move - 2;
                         progress();
-
+                        alert("刪除原先錄音內容，重新進行。");
                         console.log("刪除原先錄音內容，重新進行。");
                     }
                 });
@@ -200,7 +200,7 @@ $(function () {
                                 /*加強空白寬度的提示。*/
                                 var regex = /\s/;
                                 let vocabulary = $("#word").text();
-                                let vocabulary_length = vocabulary.replace(regex, '     ');
+                                let vocabulary_length = vocabulary.replace(regex,'&emsp;');
                                 console.log("vocabulary_length:" + vocabulary_length);
 
                                 /*單字長度的提示。*/
@@ -208,7 +208,7 @@ $(function () {
                                 vocabulary = $("#word").text();
                                 vocabulary_length = vocabulary.replace(regex, ' _ ');
 
-                                $('#spell_title').text(vocabulary_length); //幫助學生拼字。
+                                $('#spell_title').html(vocabulary_length); //幫助學生拼字。
                                 $('#hint').attr('src', 'material/tips_again.png'); //換一個暗示圖形，表示內容變更。
                                 $('#next_btn').attr('src', 'material/done.png');
 
@@ -226,7 +226,7 @@ $(function () {
                             progress();
 
                             if (icon == "success") { // 答對，就進入下一階段。
-                                if (move < 20) {
+                                if (move < 28) {
                                     init_content(); //初始化。
                                     prepare(round); //載入單字。
                                     console.log("答對，下一階段。");
@@ -374,7 +374,7 @@ $(function () {
         /*加強空白寬度的提示。*/
         var regex = /\s/;
         let vocabulary = $("#word").text();
-        hint = vocabulary.replace(regex, '     ');
+        hint = vocabulary.replace(regex,'&emsp;');
 
         /*去除母音字母的提示。*/
         regex = /[^aeiouAEIOU\s]/gi;
@@ -400,6 +400,7 @@ $(function () {
                 sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
                 sound[order[i]].setAttribute("preload", "auto");
                 document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
+                $('#sound').css('display','inline-block');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("XMLHttpRequest:" + XMLHttpRequest);
@@ -412,20 +413,21 @@ $(function () {
                 sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
                 sound[order[i]].setAttribute("preload", "auto");
                 document.body.appendChild(sound[order[i]]);
+                $('#sound').css('display','inline-block');
             }
         });
     }
     
-dialog(0);
-order = getRandomArray();
 
+order = getRandomArray();
 for (let k = 0; k < 4; k++) {
     /*去除空格。*/
     var regex = /\s/;
     file_word[k] = word[k].replace(regex, '');
 }
-    
 prepare(round);
+dialog(0);
+
     
     /*練習發音時，點擊聽單字發音*/
     $('#sound').on('click', function (event) {
@@ -548,7 +550,7 @@ prepare(round);
             $('#voice_zone').css('display', 'none'); //錄音區塊隱藏。
 
 
-            $('#spell_title').text(hint); //幫助學生拼字。
+            $('#spell_title').html(hint); //幫助學生拼字。
 
 
             $('#spell_zone').css('display', 'block'); //拼字區塊出現。
