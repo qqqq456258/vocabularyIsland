@@ -61,7 +61,7 @@ body {
 }
 
 .title {
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 #vocabulary {
@@ -207,7 +207,7 @@ body {
     border: 2px solid #E1E1E1;
     border-radius: 8px;
     text-align: center;
-    letter-spacing: 9px; /*文字間隔*/
+    letter-spacing: 8px; /*文字間隔*/
     color: #B27B7B;
     cursor: pointer;
 }

@@ -159,7 +159,6 @@ $(function () {
                         $('#click_zone').css('display', 'none');
                         move = move - 2;
                         progress();
-                        alert("刪除原先錄音內容，重新進行。");
                         console.log("刪除原先錄音內容，重新進行。");
                     }
                 });
@@ -200,7 +199,7 @@ $(function () {
                                 /*加強空白寬度的提示。*/
                                 var regex = /\s/;
                                 let vocabulary = $("#word").text();
-                                let vocabulary_length = vocabulary.replace(regex,'&emsp;');
+                                let vocabulary_length = vocabulary.replace(regex,'  ');
                                 console.log("vocabulary_length:" + vocabulary_length);
 
                                 /*單字長度的提示。*/
@@ -208,7 +207,7 @@ $(function () {
                                 vocabulary = $("#word").text();
                                 vocabulary_length = vocabulary.replace(regex, ' _ ');
 
-                                $('#spell_title').html(vocabulary_length); //幫助學生拼字。
+                                $('#spell_title').text(vocabulary_length); //幫助學生拼字。
                                 $('#hint').attr('src', 'material/tips_again.png'); //換一個暗示圖形，表示內容變更。
                                 $('#next_btn').attr('src', 'material/done.png');
 
@@ -295,7 +294,8 @@ $(function () {
         $('#spell_zone').css('display', 'none');
         $('#clear').css('display', 'inline-block');
         $('#click_zone').css('display', 'none');
-
+        
+        $('#sound').css('display','none');
         $('#vocabulary').css('marginTop', '90px');
         $('#vocabulary').css('display', 'block');
         $('#record,#stop').css('display', 'none');
@@ -374,7 +374,7 @@ $(function () {
         /*加強空白寬度的提示。*/
         var regex = /\s/;
         let vocabulary = $("#word").text();
-        hint = vocabulary.replace(regex,'&emsp;');
+        hint = vocabulary.replace(regex,'  ');
 
         /*去除母音字母的提示。*/
         regex = /[^aeiouAEIOU\s]/gi;
@@ -445,13 +445,15 @@ dialog(0);
             progress();
             listen_num++;
             
-        }else{
+        }else if(listen_num == 2){
             $("#title_en").text("Record your voice ( 0 / 2 )"); //變更標題。
             $('#vocabulary').css('height', '320px'); //單字區塊變長。
             $('#record,#stop').css('display', 'inline-block'); //將錄音與暫停按鈕並排。
             $('#voice_zone').css('display', 'block'); //錄音的結果出現。
-            listen_num++;
             progress();
+            listen_num++;
+        }else{
+            listen_num++;
         }
     });
     
@@ -460,6 +462,7 @@ dialog(0);
         event.stopPropagation();
         /*播放語音*/
         play_sound();
+        listen_num++;
     });
 
 
@@ -512,6 +515,7 @@ dialog(0);
 
         choose_audio = 'audio_' + vocabulary + '_' + audio_num[1]; // 選擇錄音的對象。
         console.log('Play - #' + choose_audio);
+        alert('Play - #' + choose_audio);
         $('#' + choose_audio).get(0).play();
         for (let i = 1; i < 3; i++) {
             $('#voice_zone_' + i).css('border', '5px dashed gray');
@@ -550,7 +554,7 @@ dialog(0);
             $('#voice_zone').css('display', 'none'); //錄音區塊隱藏。
 
 
-            $('#spell_title').html(hint); //幫助學生拼字。
+            $('#spell_title').text(hint); //幫助學生拼字。
 
 
             $('#spell_zone').css('display', 'block'); //拼字區塊出現。

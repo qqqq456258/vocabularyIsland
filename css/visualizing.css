@@ -21,10 +21,7 @@ body {
     text-align: center;
     width: 1024px;
     height: 768px;
-    background-image: url('../material/wood.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-color: #ffefde;
     cursor: pointer;
 }
 
@@ -49,7 +46,7 @@ body {
     transition: 1.5s;
 }
 .title{
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 #title_en {
