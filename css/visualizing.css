@@ -57,12 +57,24 @@ body {
 }
 
 .word {
-    display: none;
+    border: 5px solid grey;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 70px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 60px;
+    line-height:60px;
+    width: 300px;
+    font-size: 40px;
+    font-weight: 800;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    box-shadow:3px 3px 12px black;
 }
 
-.picture {
-    display: none;
-}
 
 #user_zone {
     position: relative;
@@ -97,6 +109,7 @@ body {
     background-color: #eff2f7;
     margin: auto;
     padding: 10px;
+    display: none;
 }
 .option {
     width: 20px;
@@ -125,6 +138,7 @@ body {
     background-color: #eff2f7;
     margin: auto;
     padding: 10px;
+    display: none;
 }
 .lw {
     width: 20px;
@@ -142,6 +156,11 @@ body {
     position: absolute;
     top: 24px;
     right: 25px;
+    background-image: url();
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-position: center;
+    background-color: white;
     border: 2px solid gray;
     cursor: pointer;
     margin: auto;
@@ -154,6 +173,7 @@ body {
     left: 320px;
     background-color: #eff2f7;
     margin: auto;
+    display: none;
 }
 #undo,#redo,#clear {
     font-size: 25px;
@@ -162,4 +182,46 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#canvas_position {
+    display: none;
+}
+
+
+.picture {
+    width: 214px;
+    height: 214px;
+    border-radius: 20px;
+    border: 3px solid grey;
+    box-shadow:3px 3px 10px black;
+    overflow:hidden;
+    background-color: white;
+    
+    /*以下三個屬性為文字或圖像水平、垂直置中的方法中最沒問題的寫法。*/
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.image{
+    max-width: 214px;
+    max-height: 214px;
+}
+
+#picture_pick_0 {
+    position: absolute;
+    top: 90px;
+    left: 60px;
+}
+#picture_pick_1 {
+    position: absolute;
+    top: 90px;
+    left: 317px;
+}
+#picture_pick_2 {
+    position: absolute;
+    top: 90px;
+    right: 60px;
+    
 }
