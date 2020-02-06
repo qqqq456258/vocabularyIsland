@@ -84,7 +84,7 @@ body {
     height: 400px;
     margin-top: 50px;
     border-radius: 20px;
-    border: 8px solid gray;
+    border: 8px solid #eff2f7;
     display: block;
     cursor: pointer;
 }
@@ -102,7 +102,7 @@ body {
 }
 
 /*色盤*/
-#palette {
+#palette{
     position: absolute;
     top: 10px;
     left: 10px;
@@ -111,7 +111,11 @@ body {
     padding: 10px;
     display: none;
 }
-.option {
+#palette_background,#palette_border{
+    margin: auto;
+    padding: 5px;
+}
+.option{
     width: 20px;
     height: 20px;
     border: 4px solid white;
@@ -122,8 +126,19 @@ body {
     align-items:center;
     justify-content:space-around;
 }
+.option_bg,.option_br{
+    width: 10px;
+    height: 10px;
+    border: 3px solid white;
+    display:inline-flex;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 2px;
+    align-items:center;
+    justify-content:space-around;
+}
 .active {
-    border: 4px solid grey;
+    border: 3px solid grey;
 }
 .active:hover {
     transform: scale(1.1);
@@ -156,11 +171,6 @@ body {
     position: absolute;
     top: 24px;
     right: 25px;
-    background-image: url();
-    background-repeat: no-repeat;
-    background-size:contain;
-    background-position: center;
-    background-color: white;
     border: 2px solid gray;
     cursor: pointer;
     margin: auto;
@@ -224,4 +234,86 @@ body {
     top: 90px;
     right: 60px;
     
+}
+
+#card {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    background-color: white;
+    border: 8px solid #b7b7b7;
+    border-radius: 20px;
+    width: 270px;
+    display: none;
+}
+
+#vocabulary {
+    font-size: 40px;
+    font-weight:bolder;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#part_speech {
+    font-family: 'support';
+    color: black;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 10px;
+}
+
+#definition {
+    font-family: 'support';
+    color: black;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 10px;
+}
+
+#normal_sound {
+    width: 50px;
+    z-index: 1;
+    height: auto;
+    cursor: pointer;
+    margin: 8px;
+    margin-right: 15px;
+}
+
+#self_sound {
+    width: 50px;
+    z-index: 1;
+    height: auto;
+    cursor: pointer;
+    margin: 8px;
+    margin-left: 15px;
+}
+
+#background_zone {
+    position: absolute;
+    top: 60px;
+    left:380px;
+    background-color:#b0e3ff;
+    width: 200px;
+    border: 8px dashed #3085d6;
+    font-size: 30px;
+    font-weight: 900;
+    display: none;
+}
+#border_zone{
+    position: absolute;
+    top: 60px;
+    left:610px;
+    background-color:#ffe2e2;
+    width: 200px;
+    border: 8px dashed #ffb7b7;
+    font-size: 30px;
+    font-weight: 900;
+    display: none;
+}
+
+#picture {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
 }

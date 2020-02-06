@@ -10,24 +10,63 @@ $(function () {
     let focus_option = ""; //目前所選擇的選項。
     let pick_image = "";
     var canvas = $('#canvas_draw');
-    var ctx = canvas.get(0).getContext("2d");
     var cPushArray = new Array();
     var cStep = -1;
+    var ctx = canvas.get(0).getContext("2d");
     var colors = "red;#ab0000;#da7f01;yellow;#7fccab;darkgreen;#61b9ff;#0059a0;#9155fb;#b7b7b7;white;black".split(';');
+    var colors_bg = "#ffc5c5;#ffc8a4;#fdf7c3;#c3fdd1;#7fccab;#9dfff8;#97d1ff;#d7edff;#d5d3ff;#b7b7b7;#efefef;white".split(';');
+    var colors_br = "#e66262;#ab0000;#da7f01;#ffc800;#7fccab;darkgreen;#61b9ff;#0059a0;#b79aff;black;#b7b7b7;white".split(';');
     var sb = [];
+    var color_bg = [];
+    var color_br = [];
     
 
     function cPush() {
-        console.log('cStep:'+cStep);
-        console.log('cPushArray.length:'+cPushArray.length);
         cStep++;
          if (cStep < cPushArray.length) {
              cPushArray.length = cStep;
          }
          cPushArray.push(canvas.get(0).toDataURL());
+         console.log('cStep:'+cStep);
+         console.log('cPushArray.length:'+cPushArray.length);
      }
     
+    /*字卡背景的色盤*/
+    $.each(colors_bg, function (i, v) {
+        if(i%4 == 0 == i>0){
+            color_bg.push("<br>");
+        }
+        color_bg.push("<div class='option_bg' style='background-color:" + v + "'></div>");
+    });
+    $("#palette_background").html(color_bg.join("\n"));
+    /*字卡邊框的色盤*/
+    $.each(colors_br, function (i, v) {
+        if(i%4 == 0 == i>0){
+            color_br.push("<br>");
+        }
+        color_br.push("<div class='option_br' style='background-color:" + v + "'></div>");
+    });
+    $("#palette_border").html(color_br.join("\n"));
     
+    
+    /*字卡背景的事件*/
+    $("#palette_background .option_bg").on('click',function(){
+        $("#palette_background .option_bg").removeClass("active");
+        $(this).addClass("active");
+        $('#card').css('backgroundColor',this.style.backgroundColor);
+    });
+    /*字卡邊框的事件*/
+    $("#palette_border .option_br").on('click',function(){
+        $("#palette_border .option_br").removeClass("active");
+        $(this).addClass("active");
+        $('#card').css('border','8px solid '+this.style.backgroundColor);
+    });
+
+    
+
+    
+    
+    /*繪畫用的色盤*/
     $.each(colors, function (i, v) {
         if(i%4 == 0 == i>0){
             sb.push("<br>");
@@ -67,12 +106,7 @@ $(function () {
 
 
     
-    //ctx 屬性。
-    ctx.fillStyle = "white"; //整個canvas塗上白色背景避免PNG的透明底色效果
-    ctx.fillRect(0, 0, canvas.width(), canvas.height()); //Canvas 2D API 绘制填充矩形的方法。
-    ctx.lineCap = "round"; //圓滑軌跡。
     
-    cPush();
     
     /*辨別是手指或是滑鼠，而決定何種事件。*/
     const clickEvent_start = (function () {
@@ -144,6 +178,7 @@ $(function () {
              var canvasPic = new Image();
              canvasPic.src = cPushArray[cStep];
              canvasPic.onload = function () {
+                 console.log('載入成功,undo');
                  ctx.drawImage(canvasPic, 0, 0);
              }
          }
@@ -154,6 +189,7 @@ $(function () {
              var canvasPic = new Image();
              canvasPic.src = cPushArray[cStep];
              canvasPic.onload = function () {
+                 console.log('載入成功,redo');
                  ctx.drawImage(canvasPic, 0, 0);
              }
          }
@@ -179,7 +215,7 @@ $(function () {
         if (situation == 0) { //開始前說明。
             swal.fire({
                     icon: "info",
-                    title: "Picking",
+                    title: "Make Card",
                     html: "<p style='font-family:Microsoft JhengHei;font-size:22px;padding-left: 10px;'>挑選一個單字做成字卡吧！</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
@@ -196,28 +232,28 @@ $(function () {
                     }
                 });
             
-        } else if (situation == 1) { // 答對。
+        } else if (situation == 1) { // 答對情況。
             
             $('#sound_correct').get(0).play();
             
             
-            if (move == 0) {
+            if (move == 0) { // 第一步驟→第二步驟。
                 $('#title_en').hide(1500, function () {
                     /* 內容變化。*/
                     change_content(0);
                 });
-            } else if (move == 1) {
+            } else if (move == 1) { // 第二步驟→第三步驟。
                 $('#title_en').hide(1500, function () {
                     /* 內容變化。*/
                     change_content(1);
                 });
-            } else if (move == 2){
+            } else if (move == 2){ // 第三步驟→第四步驟。
                 $('#title_en').hide(1500, function () {
                     /* 內容變化。*/
                     change_content(2);
                 });
-            }else{
-                dialog(4);
+            }else{ // 完成 字卡製作。
+                dialog(3);
             }
             
         } else if (situation == 2) { // 沒選擇選項。
@@ -235,11 +271,14 @@ $(function () {
                     confirmButtonText: "O K"
                 });
             
-        }else { // 完成挑選練習。
+        }else { // 完成字卡製作。
+            $('#sound_correct').get(0).play();
+            progress();
+            
             swal.fire({
                     icon: "success",
                     title: "完成",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>挑選練習</b><br>前往下一個訓練 go!!</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>恭喜完成<b>字卡製作</b>!!</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,
@@ -326,7 +365,7 @@ $(function () {
     function change_content(move){
         focus_option = "";
         
-        if( move == 0 ){//第一階段結束。
+        if( move == 0 ){//第一步驟結束。
             $('#title_en').text('Pick up a your Favorite Picture');
             $('#next_btn').hide(1000);
             $('.word').hide(1000);
@@ -336,19 +375,80 @@ $(function () {
             $('#img_2').attr('src','word_image/'+$('#'+choose_target).data('target')+'_2.jpg');
             
             $('#user_zone').hide(1500,function(){
+                //進入第二步驟。
                 $('.picture').css('display','flex');
                 $('#user_zone').show(1000);
                 $('#title_en').show(1000);
                 $('#next_btn').show(1500);
             });
             
-        }else if( move == 1 ){//第二階段結束。
-            $('#title_en').text('Draw your style');
+        }else if( move == 1 ){//第二步驟結束。
+            $('#title_en').text('Draw your Style');
             $('#next_btn').hide(1000);
             $('.picture').hide(1000);
-            $('#canvas_draw').css('backgroundImage','url('+$('#'+pick_image).attr('src')+')');
+            console.log('你挑的圖片：'+pick_image);
+            
+            /*宣告所選擇的圖片。*/
+            var img = document.getElementById(pick_image);
+            
+            /*ctx 屬性設定。*/
+            ctx.fillStyle = "white"; //整個canvas塗上白色背景避免PNG的透明底色效果
+            ctx.fillRect(0, 0, canvas.width(), canvas.height()); //Canvas 2D API 绘制填充矩形的方法。
+            ctx.lineCap = "round"; //圓滑軌跡。
+            
+            /*宣告所需的變數。*/
+            const img_w = img.naturalWidth; // drawImage 會抓原始圖檔大小，故用 DOM 抓圖片原始寬度。
+            const img_h = img.naturalHeight; // drawImage 會抓原始圖檔大小，故用 DOM 抓圖片原始高度。
+            let dx = 0; // drawImage 將圖片放上 canvas 的起始點座標X。
+            let dy = 0; // drawImage 將圖片放上 canvas 的起始點座標Y。
+            let dWidth = 0; // drawImage 將圖片放上 canvas 的圖片寬度。
+            let dHeight = 0; // drawImage 將圖片放上 canvas 的圖片高度。
+            
+            /*判斷原始圖片的長寬哪個值較大，再依比例去變化。*/
+            if(img_w > img_h){
+                dHeight = (img_h /img_w)*350;
+                dWidth = 350;
+                dx = 0;
+                dy = 175 - dHeight/2;
+            }else if(img_w == img_h){
+                dHeight = 350;
+                dWidth = 350;
+            }else{
+                dWidth = (img_w /img_h)*350;
+                dHeight = 350;
+                dx = 175 - dWidth/2;
+                dy = 0;
+            }
+            
+            /*先在 canvas 上畫出圖形。*/
+            ctx.drawImage(img,dx,dy,dWidth,dHeight);
+            
+            /*
+                將背景從透明轉變成白色。
+                解決方案一:將透明的pixel設成白色，因為png圖片的背景都是透明的,所以我們可以尋找透明的pixel,然後將其全部設成白色。
+                canvas 寬和高皆為 350 px;
+            */
+            var imageData = ctx.getImageData(0, 0, 350, 350);
+            for (var i = 0; i < imageData.data.length; i += 4) {
+                // 當該像素是透明的,則設置成白色
+                if (imageData.data[i + 3] == 0) { // 檢查 A 值。
+                    imageData.data[i + 0] = 255; // R
+                    imageData.data[i + 1] = 255; // G
+                    imageData.data[i + 2] = 255; // B
+                    imageData.data[i + 3] = 255; // A(0-255; 0是透明的，255是完全可見的)
+                }
+            }
+            /* putImageData 函式，能將一個 ImageData 繪製到 canvas 上 */
+            ctx.putImageData(imageData, 0, 0);
+            
+            /* 將完成的canvas 記錄下來，以方便使用undo / redo */
+            cPush();
+            
+            
+            
             
             $('#user_zone').hide(1500,function(){
+                //進入第三步驟。
                 $('#user_zone').show(1000);
                 $('#title_en').show(1000);
                 $('#palette').show(1000);
@@ -357,18 +457,40 @@ $(function () {
                 $('#btn_zone').show(1000);
                 $('#next_btn').show(1500);
             });
-        }else if( move == 2){//第三階段結束。
-            console.log("內容還沒弄。");
-//            $('#title_en').text('Create your Style');
-//            $('#next_btn').hide(1000);
+        }else if( move == 2){//第三步驟結束。
+            $('#title_en').text('Create your Style');
+            $('#picture').attr('src',($('#canvas_draw')[0]).toDataURL('image/jpeg'));
+            $('#palette').hide(1000);
+            $('#line').hide(1000);
+            $('#canvas_position').hide(1000);
+            $('#btn_zone').hide(1000);
+            $('#next_btn').hide(1000);
+            $('#next_btn').attr('src','material/OK.png');
+            
+            $('#user_zone').hide(1500,function(){
+                //進入第四步驟。
+                $('#user_zone').show(1000);
+                $('#title_en').show(1000);
+                $('#card').show(1000);
+                $('#background_zone').show(1000);
+                $('#border_zone').show(1000);
+                $('#next_btn').show(1500);
+            });
         }
         progress();
         
     }
     
+    
+    
+    
 
     prepare();
     dialog(0);
+    
+    
+    
+    
     
     
     
@@ -426,23 +548,11 @@ $(function () {
     $('#next_btn').on('click',function(){
         event.preventDefault();
         event.stopPropagation();
-        if(focus_option == ""){ //沒選擇選項回答。 
-            if(move == 0){ //第一階段
-                dialog(2);
-            }else if(move == 1){ //第二階段
-                dialog(2);
-            }else if(move == 2){ //第三階段
-                dialog(2);
-            }else{
-                dialog(2);
-            }
-        }else{ //回答成功。 
-            if(move == 0){ //第一階段
+        if(focus_option == "" && move<2){ //沒選擇選項回答。 
+            dialog(2);
+        }else{ //回答成功。
+            if(move == 0){ //第一步驟
                 choose_target = focus_option; //放入目標單字。
-                dialog(1);
-            }else if(move == 1){ //第二階段
-                dialog(1);
-            }else if(move == 2){ //第三階段
                 dialog(1);
             }else{
                 dialog(1);

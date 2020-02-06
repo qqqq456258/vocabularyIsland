@@ -187,7 +187,7 @@ $(function () {
                 .then((result) => {
                     if (result.value) {
                         if (step == 3) { // 一開始的初步拼字。
-                            play_sound();
+                            play_sound(3);
                             progress();
                             if (icon == "success") { // 答對，就進入下一階段。
                                 console.log("答對，下一階段。");
@@ -251,7 +251,7 @@ $(function () {
         }
     }
     /*播放語音*/
-    function play_sound() {
+    function play_sound(time) {
         
         /*替換空格的提示。*/
         var regex = /\s/;
@@ -272,10 +272,21 @@ $(function () {
             });
           }
 
-        
-        var timeout_0 = setTimeout(function () {
-            $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
-        }, 500);
+        if(time == 1){
+            var timeout_0 = setTimeout(function () {
+                $('#sound_' + vocabulary).get(0).play(); /*播放一次語音*/
+            }, 300);
+        }else{
+            var timeout_1 = setTimeout(function () {
+                $('#sound_' + vocabulary).get(0).play(); /*播放第一次語音*/
+            }, 300);
+            var timeout_2 = setTimeout(function () {
+                $('#sound_' + vocabulary).get(0).play(); /*播放第二次語音*/
+            }, 1900);
+            var timeout_3 = setTimeout(function () {
+                $('#sound_' + vocabulary).get(0).play(); /*播放第三次語音*/
+            }, 3500);
+        }
 
         
     }
@@ -434,7 +445,7 @@ dialog(0);
         event.preventDefault();
         event.stopPropagation();
         /*播放語音*/
-        play_sound();
+        play_sound(1);
         if (listen_num == 0) { //僅有第一次點擊才變化。
             $('#image_zone').css('display','flex');
             progress();
@@ -461,7 +472,7 @@ dialog(0);
         event.preventDefault();
         event.stopPropagation();
         /*播放語音*/
-        play_sound();
+        play_sound(1);
         listen_num++;
     });
 
@@ -515,7 +526,9 @@ dialog(0);
 
         choose_audio = 'audio_' + vocabulary + '_' + audio_num[1]; // 選擇錄音的對象。
         console.log('Play - #' + choose_audio);
-        alert('Play - #' + choose_audio);
+        
+//        alert('Play - #' + choose_audio);
+        
         $('#' + choose_audio).get(0).play();
         for (let i = 1; i < 3; i++) {
             $('#voice_zone_' + i).css('border', '5px dashed gray');
@@ -560,7 +573,7 @@ dialog(0);
             $('#spell_zone').css('display', 'block'); //拼字區塊出現。
             $('#next_btn').attr('src', 'material/done.png');
             /*播放語音*/
-            play_sound();
+            play_sound(3);
             progress();
 
         } else if (step == 3) {
