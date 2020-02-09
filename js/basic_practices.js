@@ -20,7 +20,7 @@ $(function () {
     var rec = null; //Recorder.js object
     var input = null; //MediaStreamAudioSourceNode we'll be recording
     var AudioContext = window.AudioContext || window.webkitAudioContext;
-    var audioContext = null;//audio context to help us record
+    var audioContext = audioContext || null;//audio context to help us record
     
     
     /*sweetAlert2 的功能。*/
@@ -618,6 +618,7 @@ dialog(0);
 
     function startRecording() {
         console.log("recordButton clicked");
+        alert("recordButton clicked");
         var constraints = {
             audio: true,
             video: false
@@ -625,22 +626,59 @@ dialog(0);
         
         (async () => {
             try {
+                
+                rec = null; //Recorder.js object
+                input = null; //MediaStreamAudioSourceNode we'll be recording
+                
+                console.log("The parameter settings of startRecording function have already initialized.");
+                
                 gumStream = await navigator.mediaDevices.getUserMedia({
                     audio: true,
                     video: false
                 });
                 console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-                audioContext = new AudioContext();
-                audioContext.resume();
-                input = audioContext.createMediaStreamSource(gumStream);
-                rec = new Recorder(input, {
-                    numChannels: 1
-                });
-                rec.record();
-                console.log("Recording started");
+                
+                if (AudioContext) {
+                    // Do whatever you want using the Web Audio API
+                    if(!audioContext){
+                        audioContext = new AudioContext;
+                    }else{
+                        audioContext = audioContext;
+                    }
+                    
+                    alert('audioContext:'+audioContext+' / audioContext.state:'+audioContext.state);
+                    
+//                    audioContext = new AudioContext();
+                    
+                    
+                    if(audioContext.state === 'running') {
+                            input = audioContext.createMediaStreamSource(gumStream);
+                            rec = new Recorder(input, {
+                                numChannels: 1
+                            });
+                            rec.record();
+                            console.log("Recording started");
+                        
+                    }else if(audioContext.state === 'suspended') {
+                        audioContext.resume().then(function() {                    
+                            input = audioContext.createMediaStreamSource(gumStream);
+                            rec = new Recorder(input, {
+                                numChannels: 1
+                            });
+                            rec.record();
+                            console.log("Recording started");
+                        });  
+                    }
+
+                    
+                } else {
+                    alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
+                }
+                
 
             } catch (e) {
                 console.log(e);
+                alert(e);
             }
         })();
         
@@ -648,6 +686,7 @@ dialog(0);
 
     function stopRecording() {
         console.log("stopButton clicked");
+        alert('stopButton clicked');
 
         rec.stop();
 
