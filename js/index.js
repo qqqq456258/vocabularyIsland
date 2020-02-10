@@ -46,7 +46,7 @@ $(function () {
                 console.log("result:"+result);
                 console.log("status:"+status);
                 if(status == 2){
-                    window.location.assign("topic_challenge_pick.html");
+                    window.location.assign("world.html");
                 }
             });
     }

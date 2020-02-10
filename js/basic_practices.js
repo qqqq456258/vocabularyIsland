@@ -228,6 +228,7 @@ $(function () {
                                 if (move < 28) {
                                     init_content(); //初始化。
                                     prepare(round); //載入單字。
+                                    $('#sound').css('display','inline-block');
                                     console.log("答對，下一階段。");
 
                                 } else {
@@ -368,6 +369,54 @@ $(function () {
         console.log("百分比：" + percentage + "%");
         console.log("總共：" + move + "步。");
     }
+    
+    /*載入聲音檔。*/
+    function loading_sound(someNumber) {
+        let i = someNumber;
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/get_data_from_LearningChocolate.php",
+            data: {
+                value: word[order[i]],
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+
+                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]); //問題點
+                sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
+                sound[order[i]].setAttribute("preload", "auto");
+                document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
+                if (i == 0) {
+                    $('#sound').css('display', 'inline-block');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                console.log('error, use the plan B.');
+                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+
+                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
+                sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
+                sound[order[i]].setAttribute("preload", "auto");
+                document.body.appendChild(sound[order[i]]);
+                if (i == 0) {
+                    $('#sound').css('display', 'inline-block');
+                }
+            }
+
+
+               
+        });
+    }
+
+    
     /*四個單字的順序洗牌。*/
     function prepare(round) {
         let i = round;
@@ -391,42 +440,10 @@ $(function () {
         regex = /[^aeiouAEIOU\s]/gi;
         hint = hint.replace(regex, ' _ ');
         console.log("Hint:" + hint);
-
-        /*載入聲音檔。*/
-        $.ajax({
-            type: "get",
-            async: true, //async設定true會變成異步請求。
-            cache: true,
-            url: "php/get_data_from_LearningChocolate.php",
-            data: {
-                value: word[order[i]],
-            },
-            dataType: "json",
-            success: function (json) {
-                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
-                console.log(json);
-
-                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]); //問題點
-                sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
-                sound[order[i]].setAttribute("preload", "auto");
-                document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
-                $('#sound').css('display','inline-block');
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("XMLHttpRequest:" + XMLHttpRequest);
-                console.log("textStatus:" + textStatus);
-                console.log("errorThrown:" + errorThrown);
-                console.log('error, use the plan B.');
-                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-                
-                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
-                sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
-                sound[order[i]].setAttribute("preload", "auto");
-                document.body.appendChild(sound[order[i]]);
-                $('#sound').css('display','inline-block');
-            }
-        });
+        
+        if(i == 0){
+            loading_sound(0);
+        }
     }
     
 
@@ -565,16 +582,17 @@ dialog(0);
             $("#voice_1,#voice_2,#voice_3").removeAttr('disabled'); //將錄完音的按鈕解鎖。
             $("#voice_1,#voice_2,#voice_3").css('visibility', 'hidden'); //將錄完音的按鈕隱藏。
             $('#voice_zone').css('display', 'none'); //錄音區塊隱藏。
-
-
             $('#spell_title').text(hint); //幫助學生拼字。
-
-
             $('#spell_zone').css('display', 'block'); //拼字區塊出現。
             $('#next_btn').attr('src', 'material/done.png');
             /*播放語音*/
             play_sound(3);
             progress();
+            if(round == 0){ // 趁第一次拼字的空檔讀取其他三個的語音檔。
+                for(let i = 1 ; i < 4 ; i++ ){
+                    loading_sound(i);
+                }
+            }
 
         } else if (step == 3) {
             dialog(2020);
@@ -618,7 +636,6 @@ dialog(0);
 
     function startRecording() {
         console.log("recordButton clicked");
-        alert("recordButton clicked");
         var constraints = {
             audio: true,
             video: false
@@ -646,7 +663,6 @@ dialog(0);
                         audioContext = audioContext;
                     }
                     
-                    alert('audioContext:'+audioContext+' / audioContext.state:'+audioContext.state);
                     
 //                    audioContext = new AudioContext();
                     
@@ -686,7 +702,6 @@ dialog(0);
 
     function stopRecording() {
         console.log("stopButton clicked");
-        alert('stopButton clicked');
 
         rec.stop();
 

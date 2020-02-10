@@ -8,6 +8,7 @@ $(function () {
     let move = 0; // 表示總共步驟。
     let choose_target = "";
     let focus_option = ""; //目前所選擇的選項。
+    let ns_sound_target = ""; //所選擇的去除空格單字。
     let pick_image = "";
     var canvas = $('#canvas_draw');
     var cPushArray = new Array();
@@ -324,6 +325,49 @@ $(function () {
             console.log('放第三次語音。');
         }, 4200);
     }
+    
+    /*載入聲音檔。*/
+    function loading_sound(sound_target) {
+        /*去除空格。*/
+        var regex = /\s/;
+        ns_sound_target = sound_target.replace(regex,''); //沒有空格的單字目標。
+        
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/get_data_from_LearningChocolate.php",
+            data: {
+                value: sound_target,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+
+                var voice = document.createElement("audio"); //創建聲音檔元件。
+                voice.setAttribute("id", "sound_" + ns_sound_target);
+                voice.setAttribute("src", json[0].sounds[0].fileName);
+                voice.setAttribute("preload", "auto");
+                document.body.appendChild(voice); //把它添加到頁面上。
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                console.log('error, use the plan B.');
+                var voice = document.createElement("audio"); //創建聲音檔元件。
+
+                voice.setAttribute("id", "sound_" + ns_sound_target);
+                voice.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
+                voice.setAttribute("preload", "auto");
+                document.body.appendChild(voice);
+            }
+
+
+               
+        });
+    }
 
     /*進度條*/
     function progress() {
@@ -386,6 +430,8 @@ $(function () {
             $('#title_en').text('Draw your Style');
             $('#next_btn').hide(1000);
             $('.picture').hide(1000);
+            console.log('choose_target:'+$('#'+choose_target).text());
+            loading_sound($('#'+choose_target).text()); // 載入語音。
             console.log('你挑的圖片：'+pick_image);
             
             /*宣告所選擇的圖片。*/
@@ -491,7 +537,23 @@ $(function () {
     
     
     
-    
+    $('#normal_sound').on('click', function () {
+        // Show loading animation.
+        var playPromise = $('#sound_' + ns_sound_target).get(0).play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                    $('#sound_' + ns_sound_target).get(0).pause();
+                    $('#sound_' + ns_sound_target).get(0).play();
+                
+                })
+                .catch(error => {
+                    console.log(error);
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+        }
+    });
     
     
     /*練習發音時，點擊聽單字發音*/
