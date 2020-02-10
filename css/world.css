@@ -29,3 +29,76 @@ body {
     -o-background-size:contain;
     background-size:contain;
 }
+#information {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    width: 400px;
+    height: 130px;
+    padding: 5px;
+    border: 10px solid #fffce4;
+    border-radius: 20px;
+    background-color: #ffe89d;
+    
+}
+
+#vi_icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 140px;
+    display:inline-block;
+    margin: 0px;
+}
+
+#data {
+    position: absolute;
+    top: 12px;
+    left: 140px;
+    width: 210px;
+    text-align: left;
+    padding-left: 13px;
+    background-color: white;
+    border: 2px solid black;    
+    margin-left: 10px;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 900;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#world {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 170px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#name {
+    font-weight: border;
+    color: maroon;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+#flashcard {
+    font-weight: border;
+    color: red;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+#bag {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 170px;
+    padding: 0px;
+    margin: 0px;
+}
