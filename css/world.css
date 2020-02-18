@@ -102,3 +102,109 @@ body {
     padding: 0px;
     margin: 0px;
 }
+
+.island {
+    width: 350px;
+}
+
+.island-image {
+    width: 200px;
+}
+
+#Travel {
+    position: absolute;
+    top: 450px;
+    left: 7px;
+    width: auto;
+}
+
+#Environments {
+    position: absolute;
+    top: 350px;
+    left: 70px;
+    width: auto;
+}
+
+#People {
+    position: absolute;
+    top: 260px;
+    left: 190px;
+    width: auto;
+}
+
+#Activities {
+    position: absolute;
+    top: 200px;
+    left: 410px;
+    width: auto;
+}
+
+#FoodDrink {
+    position: absolute;
+    top: 260px;
+    right: 190px;
+    width: auto;
+}
+
+#Work {
+    position: absolute;
+    top: 350px;
+    right: 70px;
+    width: auto;
+}
+
+#AroundTown {
+    position: absolute;
+    top: 450px;
+    right: 7px;
+    width: auto;
+}
+
+#ArtTheMedia {
+    position: absolute;
+    top: 520px;
+    left: 180px;
+    width: auto;
+}
+
+#TechnologyScience {
+    position: absolute;
+    top: 520px;
+    right: 180px;
+    width: auto;
+}
+
+#Home {
+    position: absolute;
+    top: 410px;
+    left: 260px;
+    width: auto;
+}
+
+#Health {
+    position: absolute;
+    top: 410px;
+    right: 260px;
+    width: auto;
+}
+
+#Assortment {
+    position: absolute;
+    top: 320px;
+    left: 410px;
+    width: auto;
+}
+
+#Animal {
+    position: absolute;
+    top: 520px;
+    left: 420px;
+    width: auto;
+}
+
+#boat-image {
+    position: absolute;
+    bottom: 60px;
+    left: 300px;
+    width: 100px;
+}
