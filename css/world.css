@@ -195,7 +195,7 @@ body {
     width: auto;
 }
 
-#Animal {
+#Animals {
     position: absolute;
     top: 520px;
     left: 420px;
@@ -207,4 +207,55 @@ body {
     bottom: 60px;
     left: 300px;
     width: 100px;
+}
+
+#content-image {
+    width: 115px;
+    position: absolute;
+    top: 24px;
+    left: 43px;
+}
+
+.buliding {
+    width: 20px;
+}
+
+#animal-building-image-0 {
+    position: absolute;
+    top: 62px;
+    left: 35px;
+}
+#animal-building-image-1 {
+    position: absolute;
+    top: 71px;
+    left: 51px;
+}
+#animal-building-image-2 {
+    position: absolute;
+    top: 80px;
+    left: 66px;
+}
+#animal-building-image-3 {
+    position: absolute;
+    top: 90px;
+    left: 81px;
+}
+
+#island-name-animal {
+    position: absolute;
+    top: 140px;
+    left: 10px;
+    color:#FF9797;
+}
+
+.island-name {
+    background-color: rgba(0,0,0,0.3);
+    width: 180px;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.island:hover,#bag:hover,#world:hover{
+    transition: .7s;
+    transform: scale(1.1); 
 }
