@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'support';
+    src: url(../font/support.ttf);
+}
+
+body,a,img{
+    padding:0;
+    margin:0;
+}
+
+body {
+    margin: 0px auto;
+    background-color: #FFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+#content {
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+    width: 1024px;
+    height: 768px;
+    background-color: #ffefde;
+    cursor: pointer;
+    background-image: url(../material/sea.svg);
+    -moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+    cursor:pointer;
+}
+
+
+#boat {
+    position: absolute;
+    bottom: 210px;
+    left: 20px;
+    width: 210px;
+    -webkit-filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
+    z-index: 1;
+    cursor:pointer;
+}
+
+#Animals {
+    position: absolute;
+    top: 192px;
+    left: 189px;
+    width: auto;
+    cursor:pointer;
+}
+
+.island {
+    width: 350px;
+}
+
+.island-image {
+    width: 740px;
+}
+
+#content-image {
+    position: absolute;
+    top: 85px;
+    left: 156px;
+    width: 430px;
+    z-index: 1;
+}
+
+.buliding {
+    width: 65px;
+    z-index: 2;
+    cursor:pointer;
+}
+
+#animal-building-image-0 {
+    position: absolute;
+    top: 220px;
+    left: 120px;
+}
+#animal-building-image-1 {
+    position: absolute;
+    top: 250px;
+    left: 185px;
+}
+#animal-building-image-2 {
+    position: absolute;
+    top: 290px;
+    left: 243px;
+}
+#animal-building-image-3 {
+    position: absolute;
+    top: 330px;
+    left: 304px;
+}
+
+#island-name-animal{
+    position: absolute;
+    top: 40px;
+    left: 345.3125px ;
+    padding: 5px 60px 5px 60px;
+    color:#FF9797;
+    background-color: rgba(0,0,0,0.3);
+    font-weight: 700;
+    font-size: 60px;
+}
+
+#boathover{
+    transition: .7s;
+    transform: scale(1.1); 
+}

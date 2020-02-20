@@ -48,7 +48,7 @@ $(function(){
     }
     
     /*印出島嶼的樣貌。*/
-    function printIsland(){
+    function printWorld(){
         /* 未完成 */
     }
     
@@ -56,7 +56,7 @@ $(function(){
     $('.island').on('click',function(){
         let ID = $(this).attr('id');
         console.log('將要進入 '+ID+' 島');
-//        window.location.assign("island.html");
+        window.location.assign(ID+"_island.html");
     });
     
     /*進入背包*/
@@ -66,15 +66,22 @@ $(function(){
     });
 
     /*上一頁*/
-    $('#world').on('click',function(){
+    $('#boat').on('click',function(){
         console.log('將回到登入畫面。');
         dialog(0);
     });
     
     
     
+    /*---------------------------------------------------------------------*/
+    
+    
+    
     $('#name').text(name);
     $('#flashcard').text(number_of_card);
+    
+    getStatus();
+    printWorld();
     
     
         

@@ -37,9 +37,11 @@ body {
     width: 400px;
     height: 130px;
     padding: 5px;
-    border: 10px solid #fffce4;
+    border: 3px solid #fffce4;
     border-radius: 20px;
     background-color: #ffe89d;
+    -webkit-filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
     
 }
 
@@ -71,13 +73,15 @@ body {
     margin-bottom: 15px;
 }
 
-#world {
+#boat {
     position: absolute;
-    bottom: 15px;
-    left: 15px;
-    width: 170px;
+    bottom: 40px;
+    left: 25px;
+    width: 130px;
     padding: 0px;
     margin: 0px;
+    -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.7));
 }
 
 #name {
@@ -98,9 +102,11 @@ body {
     position: absolute;
     bottom: 15px;
     right: 15px;
-    width: 170px;
+    width: 120px;
     padding: 0px;
     margin: 0px;
+    -webkit-filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
 }
 
 .island {
@@ -202,13 +208,6 @@ body {
     width: auto;
 }
 
-#boat-image {
-    position: absolute;
-    bottom: 60px;
-    left: 300px;
-    width: 100px;
-}
-
 #content-image {
     width: 115px;
     position: absolute;
@@ -255,7 +254,7 @@ body {
     font-size: 25px;
 }
 
-.island:hover,#bag:hover,#world:hover{
+.island:hover,#bag:hover,#boat:hover{
     transition: .7s;
     transform: scale(1.1); 
 }
