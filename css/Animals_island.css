@@ -12,11 +12,14 @@ body {
     margin: 0px auto;
     background-color: #FFF;
     text-align: center;
+    height: 768px;
     cursor: pointer;
 }
 
 #content {
-    position: relative;
+    position: fixed;
+    top: 0px;
+    left: 0px;
     margin: 0px auto;
     text-align: center;
     width: 1024px;
@@ -97,7 +100,7 @@ body {
 #island-name-animal{
     position: absolute;
     top: 40px;
-    left: 345.3125px ;
+    left: 345.3125px;
     padding: 5px 60px 5px 60px;
     color:#FF9797;
     background-color: rgba(0,0,0,0.3);

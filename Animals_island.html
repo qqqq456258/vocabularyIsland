@@ -9,26 +9,41 @@
     <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
     <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="plugin/d3/d3.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-ease.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-selection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+    <script src="https://d3js.org/d3-transition.v1.min.js"></script>
+    <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+    <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
+    <script src="js/Animals_island.js"></script>
 </head>
 
 <body>
-    <div id="content">
-        <div id='island-name-animal'>Animals</div>
-        <input id='boat' type="image" src="material/boat.svg">
+    <svg width='1024' height='768'>
+        <g>
+            <foreignObject width='1024' height='768'>
+                <div id="content" xmlns="http://www.w3.org/1999/xhtml">
+                    <div id='island-name-animal' xmlns="http://www.w3.org/1999/xhtml">Animals</div>
+                    <input id='boat' type="image" src="material/boat.svg" xmlns="http://www.w3.org/1999/xhtml">
 
-        <div id='Animals' class='island'>
-            <img class='island-image' src="material/animal-island/island.svg">
+                    <div id='Animals' class='island' xmlns="http://www.w3.org/1999/xhtml">
+                        <img class='island-image' src="material/animal-island/island.svg" xmlns="http://www.w3.org/1999/xhtml">
 
-            <img id='content-image' src="material/animal-island/road_and_building.svg">
+                        <img id='content-image' src="material/animal-island/road_and_building.svg" xmlns="http://www.w3.org/1999/xhtml">
 
-            <img id='animal-building-image-0' class='buliding' src="material/animal-island/building-3-0.svg">
-            <img id='animal-building-image-1' class='buliding' src="material/animal-island/building-3-1.svg">
-            <img id='animal-building-image-2' class='buliding' src="material/animal-island/building-3-2.svg">
-            <img id='animal-building-image-3' class='buliding' src="material/animal-island/building-3-3.svg">
+                        <img id='animal-building-image-0' class='buliding' src="material/animal-island/building-3-0.svg" xmlns="http://www.w3.org/1999/xhtml">
+                        <img id='animal-building-image-1' class='buliding' src="material/animal-island/building-3-1.svg" xmlns="http://www.w3.org/1999/xhtml">
+                        <img id='animal-building-image-2' class='buliding' src="material/animal-island/building-3-2.svg" xmlns="http://www.w3.org/1999/xhtml">
+                        <img id='animal-building-image-3' class='buliding' src="material/animal-island/building-3-3.svg" xmlns="http://www.w3.org/1999/xhtml">
+                    </div>
+                </div>
 
-        </div>
-    </div>
-    <script src="js/Animals_island.js"></script>
+            </foreignObject>
+        </g>
+    </svg>
 </body>
 
 </html>
