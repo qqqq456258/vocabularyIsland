@@ -19,15 +19,23 @@ $(function () {
 
     /* d3.js 的功能，設定縮放事件的內容*/
     function zoomed() {
-        g.attr("transform", d3.event.transform);
+        try {
+            $('foreignObject').attr('transform', d3.event.transform);
+        } catch (e) {
+            alert(e);
+        }
     }
 
     /* 首先，宣告行為 d3.zoom()，再使用call來呼叫，然後設定zoom的參數，最後執行 zoomed 這個function。*/
-    svg.call(d3.zoom()
-        .translateExtent([[0, 0], [1024, 768]])     // 設定 縮放的範圍，避免拖曳拉出視窗之外。
-        .scaleExtent([1, 8])                        // 設定 縮放的倍率範圍。
-        .on("zoom", zoomed));                       // 執行。
 
+    try {
+        svg.call(d3.zoom()
+            .translateExtent([[0, 0], [1024, 768]]) // 設定 縮放的範圍，避免拖曳拉出視窗之外。
+            .scaleExtent([1, 8]) // 設定 縮放的倍率範圍。
+            .on("zoom", zoomed)); // 執行。
+    } catch (e) {
+        alert(e);
+    }
 
     /*上一頁*/
     $('#world').on('click', function () {
