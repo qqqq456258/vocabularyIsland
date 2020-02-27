@@ -1,4 +1,5 @@
 $(function () {
+    let title = "";             // 標題。
     let topic = 0;              // 將單字主題以數字來辨別，這裡 0 是表示測試系列。
     let total_level = 7;        // 總關卡數。
     let locked_level = 1;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
@@ -67,6 +68,22 @@ $(function () {
         });
     }
     
+    /*產生標題*/
+    var url = location.href;
+    var temp = url.split("=");
+    var vars = temp[1].split("%");
+    for (var i = 0; i < vars.length; i++) {
+        vars[i] =  vars[i].replace(/20/, " ");
+        title = title + vars[i];
+    };
+    $('#title').text(title);
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -81,6 +98,10 @@ $(function () {
     $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
     $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
     
+    /*回上一頁*/
+    $('#earth').on('click',function(){
+        location.assign('Animals_island.html');
+    });
 
     
 });

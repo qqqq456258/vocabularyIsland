@@ -28,18 +28,25 @@ $(function () {
 
     
     /* 首先，宣告行為 d3.zoom()，再使用call來呼叫，然後設定zoom的參數，最後執行 zoomed 這個function。*/
-    if(document.body.clientWidth == 1024){
+    if(document.body.clientWidth != 1024){
         svg.call(d3.zoom()
             .translateExtent([[0, 0], [1024, 768]]) // 設定 縮放的範圍，避免拖曳拉出視窗之外。
             .scaleExtent([1, 8]) // 設定 縮放的倍率範圍。
             .on("zoom", zoomed)); // 執行。
     }
+    
+    $('.buliding,.title').on('click',function(){
+        let name = $(this).data('name');
+        console.log('將要進入 '+name+' 標題');
+        location.replace("topic_challenge_pick.html?name="+name);
+    });
+    
 
 
     /*上一頁*/
-    $('#world').on('click', function () {
-        console.log('將回到登入畫面。');
-        dialog(0);
+    $('#boat').on('click', function () {
+        console.log('將回到主畫面。');
+        location.replace("world.html");
     });
 
 

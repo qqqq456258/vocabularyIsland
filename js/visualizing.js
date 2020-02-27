@@ -289,7 +289,7 @@ $(function () {
                 .then((result) => {
                     if (result.value) {
                         console.log("回到主畫面");
-//                        location.replace('pairing.html');
+                        location.replace('world.html');
                     }
                 });
         }
@@ -590,13 +590,13 @@ $(function () {
         event.stopPropagation();
         if(focus_option == $(this).attr('id')){ // 取消自身選擇。
             focus_option = "";
-            $(this).css('border','3px solid grey');
+            $(this).css('border','5px solid #AAA');
             $(this).css('backgroundColor','white');
             
         }else{  // 其他選項變化。
-            $(".picture").css('border','3px solid grey');
+            $(".picture").css('border','5px solid #AAA');
             $(".picture").css('backgroundColor','white');
-            $(this).css('border','3px solid darkgreen');
+            $(this).css('border','5px solid darkgreen');
             $(this).css('backgroundColor','white');
             focus_option = $(this).attr('id');
         }
