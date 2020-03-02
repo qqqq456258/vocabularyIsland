@@ -1,12 +1,11 @@
 $(function(){
     let account = "";           // 輸入的帳號。
-    let password = "";          // 輸入的密碼。
-    let name = "Bunny";         // 使用者姓名。
-    let number_of_card = 99;    // 字卡數量。
+    let name = "";              // 使用者姓名。
+    let number_of_card = 0;     // 字卡數量。
     var islands_status = [];    // 每個島嶼進度。
     
     
-    /* sweetAlert2 的跳出通知。*/
+    /* 跳出通知。*/
     function dialog(status) {
         let icon = "";
         let title = "";
@@ -40,6 +39,40 @@ $(function(){
         
         
         
+    }
+    
+    /*抓使用者資訊。*/
+    function getPersonalInformation() {
+        console.log("開始抓使用者資訊...");
+        
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/world.php",
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log('Success.');
+                name = json['name'];
+                number_of_card = json['cardAmount'];
+                
+                $('#name').text(name);
+                $('#flashcard').text(number_of_card);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                console.log('Error.');
+                name = "None";
+                number_of_card = 0;
+                $('#name').text(name);
+                $('#flashcard').text(number_of_card);
+            }
+        });
+        /* 未完成 */
     }
     
     /*抓每個島嶼的關卡進度。*/
@@ -77,9 +110,8 @@ $(function(){
     
     
     
-    $('#name').text(name);
-    $('#flashcard').text(number_of_card);
     
+    getPersonalInformation();
     getStatus();
     printWorld();
     

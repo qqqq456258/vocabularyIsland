@@ -6,8 +6,43 @@ $(function () {
     var title_array = ["Pet & Farm Animals - 0","Pet & Farm Animals - 1","Pet & Farm Animals - 2","Pet & Farm Animals - 3","Pet & Farm Animals - 4","Pet & Farm Animals - 5","Pet & Farm Animals - 6"]; // 每個解鎖自主練習的標題。
     var star_array = [0,0,0,0,0,0,0]; // 每個解鎖自主練習的星數。
     let content = "";           // 生成自主練習所需的字串。
+
     
-    /*生成每個自主練習。*/
+    
+    
+    /*轉頁效果。*/
+    $("#stages").fullpage({
+        resize: true,
+        slidesNavigation: true,
+        slidesNavPosition: "bottom",
+        lazyLoad: true
+    });
+    $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height", "auto");
+    $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
+    $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
+    
+    /*回上一頁*/
+    $('#earth').on('click',function(){
+        location.assign('Animals_island.html');
+    });
+    
+    
+    
+    /*---------------------------------------------------------------------*/
+    
+    
+    
+    /*產生標題*/
+    var url = location.href;
+    var temp = url.split("=");
+    var vars = temp[1].split("%");
+    for (var i = 0; i < vars.length; i++) {
+        vars[i] =  vars[i].replace(/20/, " ");
+        title = title + vars[i];
+    };
+    $('#title').text(title);
+    
+    /*產生每個自主練習。*/
     for (let i = 0; i < total_level; i++) {
         content = "<div id='level_" + topic + "_" + i + "' class='each_level'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
 
@@ -68,40 +103,5 @@ $(function () {
         });
     }
     
-    /*產生標題*/
-    var url = location.href;
-    var temp = url.split("=");
-    var vars = temp[1].split("%");
-    for (var i = 0; i < vars.length; i++) {
-        vars[i] =  vars[i].replace(/20/, " ");
-        title = title + vars[i];
-    };
-    $('#title').text(title);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*轉頁效果。*/
-    $("#stages").fullpage({
-        resize: true,
-        slidesNavigation: true,
-        slidesNavPosition: "bottom",
-        lazyLoad: true
-    });
-    $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height", "auto");
-    $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
-    $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
-    
-    /*回上一頁*/
-    $('#earth').on('click',function(){
-        location.assign('Animals_island.html');
-    });
-
     
 });

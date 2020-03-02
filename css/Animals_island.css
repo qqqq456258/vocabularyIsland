@@ -45,6 +45,10 @@ body {
     z-index: 1;
     cursor:pointer;
 }
+#boat:hover{
+    transition: 0.7s;
+    transform: scale(1.1);
+}
 
 #Animals {
     position: absolute;
@@ -67,34 +71,45 @@ body {
     top: 85px;
     left: 156px;
     width: 430px;
-    z-index: 1;
+    z-index: 2;
 }
 
-.buliding {
+.buliding_left {
     width: 65px;
-    z-index: 2;
+    z-index: 3;
     cursor:pointer;
+}
+
+.buliding_right {
+    width: 65px;
+    z-index: 1;
+    cursor:pointer;
+}
+
+.buliding_left,.buliding_right:hover{
+    transition: 0.7s;
+    transform: scale(1.1);
 }
 
 #animal-building-image-0 {
     position: absolute;
-    top: 220px;
-    left: 120px;
+    top: 217px;
+    left: 130px;
 }
 #animal-building-image-1 {
     position: absolute;
-    top: 250px;
-    left: 185px;
+    top: 282px;
+    left: 239px;
 }
 #animal-building-image-2 {
     position: absolute;
-    top: 290px;
-    left: 243px;
+    top: 344px;
+    left: 346px;
 }
 #animal-building-image-3 {
     position: absolute;
-    top: 330px;
-    left: 304px;
+    top: 326px;
+    left: 485px;
 }
 
 #island-name-animal{
@@ -108,7 +123,7 @@ body {
     font-size: 60px;
 }
 
-#boathover{
+#boat:hover{
     transition: .7s;
     transform: scale(1.1); 
 }
@@ -116,8 +131,8 @@ body {
 
 #animal-building-title-0 {
     position: absolute;
-    top: 190px;
-    left: 89px;
+    top: 278px;
+    left: 136px;
 }
 
 .title {
@@ -127,23 +142,35 @@ body {
     color: white;
     background-color: rgba(3.0, 146.0, 94.0, 0.5);
     padding: 8px;
-    z-index: 3;
+    z-index: 4;
 }
 
 #animal-building-title-1 {
     position: absolute;
-    top: 230px;
-    left: 170px;
+    top: 343px;
+    left: 210px;
 }
 
 #animal-building-title-2 {
     position: absolute;
-    top: 265px;
-    left: 232px;
+    top: 405px;
+    left: 333px;
 }
 
 #animal-building-title-3 {
     position: absolute;
-    top: 380px;
-    left: 250px;
+    top: 387px;
+    left: 473px;
+}
+
+#animal-building-image-4 {
+    position: absolute;
+    top: 222px;
+    left: 530px;
+}
+
+#animal-building-title-4 {
+    position: absolute;
+    top: 280px;
+    left: 477px;
 }

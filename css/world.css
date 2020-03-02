@@ -85,6 +85,7 @@ body {
 }
 
 #name {
+    font-family: '微軟正黑體';
     font-weight: border;
     color: maroon;
     font-size: 30px;
@@ -221,23 +222,23 @@ body {
 
 #animal-building-image-0 {
     position: absolute;
-    top: 62px;
-    left: 35px;
+    top: 57px;
+    left: 33px;
 }
 #animal-building-image-1 {
     position: absolute;
-    top: 71px;
-    left: 51px;
+    top: 73px;
+    left: 59px;
 }
 #animal-building-image-2 {
     position: absolute;
-    top: 80px;
-    left: 66px;
+    top: 88px;
+    left: 86px;
 }
 #animal-building-image-3 {
     position: absolute;
-    top: 90px;
-    left: 81px;
+    top: 86px;
+    left: 131px;
 }
 
 #island-name-animal {
@@ -254,7 +255,13 @@ body {
     font-size: 25px;
 }
 
-.island:hover,#bag:hover,#boat:hover{
+#Animals:hover,#bag:hover,#boat:hover{
     transition: .7s;
     transform: scale(1.1); 
+}
+
+#animal-building-image-4 {
+    position: absolute;
+    top: 57px;
+    left: 144px;
 }
