@@ -30,7 +30,7 @@ $(function () {
             swal.fire({
                     icon: "info",
                     title: "Basic Practice",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;text-align: left;padding-left: 10px;'>1. 試著練習發音<b>三次</b>。<br>2. 與標準發音比較，<b>挑出最滿意的錄音結果</b>。<br>3. 最後，試著聆聽發音並<b>拼出</b>單字。</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;text-align: left;padding-left: 10px;'>1. 試著練習發音<b>兩次</b>。<br>2. 與標準發音比較，<b>挑出最滿意的錄音結果</b>。<br>3. 最後，試著聆聽發音並<b>拼出</b>單字。</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,
@@ -47,7 +47,7 @@ $(function () {
             swal.fire({
                     icon: "error",
                     title: "Error",
-                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>請將三個錄音與標準發音比較，<br><b>挑出一個最滿意的</b>。</p>",
+                    html: "<p style='font-family:Microsoft JhengHei;font-size:22px;'>請將兩個錄音與標準發音比較，<br><b>挑出一個最滿意的</b>。</p>",
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: true,
@@ -425,7 +425,7 @@ $(function () {
         console.log("round:" + round);
 
         /*放入這次學習的單字。*/
-        $("#title_en").text("Listen three times pronunciation");
+        $("#title_en").text("Listen 3 times pronunciation");
         $("#word").text(word[order[i]]);
         $('#img').attr('src','word_image/'+file_word[order[i]]+'_'+Math.floor(Math.random() * 3)+'.jpg');
         $("#part_speech").text(partOfSpeech[order[i]]);

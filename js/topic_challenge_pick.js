@@ -1,37 +1,12 @@
 $(function () {
     let title = "";             // 標題。
     let topic = 0;              // 將單字主題以數字來辨別，這裡 0 是表示測試系列。
-    let total_level = 7;        // 總關卡數。
-    let locked_level = 1;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
-    var title_array = ["Pet & Farm Animals - 0","Pet & Farm Animals - 1","Pet & Farm Animals - 2","Pet & Farm Animals - 3","Pet & Farm Animals - 4","Pet & Farm Animals - 5","Pet & Farm Animals - 6"]; // 每個解鎖自主練習的標題。
-    var star_array = [0,0,0,0,0,0,0]; // 每個解鎖自主練習的星數。
+    let total_level = 0;        // 總關卡數。
+    let locked_level = 0;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
+    var title_array = []; // 每個解鎖自主練習的標題。
+    var star_array = []; // 每個解鎖自主練習的星數。
     let content = "";           // 生成自主練習所需的字串。
 
-    
-    
-    
-    /*轉頁效果。*/
-    $("#stages").fullpage({
-        resize: true,
-        slidesNavigation: true,
-        slidesNavPosition: "bottom",
-        lazyLoad: true
-    });
-    $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height", "auto");
-    $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
-    $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
-    
-    /*回上一頁*/
-    $('#earth').on('click',function(){
-        location.assign('Animals_island.html');
-    });
-    
-    
-    
-    /*---------------------------------------------------------------------*/
-    
-    
-    
     /*產生標題*/
     var url = location.href;
     var temp = url.split("=");
@@ -42,13 +17,58 @@ $(function () {
     };
     $('#title').text(title);
     
+    
+    /* 抓資料並回傳 自主練習的每個標題，總自主練習總數、自主練習進度(星數)、未解鎖關卡起始。 */
+    console.log("開始抓取關卡資訊、進度...");
+    $.ajax({
+        type: "get",
+        async: false, //async設定true會變成異步請求。
+        cache: true,
+        url: "php/topic_challenge_pick.php",
+        data:{
+            title:title
+        },
+        dataType: "json",
+        success: function (json) {
+            //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+            console.log('Success.');
+            total_level = json['amount_practices'];
+            title_array = json['title_practices'];
+            star_array = json['star_practices'];
+            let num = 0;
+            for( let num = 0 ; num < total_level ; num++ ){
+                if( star_array[num] == 0 ){
+                    num++;
+                    locked_level = num;
+                    break;
+                }
+            }
+            
+            console.log("total_level:"+total_level);
+            console.log("locked_level:"+locked_level);
+            console.log("title_array:"+title_array);
+            console.log("star_array:"+star_array);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("XMLHttpRequest:" + XMLHttpRequest);
+            console.log("textStatus:" + textStatus);
+            console.log("errorThrown:" + errorThrown);
+            console.log('Error.');
+        }
+    });
+    
     /*產生每個自主練習。*/
     for (let i = 0; i < total_level; i++) {
         content = "<div id='level_" + topic + "_" + i + "' class='each_level'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
 
         /*亮星數*/
         for (let t = 0; t < star_array[i]; t++) {
-            content = content + "<img class='star' src='material/star_shine.png'>";
+            if(t>0){
+                content = content + "<img class='star' src='material/star_review.png'>";
+            }else{
+                content = content + "<img class='star' src='material/star_shine.png'>";
+            }
         }
         /*暗星數*/
         for (let f = 0; f < (3 - star_array[i]); f++) {
@@ -101,7 +121,30 @@ $(function () {
                         
                 });
         });
-    }
+    }    
+    
+    /*轉頁效果。*/
+    $("#stages").fullpage({
+        resize: true,
+        slidesNavigation: true,
+        slidesNavPosition: "bottom",
+        lazyLoad: true
+    });
+    $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height", "auto");
+    $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
+    $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
+    
+    /*回上一頁*/
+    $('#earth').on('click',function(){
+        location.assign('Animals_island.html');
+    });
+    
+    
+    
+    /*---------------------------------------------------------------------*/
+    
+
+
     
     
 });

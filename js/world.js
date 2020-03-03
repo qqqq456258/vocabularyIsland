@@ -86,7 +86,7 @@ $(function(){
     }
     
     /*進入島嶼*/
-    $('.island').on('click',function(){
+    $('#Animals').on('click',function(){
         let ID = $(this).attr('id');
         console.log('將要進入 '+ID+' 島');
         window.location.assign(ID+"_island.html");
