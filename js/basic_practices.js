@@ -228,6 +228,7 @@ $(function () {
                                 if (move < 28) {
                                     init_content(); //初始化。
                                     prepare(round); //載入單字。
+                                    $('#sound').attr('src','material/speaker_3.png');
                                     $('#sound').css('display','inline-block');
                                     console.log("答對，下一階段。");
 
@@ -293,7 +294,7 @@ $(function () {
     }
     /*初始化*/
     function init_content() { //here
-        round++; //下一個。
+        round++;//下一個。
         step = 1;
         listen_num = 0;
         record_num = 0;
@@ -465,15 +466,18 @@ dialog(0);
         play_sound(1);
         if (listen_num == 0) { //僅有第一次點擊才變化。
             $('#image_zone').css('display','flex');
+            $('#sound').attr('src','material/speaker_2.png');
             progress();
             listen_num++;
             
         }else if(listen_num == 1){
             $('#info_zone').css('display','flex');
+            $('#sound').attr('src','material/speaker_1.png');
             progress();
             listen_num++;
             
         }else if(listen_num == 2){
+            $('#sound').attr('src','material/speaker.png');
             $("#title_en").text("Record your voice ( 0 / 2 )"); //變更標題。
             $('#vocabulary').css('height', '320px'); //單字區塊變長。
             $('#record,#stop').css('display', 'inline-block'); //將錄音與暫停按鈕並排。
@@ -522,7 +526,9 @@ dialog(0);
             $("#voice_" + stop_num).css('visibility', 'visible'); //錄完音的結果出現。
             $("#voice_1,#voice_2,#next_btn").removeAttr('disabled'); //將錄完音的結果都解鎖。
             $('#stop,#record').css('display', 'none'); //隱藏錄音及暫停按鈕。
-            $('#vocabulary').css('height', '250px'); //隱藏單字區塊。
+            $('#image_zone').css('display', 'none');    // 圖片區塊隱藏。
+            $('#info_zone').css('display', 'none');     // 單字資訊區塊隱藏。
+            $('#vocabulary').css('height', '200px'); //隱藏單字區塊。
             $('#vocabulary').css('marginTop', '70px'); //往上調整單字區塊位置。
             $("#title_en").text("Listen and pick the best one"); //變更標題。
             $('#click_zone').css('display', 'block');
