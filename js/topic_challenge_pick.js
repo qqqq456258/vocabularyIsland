@@ -3,8 +3,9 @@ $(function () {
     let topic = 0;              // 將單字主題以數字來辨別，這裡 0 是表示測試系列。
     let total_level = 0;        // 總關卡數。
     let locked_level = 0;       // 未解鎖關卡起始索引（表示學生目前進度是第 0 關）。
-    var title_array = []; // 每個解鎖自主練習的標題。
-    var star_array = []; // 每個解鎖自主練習的星數。
+    let title_array = [];       // 每個解鎖自主練習的標題。
+    let star_array = [];        // 每個解鎖自主練習的星數。
+    let code_array = [];        // 每個自主練習的代碼。
     let content = "";           // 生成自主練習所需的字串。
 
     /*產生標題*/
@@ -30,11 +31,14 @@ $(function () {
         },
         dataType: "json",
         success: function (json) {
-            //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+            /* jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行) */
             console.log('Success.');
             total_level = json['amount_practices'];
             title_array = json['title_practices'];
             star_array = json['star_practices'];
+            code_array = json['code_practices'];
+            
+            /* 找未解鎖關卡的開頭。 */
             let num = 0;
             for( let num = 0 ; num < total_level ; num++ ){
                 if( star_array[num] == 0 ){
@@ -48,6 +52,7 @@ $(function () {
             console.log("locked_level:"+locked_level);
             console.log("title_array:"+title_array);
             console.log("star_array:"+star_array);
+            console.log("code_array:"+code_array);
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -60,7 +65,7 @@ $(function () {
     
     /*產生每個自主練習。*/
     for (let i = 0; i < total_level; i++) {
-        content = "<div id='level_" + topic + "_" + i + "' class='each_level'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
+        content = "<div id='level_" + topic + "_" + i + "' class='each_level' data-code='"+code_array[i]+"'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
 
         /*亮星數*/
         for (let t = 0; t < star_array[i]; t++) {
@@ -111,7 +116,8 @@ $(function () {
                 })
                 .then((result) => {
                     if(result.value){
-                        window.location.assign('basic_practices.html');
+                        let temp = $(this).data('code').split("-");
+                        window.location.replace('basic_practices.html?theme='+temp[0]+'&title='+temp[1]+'&practice='+temp[2]);
                         /* 進入自主練習。 */
                         console.log("進入自主練習。");
                     }else{
@@ -136,7 +142,7 @@ $(function () {
     
     /*回上一頁*/
     $('#earth').on('click',function(){
-        location.assign('Animals_island.html');
+        location.replace('Animals_island.html');
     });
     
     

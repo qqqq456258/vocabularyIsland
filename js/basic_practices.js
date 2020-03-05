@@ -1,20 +1,22 @@
 $(function () {
-    var word = ["cat", "hamster", "guinea pig", "rabbit"]; // 宣告陣列放入 4 個單字。
-    var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"]; // 宣告陣列放入 4 個單字詞性。
-    var definition = ["貓", "倉鼠", "天竺鼠", "兔子"]; // 宣告陣列放入 4 個單字翻譯。
-    var file_word = []; // 宣告陣列放入 4 個去除空格的單字，來命名檔案名稱。
+    /* 系統所需全域變數。*/
+    let word = ["cat", "hamster", "guinea pig", "rabbit"]; // 宣告陣列放入 4 個單字。
+    let partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"]; // 宣告陣列放入 4 個單字詞性。
+    let definition = ["貓", "倉鼠", "天竺鼠", "兔子"]; // 宣告陣列放入 4 個單字翻譯。
+    let file_word = [];     //存放去除空格的檔案名稱。
     let hint = ""; // 存放去除字母以外的單字提示。
-    var order = []; // 宣告陣列放入排序。
-    var sound = []; // 宣告陣列放入 4 個語音檔。
-    let listen_num = 0; // 存放聆聽次數。
+    let order = []; // 宣告陣列放入排序。
+    let sound = []; // 宣告陣列放入 4 個語音檔。
     let record_num = 0; // 存放按擊錄音次數。
     let stop_num = 0; // 存放按擊暫停次數。
-    let choose_audio = ""; // 存放三個錄音中所選擇的audio ID，可以再去 audio_base64 陣列中找 base64。
-    var audio_base64 = []; // 存放3次語音的 base64。
+    let choose_audio = ""; // 存放二個錄音中所選擇的audio ID，可以再去 audio_base64 陣列中找 base64。
+    let audio_base64 = []; // 存放2次語音的 base64。
     let step = 1; // 控制步驟的參數。
     let round = 0; // 控制下一個單字出現。
     let move = 0; // 基礎練習總共步驟。
+    
 
+    /* Recorder.js 所需全域變數。*/
     var URL = window.URL || window.webkitURL;
     var gumStream = null; //stream from getUserMedia()
     var rec = null; //Recorder.js object
@@ -23,7 +25,214 @@ $(function () {
     var audioContext = audioContext || null;//audio context to help us record
     
     
-    /*sweetAlert2 的功能。*/
+    /* 紀錄所需全域變數 */
+    let listen_num = 0;     // 存放 聆聽次數。
+    let select_target = 0;  // 存放 語音目標 1 or 2。
+    let delete_time = 0;    // 存放 刪除語音次數。
+    let this_page = new URL(location.href); //取得完整網址（URL）。
+    let theme = this_page.searchParams.get('theme');
+    let title = this_page.searchParams.get('title');
+    let practice = this_page.searchParams.get('practice');
+    console.log("theme:"+theme+'\n'+"title:"+title+'\n'+"practice:"+practice);
+    
+    
+/*
+
+Log :
+
+    1. 按了幾次語音按鈕。listen_num
+    2. 挑選語音時的偏好(1 or 2)。choose_audio
+    3. 重新錄音的次數(與原因)。
+    4. 拼字步驟時，使用語音按鈕、提示的次數。
+
+*/
+
+    
+    
+    /* 將點擊語音的紀錄插入資料庫。*/
+    function insert_click_sound(whichStep){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 0,
+                target: word[order[i]],
+                click_code: whichStep,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+                listen_num = 0; // 歸零。
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_click_sound: Wrong !!');
+                
+            }
+        });
+    }
+    /* 將錄音選擇的紀錄插入資料庫內。*/
+    function insert_select_record(){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 1,
+                target: word[order[i]],
+                select_target: select_target,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_select_record : Wrong !!');
+                
+            }
+        });
+    } 
+    /* 將刪除語音的紀錄插入資料庫內。*/
+    function insert_delete_record(){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 2,
+                target: word[order[i]],
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_delete_record : Wrong !!');
+                
+            }
+        });
+    } 
+    /* 將點擊提示的紀錄插入資料庫。*/
+    function insert_click_tip(whichStep){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 3,
+                target: word[order[i]],
+                click_code: whichStep,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+                listen_num = 0; // 歸零。
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_click_sound_time : Wrong !!');
+                
+            }
+        });
+    }
+    /* 將錄製的語音紀錄插入資料庫內。*/
+    function insert_record(){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 4,
+                target: word[order[i]],
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_delete_record : Wrong !!');
+                
+            }
+        });
+    } 
+    /* 將完成基礎練習的紀錄插入資料庫內。*/
+    function insert_done(){
+        $.ajax({
+            type: "get",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 5,
+                target: word[order[i]],
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice,
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+                alert('insert_delete_record : Wrong !!');
+                
+            }
+        });
+    } 
+    
+    
+    /* sweetAlert2 的功能。*/
     function dialog(situation) {
         console.log("Dialog:" + situation);
         if (situation == 0) { //遊戲開始前說明。
@@ -252,7 +461,7 @@ $(function () {
                 });
         }
     }
-    /*播放語音*/
+    /* 播放語音 */
     function play_sound(time) {
         
         /*替換空格的提示。*/
@@ -292,7 +501,7 @@ $(function () {
 
         
     }
-    /*初始化*/
+    /* 初始化 */
     function init_content() { //here
         round++;//下一個。
         step = 1;
@@ -304,14 +513,14 @@ $(function () {
         $('#answer').removeAttr('placeholder');
         $('#hint').attr('src', 'material/tips.png'); //換暗示圖形，表示內容變更。
         $('#next_btn').attr('src', 'material/next_step.png'); //換下一步的按鈕。
-        $('#spell_zone').css('display', 'none');
-        $('#clear').css('display', 'inline-block');
+        $('#spell_zone').css('display', 'none'); 
         $('#click_zone').css('display', 'none');
         
         $('#sound').css('display','none');
         $('#vocabulary').css('marginTop', '90px');
         $('#vocabulary').css('display', 'block');
         $('#record,#stop').css('display', 'none');
+        select_target = 0;
         choose_audio = "";
         for (let i = 1; i < 4; i++) {
             $('#voice_zone_' + i).css('border', '5px dashed gray');
@@ -330,7 +539,7 @@ $(function () {
         console.log("初始化");
 
     }
-    /*隨機產生不重覆的4個數字。*/
+    /* 隨機產生不重覆的4個數字。*/
     function getRandomArray() {
         var rdmArray = [4]; //儲存產生的陣列。
 
@@ -350,7 +559,7 @@ $(function () {
         }
         return rdmArray;
     }
-    /*進度條*/
+    /* 進度條*/
     function progress() {
         let total_move = 28;
         move++;
@@ -370,8 +579,7 @@ $(function () {
         console.log("百分比：" + percentage + "%");
         console.log("總共：" + move + "步。");
     }
-    
-    /*載入聲音檔。*/
+    /* 載入聲音檔。*/
     function loading_sound(someNumber) {
         let i = someNumber;
         $.ajax({
@@ -416,9 +624,7 @@ $(function () {
                
         });
     }
-
-    
-    /*四個單字的順序洗牌。*/
+    /* 四個單字的順序洗牌。*/
     function prepare(round) {
         let i = round;
         console.log("order:" + order);
@@ -447,6 +653,8 @@ $(function () {
         }
     }
     
+    
+    
 
 order = getRandomArray();
 for (let k = 0; k < 4; k++) {
@@ -457,6 +665,8 @@ for (let k = 0; k < 4; k++) {
 prepare(round);
 dialog(0);
 
+    
+    
     
     /*練習發音時，點擊聽單字發音*/
     $('#sound').on('click', function (event) {
@@ -541,7 +751,7 @@ dialog(0);
         event.preventDefault();
         event.stopPropagation();
         var audio_num = $(this).attr('id').split("_");
-
+        select_target = audio_num[1];
         /*替換空格的提示。*/
         var regex = /\s/;
         let vocabulary = $("#word").text();

@@ -14,12 +14,14 @@
     $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
 
     $information['name'] = $row[0]['pi_name'];
-    $information['cardAmount'] = $row[0]['card_amount'];
+    $information['cardAmount'] = $row[0]['pi_card_amount'];
 
+
+    $pdo = null;
     echo json_encode($information);
 
     /* 闖關進度 */
-    // 等單字庫及關卡確定後再說
+    // 等單字庫及關卡確定後再說。
 
 
 ?>

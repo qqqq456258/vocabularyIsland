@@ -21,6 +21,19 @@ $(function () {
     var color_bg = [];
     var color_br = [];
     
+    
+/*
+
+Log :
+
+    1. 挑選的單字。
+    2. 字卡背景顏色。
+    3. 字卡邊框顏色。
+
+
+*/    
+    
+    
 
     function cPush() {
         cStep++;

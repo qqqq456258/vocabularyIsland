@@ -14,10 +14,14 @@
     $nRows = Count($row);  // 資料幾筆，預設：只取出一筆，所以基本上會輸出 1 。
 
     if($id == null || $pw == null){//無輸入的情況。
+
+        $pdo = null;
         echo json_encode(array(
                     'status' => "no input"
                 ));
     }elseif( $nRows == 0 ){  //無此帳號的情況。
+
+        $pdo = null;
         echo json_encode(array(
                     'status' => "no data"
                 ));
@@ -41,11 +45,15 @@
         $stmt->bindValue(':ID',$id); // 避免SQL injection。以 :UserID 代替並放入語法內。
         $stmt->execute() or exit("讀取personal_information資料表時，發生錯誤。");
         
+
+        $pdo = null;
         echo json_encode(array(
                     'nickname' => $name,
                     'status' => "success"
                 ));
     }else{//擋掉無帳號且非完整輸入的以後，就只剩下密碼錯誤的情況。
+
+        $pdo = null;
         echo json_encode(array(
                     'status' => "error password"
                 ));
