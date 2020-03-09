@@ -5,7 +5,7 @@
     $information = array();         //最後回傳的資訊陣列。
 
     $title = $_GET['title'];        //標題。
-    $account = $_SESSION['user'];   //使用者帳號。
+    $account = 0;   //使用者帳號。
 
 
     /* 從標題抓取關卡資訊(代碼) */
@@ -33,9 +33,9 @@
     for( $i=0 ; $i<$information['amount_practices'] ; $i++ ){
         $sql_find_practice_title = "SELECT pt_name FROM vocabularyisland.practice WHERE kind_of_title = :kind_of_title AND kind_of_theme = :kind_of_theme AND pt_code = :pt_code";
         $stmt = $pdo->prepare($sql_find_practice_title);
-        $stmt->bindValue(':kind_of_title',$title_code); // 避免SQL injection。
-        $stmt->bindValue(':kind_of_theme',$kind_of_theme); // 避免SQL injection。
-        $stmt->bindValue(':pt_code',$i); // 避免SQL injection。
+        $stmt->bindValue(':kind_of_title',$title_code);     // 避免SQL injection。
+        $stmt->bindValue(':kind_of_theme',$kind_of_theme);  // 避免SQL injection。
+        $stmt->bindValue(':pt_code',$i);                    // 避免SQL injection。
         $stmt->execute() or exit("讀取 practice 資料表時，發生錯誤。"); //執行。 
         $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
         $title_practices[$i] = $row[0]['pt_name'];
@@ -48,8 +48,8 @@
     /* 抓取使用者每個自主練習的代碼 ( 依照關卡代碼順序由小至大 ) */
     $code_practices = array();
     for( $i=0 ; $i<$information['amount_practices'] ; $i++ ){
-        $sql_find_practice_amount = "SELECT ps_star FROM vocabularyisland.practice_status WHERE ps_account = :ps_account AND ps_theme = :ps_theme AND ps_title = :ps_title AND ps_practice = :ps_practice";
-        $stmt = $pdo->prepare($sql_find_practice_amount);
+        $sql_find_practice_time = "SELECT * FROM vocabularyisland.practice_status WHERE ps_account = :ps_account AND ps_theme = :ps_theme AND ps_title = :ps_title AND ps_practice = :ps_practice";
+        $stmt = $pdo->prepare($sql_find_practice_time);
         $stmt->bindValue(':ps_account',$account); // 避免SQL injection。
         $stmt->bindValue(':ps_theme',$kind_of_theme); // 避免SQL injection。
         $stmt->bindValue(':ps_title',$title_code); // 避免SQL injection。
@@ -57,13 +57,11 @@
         
         $stmt->execute() or exit("讀取 practice_status 資料表時，發生錯誤。"); //執行。 
         $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
-        if(count($row) == 0){
-            $star_practices[$i] = 0;
-        }else{
-            $star_practices[$i] = $row[0]['ps_star'];
-        }
+        $star_practices[$i] = count($row); // 看遊玩幾次，代表幾顆星。
         $code_practices[$i] = $kind_of_theme."-".$title_code."-".$i;
+        
     }
+
     $information['star_practices'] = $star_practices; // 每個自主練習進度(星數)。
     $information['code_practices'] = $code_practices; // 每個自主練習進度(代碼)。
 
