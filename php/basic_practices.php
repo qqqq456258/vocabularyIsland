@@ -3,13 +3,12 @@
     include('connMysql.php');
 
     
-    $information = array();                     // 最後回傳的資訊陣列。
-    date_default_timezone_set('Asia/Taipei');   //亞洲時區。
+    $information = array();                      // 最後回傳的資訊陣列。
+    date_default_timezone_set('Asia/Taipei');    //亞洲時區。
 
 
     $code = $_POST['code'];                      // 執行代碼。
     $account = $_SESSION['user'];                // 使用者帳號。
-    $vocabulary = $_POST['target'];              // 對象(單字)。
     $theme_code = $_POST['theme_code'];          // 主題代碼。
     $title_code = $_POST['title_code'];          // 標題代碼。
     $practice_code = $_POST['practice_code'];    // 自主練習代碼。
@@ -19,6 +18,7 @@
 
     if($code == 0){           //將點擊語音的紀錄插入資料庫。
         
+        $vocabulary = $_POST['target'];
         $cs_click_step = $_POST['click_step'];
         $cs_click_time = $_POST['click_time'];
         
@@ -50,6 +50,7 @@
         
     }elseif($code == 1){      //將錄音選擇的紀錄插入資料庫內。
         
+        $vocabulary = $_POST['target'];
         $select_target = $_POST['select_target'];
         
         $sql = "
@@ -79,6 +80,7 @@
         
     }elseif($code == 2){      //將刪除語音的紀錄插入資料庫內。
         
+        $vocabulary = $_POST['target'];
         $delete_time = $_POST['delete_time'];
         
         $sql = "
@@ -107,6 +109,7 @@
         
     }elseif($code == 3){      //將點擊提示的紀錄插入資料庫。
         
+        $vocabulary = $_POST['target'];
         $ct_click_step = $_POST['click_step'];
         $ct_click_time = $_POST['tip_num'];
         
@@ -137,9 +140,12 @@
         
     }elseif($code == 4){      //將錄製的語音紀錄插入資料庫內。
         
+        $vocabulary = $_POST['target'];
+        
         /* 將檔案放入資料夾中 */
         $audio = $_POST['audURI'];
         $GetOnly =  md5(uniqid(rand()));
+        $GetOnly = $account.'_'.$vocabulary.'_'.$GetOnly;
         $audio = str_replace('data:audio/wav;base64,', '', $audio); 
         $audio = str_replace(' ', '+', $audio); 
         $audio_data = base64_decode($audio);                        //將base64解碼成圖檔資料。
@@ -170,8 +176,9 @@
         }
         
         
-    }elseif($code == 5){      //將點擊提示的紀錄插入資料庫。
+    }elseif($code == 5){      //將錯誤的紀錄插入資料庫。
         
+        $vocabulary = $_POST['target'];
         $wt_step = $_POST['wrong_step'];
         $wt_wrong_time = $_POST['wrong_time'];
         

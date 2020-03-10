@@ -272,7 +272,9 @@ Log :
         });
     } 
     /* 將拼字步驟錯誤次數插入資料庫。*/
-    function insert_wrong_time(whichStep,whichWord,wrong_time,dateTime){
+    function insert_wrong_time(whichStep,whichWord,wrongTime,dateTime){
+        console.log('進入function ，wrong_time:'+wrongTime);
+        
         $.ajax({
             type: "POST",
             async: true, //async設定true會變成異步請求。
@@ -282,7 +284,7 @@ Log :
                 code: 5,
                 target: word[order[whichWord]],
                 wrong_step: whichStep,
-                wrong_time: wrong_time,
+                wrong_time: wrongTime,
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
@@ -293,7 +295,8 @@ Log :
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
                 console.log(json);
                 
-                wrong_time = 0;     //歸零。
+                wrong_time = 0;     //全域變數歸零。
+                console.log('wrong_time 歸零，'+wrong_time);
                 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -317,6 +320,7 @@ Log :
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
+                date_time:dateTime
             },
             dataType: "json",
             success: function (json) {
@@ -545,6 +549,7 @@ Log :
                             } else { // 答錯，就繼續拼字。
                                 
                                 wrong_time++;
+                                console.log('wrong_time:'+wrong_time);
                                 
                                 $('#title_en').text('Try again'); //變更標題。
                                 $('#answer').val('');
@@ -581,6 +586,7 @@ Log :
 
                             } else { // 答錯，就繼續拼字。
                                 wrong_time++;
+                                console.log('wrong_time:'+wrong_time);
                                 
                                 $('#title_en').text('Try again'); //變更標題。
                                 $('#answer').val('');
