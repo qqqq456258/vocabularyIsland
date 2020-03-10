@@ -170,6 +170,36 @@
         }
         
         
+    }elseif($code == 5){      //將點擊提示的紀錄插入資料庫。
+        
+        $wt_step = $_POST['wrong_step'];
+        $wt_wrong_time = $_POST['wrong_time'];
+        
+        $sql = "
+        INSERT INTO 
+        vocabularyisland.exp_wrong_time 
+        (wt_account,wt_vocabulary,wt_theme,wt_title,wt_practice,wt_step,wt_wrong_time,wt_save_date) 
+        VALUES
+        (:wt_account,:wt_vocabulary,:wt_theme,:wt_title,:wt_practice,:wt_step,:wt_wrong_time,:wt_save_date)";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':wt_account',$account);
+        $stmt->bindValue(':wt_vocabulary',$vocabulary);
+        $stmt->bindValue(':wt_theme',$theme_code);
+        $stmt->bindValue(':wt_title',$title_code);
+        $stmt->bindValue(':wt_practice',$practice_code);
+        $stmt->bindValue(':wt_step',$wt_step);
+        $stmt->bindValue(':wt_wrong_time',$wt_wrong_time);
+        $stmt->bindValue(':wt_save_date',$datetime);
+        
+        /* 回傳狀態。*/
+        if ($stmt->execute()) { 
+            $information['exp_wrong_time'] = 'Success';
+        } else {
+            $information['exp_wrong_time'] = $stmt->error;
+        }
+        
+        
     }else{                    //將完成基礎練習的紀錄插入資料庫內。
         
         $sql = "

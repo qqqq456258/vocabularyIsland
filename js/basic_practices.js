@@ -37,6 +37,7 @@ $(function () {
     let title = this_page.searchParams.get('title');
     let practice = this_page.searchParams.get('practice');
     
+    /*new Date() 的 擴充語法，表示 format("yyyy-MM-dd hh:mm:ss") 的時間格式。*/
     Date.prototype.format = function (fmt) {
       var o = {
         "M+": this.getMonth() + 1, //月份
@@ -249,7 +250,7 @@ Log :
             data: {
                 code: 4,
                 target: word[order[whichWord]],
-                audURI: audio_base64[(select_target-1)],
+                audURI: audio_base64[select_target],
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
@@ -271,24 +272,28 @@ Log :
         });
     } 
     /* 將拼字步驟錯誤次數插入資料庫。*/
-    function insert_wrong_time(whichStep,whichWord){
+    function insert_wrong_time(whichStep,whichWord,wrong_time,dateTime){
         $.ajax({
             type: "POST",
             async: true, //async設定true會變成異步請求。
             cache: true,
             url: "php/basic_practices.php",
             data: {
-                code: 4,
+                code: 5,
                 target: word[order[whichWord]],
-                click_time: whichStep,
+                wrong_step: whichStep,
+                wrong_time: wrong_time,
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
+                date_time:dateTime
             },
             dataType: "json",
             success: function (json) {
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
                 console.log(json);
+                
+                wrong_time = 0;     //歸零。
                 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -301,14 +306,14 @@ Log :
         });
     } 
     /* 將完成基礎練習的紀錄插入資料庫。*/
-    function insert_done(){
+    function insert_done(dateTime){
         $.ajax({
             type: "POST",
-            async: true, //async設定true會變成異步請求。
+            async: false, //async設定true會變成異步請求。
             cache: true,
             url: "php/basic_practices.php",
             data: {
-                code: 5,
+                code: 6,
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
@@ -432,6 +437,7 @@ Log :
                 })
                 .then((result) => {
                     if (result.value) {
+                        insert_done(date_time);
                         console.log("前往製作自己的字卡吧！！");
                         location.replace('visualizing.html');
                     }
@@ -511,6 +517,9 @@ Log :
                                 
                                 insert_click_sound(step-2,round,date_time);         // 點擊發音之紀錄。
                                 insert_click_tip(step-3,round,date_time);           // 紀錄點擊提示次數。
+                                if(wrong_time>0){                                   // 記錄錯誤之紀錄。
+                                    insert_wrong_time(step-3,round,wrong_time,date_time);
+                                }
                                 
                                 console.log("答對，下一階段。");
 
@@ -534,9 +543,13 @@ Log :
                                 $('#next_btn').attr('src', 'material/done.png');
 
                             } else { // 答錯，就繼續拼字。
+                                
+                                wrong_time++;
+                                
                                 $('#title_en').text('Try again'); //變更標題。
                                 $('#answer').val('');
-                                $('#tip').text('Keep going.');
+                                $('#tip').css('color', 'black');
+                                $('#tip').text('Keep going...');
                                 move = move - 2;
                                 progress();
                                 step--;
@@ -550,6 +563,9 @@ Log :
                                 
                                 insert_click_sound(step-2,round,date_time);         // 點擊發音之紀錄。
                                 insert_click_tip(step-3,round,date_time);           // 紀錄點擊提示次數。
+                                if(wrong_time>0){                                   // 記錄錯誤之紀錄。
+                                    insert_wrong_time(step-3,round,wrong_time,date_time);
+                                }
                                 
                                 if (move < 28) {
                                     init_content(); //初始化。
@@ -564,9 +580,12 @@ Log :
                                 }
 
                             } else { // 答錯，就繼續拼字。
+                                wrong_time++;
+                                
                                 $('#title_en').text('Try again'); //變更標題。
                                 $('#answer').val('');
-                                $('#tip').text('Keep going.');
+                                $('#tip').css('color', 'black');
+                                $('#tip').text('Keep going...');
                                 move = move - 2;
                                 progress();
                                 step--;
@@ -1078,7 +1097,8 @@ dialog(0);
         //        au.controls = true;
         getFileBase64Encode(blob).then(b64 => {
             audio_base64[stop_num] = b64;
-            console.log(b64);
+            console.log('stop_num:'+stop_num);
+            console.log('b64:'+b64);
             /* 「 b64 」是語音檔轉成base64的變數，要處理語音檔資料可以從這裡抓。*/
         });
         $('#recordingslist').append(au);
