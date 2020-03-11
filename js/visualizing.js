@@ -10,6 +10,7 @@ $(function () {
     let focus_option = ""; //目前所選擇的選項。
     let ns_sound_target = ""; //所選擇的去除空格單字。
     let pick_image = "";
+    
     var canvas = $('#canvas_draw');
     var cPushArray = new Array();
     var cStep = -1;
@@ -22,6 +23,146 @@ $(function () {
     var color_br = [];
     
     
+    /*後端所需全域變數*/
+    let this_page = new URL(location.href); //取得完整網址（URL）。
+    let theme = this_page.searchParams.get('theme');
+    let title = this_page.searchParams.get('title');
+    let practice = this_page.searchParams.get('practice');
+    let file_name = "";
+    let date_time = "";
+    let bg_color = "rgb(255,255,255)";
+    let br_color = "rgb(183,183,183)";
+    
+    
+    
+    /* 抓取自己最新的單字發音。*/
+    function get_own_audio_file(target){
+        
+        console.log('target:'+target);
+        console.log('theme:'+theme);
+        console.log('title:'+title);
+        console.log('practice:'+practice);
+        
+        $.ajax({
+            type: "POST",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/visualizing.php",
+            data: {
+                code: 0,
+                vocabulary:target,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+                file_name = json['record'][0];
+                date_time = json['record'][1];
+
+                var voice = document.createElement("audio"); //創建聲音檔元件。
+                voice.setAttribute("id", "self_pronunciation");
+                voice.setAttribute("src", 'upload/sound/'+file_name+'.wav');
+                voice.setAttribute("preload", "auto");
+                document.body.appendChild(voice); //把它添加到頁面上。
+                
+            },
+            error: function (error) {
+                console.log(error.responseText);
+                alert('get_own_audio_file : Wrong。');
+                
+            }
+        });
+    }
+    
+    /* 建立圖檔並插入圖片資訊。*/
+    function insert_picture_information(target,base64,filename,date){
+        
+        console.log('vocabulary:'+target);
+        console.log('base64:'+base64);
+        console.log('filename:'+filename);
+        console.log('date:'+date);
+        console.log('theme:'+theme);
+        console.log('title:'+title);
+        console.log('practice:'+practice);
+        
+        $.ajax({
+            type: "POST",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/visualizing.php",
+            data: {
+                code: 1,
+                base64:base64,
+                vocabulary:target,
+                filename:filename,
+                datetime:date,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (error) {
+                console.log(error.responseText);
+                alert('insert_picture_information : Wrong。');
+                
+            }
+        });
+    }
+    
+    /* 插入字卡資訊。*/
+    function insert_card_information(target,base64,bg_color,br_color,filename,date){
+        
+        console.log('vocabulary:'+target);
+        console.log('base64:'+base64);
+        console.log('bg_color:'+bg_color);
+        console.log('br_color:'+br_color);
+        console.log('filename:'+filename);
+        console.log('date:'+date);
+        console.log('theme:'+theme);
+        console.log('title:'+title);
+        console.log('practice:'+practice);
+        
+        $.ajax({
+            type: "POST",
+            async: false, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/visualizing.php",
+            data: {
+                code: 2,
+                base64:base64,
+                bg_color:bg_color,
+                br_color:br_color,
+                vocabulary:target,
+                filename:filename,
+                datetime:date,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                
+            },
+            error: function (error) {
+                console.log(error.responseText);
+                alert('insert_card_information : Wrong。');
+                
+            }
+        });
+    }
+    
+    
 /*
 
 Log :
@@ -29,7 +170,6 @@ Log :
     1. 挑選的單字。
     2. 字卡背景顏色。
     3. 字卡邊框顏色。
-
 
 */    
     
@@ -68,12 +208,14 @@ Log :
         $("#palette_background .option_bg").removeClass("active");
         $(this).addClass("active");
         $('#card').css('backgroundColor',this.style.backgroundColor);
+        bg_color = this.style.backgroundColor;
     });
     /*字卡邊框的事件*/
     $("#palette_border .option_br").on('click',function(){
         $("#palette_border .option_br").removeClass("active");
         $(this).addClass("active");
         $('#card').css('border','8px solid '+this.style.backgroundColor);
+        br_color = this.style.backgroundColor;
     });
 
     
@@ -289,6 +431,8 @@ Log :
             $('#sound_correct').get(0).play();
             progress();
             
+            
+            
             swal.fire({
                     icon: "success",
                     title: "完成",
@@ -301,6 +445,9 @@ Log :
                 })
                 .then((result) => {
                     if (result.value) {
+                        
+                        insert_card_information($('#'+choose_target).text(),($('#canvas_draw')[0]).toDataURL('image/jpeg'),bg_color,br_color,file_name,date_time);
+                        
                         console.log("回到主畫面");
                         location.replace('world.html');
                     }
@@ -338,7 +485,6 @@ Log :
             console.log('放第三次語音。');
         }, 4200);
     }
-    
     /*載入聲音檔。*/
     function loading_sound(sound_target) {
         /*去除空格。*/
@@ -381,7 +527,6 @@ Log :
                
         });
     }
-
     /*進度條*/
     function progress() {
         let total_move = 4;
@@ -402,7 +547,6 @@ Log :
         console.log("百分比：" + percentage + "%");
         console.log("總共：" + move + "步。");
     }
-    
     /*四個單字的順序洗牌。*/
     function prepare() {
         for(let k=0;k<4;k++){
@@ -517,6 +661,12 @@ Log :
                 $('#next_btn').show(1500);
             });
         }else if( move == 2){//第三步驟結束。
+            insert_picture_information($('#'+choose_target).text(),($('#canvas_draw')[0]).toDataURL('image/jpeg'),file_name,date_time);
+            
+            $('#vocabulary').text(word[choose_target.split("_")[2]]);
+            $('#part_speech').text(partOfSpeech[choose_target.split("_")[2]]);
+            $('#definition').text(definition[choose_target.split("_")[2]]);
+            
             $('#title_en').text('Create your Style');
             $('#picture').attr('src',($('#canvas_draw')[0]).toDataURL('image/jpeg'));
             $('#palette').hide(1000);
@@ -568,6 +718,24 @@ Log :
         }
     });
     
+    $('#self_sound').on('click', function () {
+        // Show loading animation.
+        var playPromise = $('#self_pronunciation').get(0).play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                    $('#self_pronunciation').get(0).pause();
+                    $('#self_pronunciation').get(0).play();
+                
+                })
+                .catch(error => {
+                    console.log(error);
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+        }
+    });
+    
     
     /*練習發音時，點擊聽單字發音*/
     $('#sound').on('click', function () {
@@ -594,7 +762,6 @@ Log :
             focus_option = $(this).attr('id');
         }
         console.log("目前選擇之ID:"+focus_option);
-        console.log("目前選擇之data-target:"+$('#'+focus_option).data('target'));
     });
     
     /*點擊選項時的反饋*/
@@ -628,6 +795,8 @@ Log :
         }else{ //回答成功。
             if(move == 0){ //第一步驟
                 choose_target = focus_option; //放入目標單字。
+                get_own_audio_file($('#'+choose_target).text()); // 找先前基礎練習所練習的發音。
+                
                 dialog(1);
             }else{
                 dialog(1);

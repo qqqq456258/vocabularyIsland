@@ -95,7 +95,7 @@ $(function(){
     /*進入背包*/
     $('#bag').on('click',function(){
         console.log('將要進入 背包 ');
-//        window.location.assign("bag.html");
+        window.location.assign("bag.html");
     });
 
     /*上一頁*/

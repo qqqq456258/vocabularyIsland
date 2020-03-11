@@ -273,7 +273,6 @@ Log :
     } 
     /* 將拼字步驟錯誤次數插入資料庫。*/
     function insert_wrong_time(whichStep,whichWord,wrongTime,dateTime){
-        console.log('進入function ，wrong_time:'+wrongTime);
         
         $.ajax({
             type: "POST",
@@ -337,8 +336,8 @@ Log :
             }
         });
     } 
-    
-    
+     
+     
     /* sweetAlert2 的功能。*/
     function dialog(situation) {
         console.log("Dialog:" + situation);
@@ -443,7 +442,8 @@ Log :
                     if (result.value) {
                         insert_done(date_time);
                         console.log("前往製作自己的字卡吧！！");
-                        location.replace('visualizing.html');
+                        location.replace('visualizing.html?theme='+theme+'&title='+title+'&practice='+practice);
+                        
                     }
                 });
         } else if (situation == 6) { // 重新複誦步驟。
@@ -585,6 +585,7 @@ Log :
                                 }
 
                             } else { // 答錯，就繼續拼字。
+                                play_sound(3);
                                 wrong_time++;
                                 console.log('wrong_time:'+wrong_time);
                                 
