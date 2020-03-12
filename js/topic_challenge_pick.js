@@ -44,6 +44,7 @@ $(function () {
                 if( star_array[num] == 0 ){
                     num++;
                     locked_level = num;
+                    console.log('locked_level:'+locked_level);
                     break;
                 }
             }
@@ -70,14 +71,24 @@ $(function () {
         /*亮星數*/
         for (let t = 0; t < star_array[i]; t++) {
             if(t>0){
-                content = content + "<img class='star' src='material/star_review.png'>";
+                if(t == 3){ // 避免超過三顆星。
+                    console.log('超過三顆星，直接跳出。');
+                    break;
+                }else{
+                    content = content + "<img class='star' src='material/star_review.png'>";
+                }
             }else{
                 content = content + "<img class='star' src='material/star_shine.png'>";
             }
         }
         /*暗星數*/
         for (let f = 0; f < (3 - star_array[i]); f++) {
-            content = content + "<img class='star' src='material/star_dark.png'>";
+            if(star_array[i] > 3){
+                break;
+                console.log('超過三顆星，直接跳出。');
+            }else{
+                content = content + "<img class='star' src='material/star_dark.png'>";
+            }
         }
         /*關卡鎖頭*/
         if (i >= locked_level) {

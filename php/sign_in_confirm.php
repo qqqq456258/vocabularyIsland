@@ -1,4 +1,4 @@
-<?
+<?php
     session_start();
     include('connMysql.php');
 
@@ -38,12 +38,6 @@
         $stmt->execute() or exit("讀取member資料表時，發生錯誤。"); //執行pdo物件；反之出錯。 
         $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一取出，並以陣列放入$row。
         $name = $row[0]['pi_name'];
-
-        /* 更新登入次數。 */
-        $sql_updateData = "UPDATE vocabularyisland.personal_information SET login_time=login_time+1 WHERE pi_account =:ID";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':ID',$id); // 避免SQL injection。以 :UserID 代替並放入語法內。
-        $stmt->execute() or exit("讀取personal_information資料表時，發生錯誤。");
         
 
         $pdo = null;

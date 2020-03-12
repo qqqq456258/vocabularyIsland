@@ -2,12 +2,12 @@
     try{
         $dsn = "mysql:host=localhost;port=3306;dbname=vocabularyisland;charset=utf8";
 
-        $user = "root";	// mysql使用者名稱
-        $password = "";	// mysql使用者密碼
+         $user = "root";	// mysql使用者名稱
+         $password = "";	// mysql使用者密碼
 
 
-    //    $user = "vi";	// mysql使用者名稱
-    //    $password = "GDfGy6$nzfB@";	// mysql使用者密碼
+//       $user = "vi";	// mysql使用者名稱
+//       $password = "GDfGy6$nzfB@";	// mysql使用者密碼
 
         $options = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
         /*
