@@ -19,7 +19,7 @@ body {
     position: relative;
     margin: 0px auto;
     text-align: center;
-    width: 1024px;
+    width: 980px;
     height: 768px;
     background-color: #ffefde;
     cursor: pointer;
@@ -170,7 +170,7 @@ body {
 #canvas_draw {
     position: absolute;
     top: 24px;
-    right: 25px;
+    right: 10px;
     border: 2px solid gray;
     cursor: pointer;
     margin: auto;
@@ -222,17 +222,17 @@ body {
 #picture_pick_0 {
     position: absolute;
     top: 90px;
-    left: 60px;
+    left: 35px;
 }
 #picture_pick_1 {
     position: absolute;
     top: 90px;
-    left: 317px;
+    left: 295px;
 }
 #picture_pick_2 {
     position: absolute;
     top: 90px;
-    right: 60px;
+    right: 35px;
     
 }
 
@@ -292,7 +292,7 @@ body {
 #background_zone {
     position: absolute;
     top: 60px;
-    left:380px;
+    left:365px;
     background-color:#b0e3ff;
     width: 200px;
     border: 8px dashed #3085d6;
@@ -303,7 +303,7 @@ body {
 #border_zone{
     position: absolute;
     top: 60px;
-    left:610px;
+    left:589px;
     background-color:#ffe2e2;
     width: 200px;
     border: 8px dashed #ffb7b7;

@@ -22,32 +22,31 @@ body {
     left: 0px;
     margin: 0px auto;
     text-align: center;
-    width: 1024px;
+    width: 980px;
     height: 768px;
-    background-color: #ffefde;
     cursor: pointer;
     background-image: url(../material/sea.svg);
-    -moz-background-size:contain;
-    -webkit-background-size:contain;
-    -o-background-size:contain;
-    background-size:contain;
-    cursor:pointer;
+    background-repeat: no-repeat;
+    -moz-background-size:cover;
+    -webkit-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
 }
 
 
 #boat {
     position: absolute;
     bottom: 210px;
-    left: 20px;
+    left: 30px;
     width: 210px;
     -webkit-filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
     filter: drop-shadow(6px 6px 7px rgba(0, 0, 0, 0.7));
-    z-index: -1;
+    z-index: 6;
     cursor:pointer;
 }
 #boat:hover{
     transition: 0.7s;
-    transform: scale(1.1);
+    transform: scale(1.03);
 }
 
 #Animals {
@@ -136,7 +135,7 @@ body {
 }
 
 .title {
-    font-size: 1px;
+    font-size: 12px;
     border: 3px solid #DDD;
     border-radius: 10px;
     color: white;

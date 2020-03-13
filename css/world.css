@@ -19,15 +19,15 @@ body {
     position: relative;
     margin: 0px auto;
     text-align: center;
-    width: 1024px;
+    width: 980px;
     height: 768px;
-    background-color: #ffefde;
     cursor: pointer;
     background-image: url(../material/sea.png);
-    -moz-background-size:contain;
-    -webkit-background-size:contain;
-    -o-background-size:contain;
-    background-size:contain;
+    background-repeat: no-repeat;
+    -moz-background-size:cover;
+    -webkit-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
 }
 #information {
     position: absolute;
@@ -205,7 +205,7 @@ body {
 #Animals {
     position: absolute;
     top: 520px;
-    left: 420px;
+    left: 390px;
     width: auto;
 }
 

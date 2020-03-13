@@ -20,7 +20,7 @@ body {
     position: relative;
     margin: 0px auto;
     text-align: center;
-    width: 1024px;
+    width: 980px;
     height: 768px;
     cursor: pointer;
     background-image: url(../material/wood.jpg);
@@ -34,7 +34,7 @@ body {
 #card_pile{
     position: absolute;
     top: 170px;
-    width: 1024px;
+    width: 980px;
     padding-bottom: 100px;
 }
 
@@ -101,7 +101,7 @@ body {
     margin: auto;
     position: absolute;
     top: 40px;
-    left: calc(550px);
+    left: calc(520px);
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;

@@ -474,7 +474,7 @@ Log :
                         $('#record').removeAttr('disabled'); //錄音按鈕開啟。
                         $('#stop').attr('src', 'material/stop_0.png'); //暫停按鈕關閉。
                         $('#stop').attr('disabled', 'disabled'); //暫停按鈕關閉。
-                        $("#title_en").text("Record your voice ( " + stop_num + " / 2 )");
+                        $("#title_en").text("Record your pronunciation ( " + stop_num + " / 2 )");
                         for (let i = 1; i < 3; i++) {
                             $('#voice_zone_' + i).css('border', '5px dashed gray');
                             $("#voice_" + i).attr('disabled', 'disabled'); //將錄完音的結果鎖起來，不給播放。
@@ -527,7 +527,7 @@ Log :
                                 
                                 console.log("答對，下一階段。");
 
-                                $('#title_en').text('Spell the word completely in English'); //變更標題。
+                                $('#title_en').text('Spell the word completely'); //變更標題。
                                 $('#tip').text(''); //清空內容。
                                 $('#answer').val(''); //清空內容。
 
@@ -775,7 +775,7 @@ Log :
         console.log("round:" + round);
 
         /*放入這次學習的單字。*/
-        $("#title_en").text("Listen 3 times pronunciation");
+        $("#title_en").text("Listen to the pronunciation  3  times");
         $("#word").text(word[order[i]]);
         $('#img').attr('src','word_image/'+file_word[order[i]]+'_'+Math.floor(Math.random() * 3)+'.jpg');
         $("#part_speech").text(partOfSpeech[order[i]]);
@@ -831,7 +831,7 @@ dialog(0);
             
         }else if(listen_num == 2){
             $('#sound').attr('src','material/speaker.png');
-            $("#title_en").text("Record your voice ( 0 / 2 )"); //變更標題。
+            $("#title_en").text("Record your pronunciation ( 0 / 2 )"); //變更標題。
             $('#vocabulary').css('height', '320px'); //單字區塊變長。
             $('#record,#stop').css('display', 'inline-block'); //將錄音與暫停按鈕並排。
             $('#voice_zone').css('display', 'block'); //錄音的結果出現。
@@ -872,7 +872,7 @@ dialog(0);
         $('#record').removeAttr('disabled'); //錄音按鈕開啟。
         stop_num++; //暫停按鈕點擊次數。
         if (stop_num > 0 && stop_num < 2) { // 第1~2次 錄音。
-            $("#title_en").text("Record your voice ( " + stop_num + " / 2 )");
+            $("#title_en").text("Record your pronunciation ( " + stop_num + " / 2 )");
             $("#voice_" + stop_num).css('visibility', 'visible'); //錄完音的結果出現。
             $("#voice_" + stop_num).attr('disabled', 'disabled'); //將錄完音的結果鎖起來，不給播放。
         } else { //第2次錄音之後。
@@ -883,7 +883,7 @@ dialog(0);
             $('#info_zone').css('display', 'none');     // 單字資訊區塊隱藏。
             $('#vocabulary').css('height', '200px'); //隱藏單字區塊。
             $('#vocabulary').css('marginTop', '70px'); //往上調整單字區塊位置。
-            $("#title_en").text("Listen and pick the best one"); //變更標題。
+            $("#title_en").text("Listen to and pick up the best one"); //變更標題。
             $('#click_zone').css('display', 'block');
             progress();
         }
@@ -934,7 +934,7 @@ dialog(0);
         } else if (step == 2) {
             dialog(4);
             $('#clear').css('display', 'none');
-            $('#title_en').text('Spell the word in English'); //變更標題。
+            $('#title_en').text('Spell the word'); //變更標題。
             $('#vocabulary').css('display', 'none');    // 單字區塊隱藏。
             $('#image_zone').css('display', 'none');    // 圖片區塊隱藏。
             $('#info_zone').css('display', 'none');     // 單字資訊區塊隱藏。
@@ -965,7 +965,8 @@ dialog(0);
 
     /*即時字元檢測。*/
     $('#answer').bind("input propertychange", function (e) {
-        let input_value = $('#answer').val();
+        let input_value = $('#answer').val().toLowerCase();
+        $('#answer').val(input_value);
         let vocabulary = $('#word').text();
         console.log('vocabulary:' + vocabulary);
         console.log('input_value:' + input_value);

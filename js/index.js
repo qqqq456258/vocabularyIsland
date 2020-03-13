@@ -67,6 +67,8 @@ $(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.responseText);
+                console.log(textStatus);
+                console.log(errorThrown);
             },
             success: function (data) {
                 if (data.status == "no input") {

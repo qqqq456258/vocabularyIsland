@@ -66,7 +66,7 @@ $(function () {
     
     /*產生每個自主練習。*/
     for (let i = 0; i < total_level; i++) {
-        content = "<div id='level_" + topic + "_" + i + "' class='each_level' data-code='"+code_array[i]+"'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>評分：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
+        content = "<div id='level_" + topic + "_" + i + "' class='each_level' data-code='"+code_array[i]+"'><h3 id='title_" + topic + "_" + i + "' class='title_zone'>" + title_array[i] + "</h3><div id='word_" + topic + "_" + i + "' class='word_zone'>進度：</div><div id='star_" + topic + "_" + i + "' class='star_zone'>";
 
         /*亮星數*/
         for (let t = 0; t < star_array[i]; t++) {
@@ -141,22 +141,22 @@ $(function () {
     }    
     
     /*轉頁效果。*/
-    $("#stages").fullpage({
+    var myFullpage = new fullpage('#stages', {
         resize: true,
         slidesNavigation: true,
         slidesNavPosition: "bottom",
-        lazyLoad: true
+        lazyLoading: true,
+        css3: true,
+        paddingTop: '30px',
+        paddingBottom: '50px'
     });
-    $(".fullpage-wrapper,.section.fp-section.active.fp-completely,.fp-tableCell").css("height", "auto");
-    $(".section.fp-section.active.fp-completely").css("padding-bottom", "30px");
-    $(".section.fp-section.active.fp-completely").css("padding-top", "10px");
+    $(".fullpage-wrapper").css("height", "auto");
+    $(".section fp-auto-height").css("height", "350px");
     
     /*回上一頁*/
     $('#earth').on('click',function(){
         location.replace('Animals_island.html');
     });
-    
-    
     
     /*---------------------------------------------------------------------*/
     
