@@ -1,8 +1,8 @@
 $(function () {
     /* 系統所需全域變數。*/
-    let word = ["cat", "hamster", "guinea pig", "rabbit"]; // 宣告陣列放入 4 個單字。
-    let partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"]; // 宣告陣列放入 4 個單字詞性。
-    let definition = ["貓", "倉鼠", "天竺鼠", "兔子"]; // 宣告陣列放入 4 個單字翻譯。
+    let word = []; // 宣告陣列放入 4 個單字。
+    let partOfSpeech = []; // 宣告陣列放入 4 個單字詞性。
+    let definition = []; // 宣告陣列放入 4 個單字翻譯。
     let file_word = [];     //存放去除空格的檔案名稱。
     let hint = ""; // 存放去除字母以外的單字提示。
     let order = []; // 宣告陣列放入排序。
@@ -307,6 +307,38 @@ Log :
             }
         });
     } 
+    /* 抓本單元的四個單字相關資訊 */
+    function get_vocbulary(){
+        $.ajax({
+            type: "POST",
+            async: false, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/basic_practices.php",
+            data: {
+                code: 6,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                for(let i = 0 ; i<4 ; i++){
+                    word[i] = json['get_vocbulary'][i]['vl_vocabulary'];
+                    partOfSpeech[i] = json['get_vocbulary'][i]['vl_part_of_speech'];
+                    definition[i] = json['get_vocbulary'][i]['vl_definition'];
+                }
+                console.log('單字資訊載入完成。'); 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.responseText);
+            }
+
+
+               
+        });
+    }
     /* 將完成基礎練習的紀錄插入資料庫。*/
     function insert_done(dateTime){
         $.ajax({
@@ -315,7 +347,7 @@ Log :
             cache: true,
             url: "php/basic_practices.php",
             data: {
-                code: 6,
+                code: 7,
                 theme_code:theme,
                 title_code:title,
                 practice_code:practice,
@@ -464,6 +496,7 @@ Log :
                         
                         delete_time++;
                         
+                        choose_audio = "";
                         record_num = 0;
                         stop_num = 0;
                         var regex = /\s/;
@@ -736,31 +769,27 @@ Log :
             dataType: "json",
             success: function (json) {
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
-                console.log(json);
-
-                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]); //問題點
-                sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
-                sound[order[i]].setAttribute("preload", "auto");
-                document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
+                console.log(json.length);
+                if(json.length != 0){
+                    sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                    sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]); //問題點
+                    sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
+                    sound[order[i]].setAttribute("preload", "auto");
+                    document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
+                    
+                }else{
+                    sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                    sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
+                    sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
+                    sound[order[i]].setAttribute("preload", "auto");
+                    document.body.appendChild(sound[order[i]]);
+                }
                 if (i == 0) {
                     $('#sound').css('display', 'inline-block');
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("XMLHttpRequest:" + XMLHttpRequest);
-                console.log("textStatus:" + textStatus);
-                console.log("errorThrown:" + errorThrown);
-                console.log('error, use the plan B.');
-                sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
-
-                sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
-                sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
-                sound[order[i]].setAttribute("preload", "auto");
-                document.body.appendChild(sound[order[i]]);
-                if (i == 0) {
-                    $('#sound').css('display', 'inline-block');
-                }
+                
             }
 
 
@@ -797,16 +826,16 @@ Log :
     }
     
     
-    
 
-order = getRandomArray();
-for (let k = 0; k < 4; k++) {
-    /*去除空格。*/
-    var regex = /\s/;
-    file_word[k] = word[k].replace(regex, '');
-}
-prepare(round);
-dialog(0);
+    get_vocbulary();
+    order = getRandomArray();
+    for (let k = 0; k < 4; k++) {
+        /*去除空格。*/
+        var regex = /\s/;
+        file_word[k] = word[k].replace(regex, '');
+    }
+    prepare(round);
+    dialog(0);
 
     
     

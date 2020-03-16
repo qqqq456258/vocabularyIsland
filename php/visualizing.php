@@ -10,10 +10,10 @@
     $theme_code = $_POST['theme_code'];          // 主題代碼。
     $title_code = $_POST['title_code'];          // 標題代碼。
     $practice_code = $_POST['practice_code'];    // 自主練習代碼。
-    $vocabulary = $_POST['vocabulary'];          // 單字。
 
 
     if($code == 0){         // 抓取自己先前的單字發音。
+        $vocabulary = $_POST['vocabulary'];          // 單字。
         
         $sql = "SELECT au_filename,au_save_date FROM vocabularyisland.record WHERE au_account = :au_account AND au_vocabulary = :au_vocabulary AND au_theme = :au_theme AND au_title = :au_title AND au_practice = :au_practice ORDER BY au_save_date DESC LIMIT 1";
         
@@ -36,6 +36,7 @@
         
     }elseif($code == 1){   // 建立圖檔，並將資料插入。
         
+        $vocabulary = $_POST['vocabulary'];          // 單字。
         $img_b64 = $_POST['base64'];
         $filename = $_POST['filename'];
         $datetime = $_POST['datetime'];
@@ -73,8 +74,30 @@
         
         
         
+    }elseif($code == 2){      //抓本單元的四個單字。
+        
+        $sql = "
+        SELECT vocabulary_library.vl_vocabulary,vocabulary_library.vl_part_of_speech,vocabulary_library.vl_definition
+        FROM vocabularyisland.vocabulary_library
+        WHERE vocabulary_library.vl_theme = :vl_theme AND vocabulary_library.vl_title = :vl_title AND vocabulary_library.vl_practice = :vl_practice
+        ";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':vl_theme',$theme_code);
+        $stmt->bindValue(':vl_title',$title_code);
+        $stmt->bindValue(':vl_practice',$practice_code);
+        
+        /* 回傳狀態。*/
+        if ($stmt->execute()) {
+            $information['get_vocbulary'] = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將資料照索引順序一一全部取出，並以陣列放入。
+        } else {
+            $information['get_vocbulary'] = $stmt->error;
+        }
+        
+        
     }else{    //將字卡資訊插入資料庫。
         
+        $vocabulary = $_POST['vocabulary'];          // 單字。
         $bg_color = $_POST['bg_color'];
         $br_color = $_POST['br_color'];
         $filename = $_POST['filename'];

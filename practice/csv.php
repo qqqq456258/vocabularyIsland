@@ -1,7 +1,7 @@
 <?php
 
     include('../php/connMysql.php');
-    $fp = fopen("../php/GG.csv", "r");
+    $fp = fopen("GG.csv", "r");
     while (($data = fgetcsv($fp, 1000, ",")) !== FALSE) {
         $vl_vocabulary = $data[0];
         $vl_definition = $data[1];
@@ -11,7 +11,7 @@
         $vl_practice = $data[5];
         $vl_upload_date = $data[6];
 
-        $vl_definition = mb_convert_encoding($vl_definition,"utf-8","big5");
+        $vl_definition = iconv("BIG5", "UTF-8", $vl_definition);
 
         echo $vl_definition;
 

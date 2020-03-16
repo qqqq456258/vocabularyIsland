@@ -12,7 +12,6 @@
     $theme_code = $_POST['theme_code'];          // 主題代碼。
     $title_code = $_POST['title_code'];          // 標題代碼。
     $practice_code = $_POST['practice_code'];    // 自主練習代碼。
-    $datetime = $_POST['date_time'];             // 時間。
 
     
 
@@ -21,6 +20,7 @@
         $vocabulary = $_POST['target'];
         $cs_click_step = $_POST['click_step'];
         $cs_click_time = $_POST['click_time'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO 
@@ -52,6 +52,7 @@
         
         $vocabulary = $_POST['target'];
         $select_target = $_POST['select_target'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO 
@@ -82,6 +83,7 @@
         
         $vocabulary = $_POST['target'];
         $delete_time = $_POST['delete_time'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO 
@@ -112,6 +114,7 @@
         $vocabulary = $_POST['target'];
         $ct_click_step = $_POST['click_step'];
         $ct_click_time = $_POST['tip_num'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO 
@@ -141,6 +144,7 @@
     }elseif($code == 4){      //將錄製的語音紀錄插入資料庫內。
         
         $vocabulary = $_POST['target'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         /* 將檔案放入資料夾中 */
         $audio = $_POST['audURI'];
@@ -181,6 +185,7 @@
         $vocabulary = $_POST['target'];
         $wt_step = $_POST['wrong_step'];
         $wt_wrong_time = $_POST['wrong_time'];
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO 
@@ -207,7 +212,30 @@
         }
         
         
+    }elseif($code == 6){      //抓本單元的四個單字。
+        
+        $sql = "
+        SELECT vocabulary_library.vl_vocabulary,vocabulary_library.vl_part_of_speech,vocabulary_library.vl_definition
+        FROM vocabularyisland.vocabulary_library
+        WHERE vocabulary_library.vl_theme = :vl_theme AND vocabulary_library.vl_title = :vl_title AND vocabulary_library.vl_practice = :vl_practice
+        ";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':vl_theme',$theme_code);
+        $stmt->bindValue(':vl_title',$title_code);
+        $stmt->bindValue(':vl_practice',$practice_code);
+        
+        /* 回傳狀態。*/
+        if ($stmt->execute()) {
+            $information['get_vocbulary'] = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將資料照索引順序一一全部取出，並以陣列放入。
+        } else {
+            $information['get_vocbulary'] = $stmt->error;
+        }
+        
+        
     }else{                    //將完成基礎練習的紀錄插入資料庫內。
+        
+        $datetime = $_POST['date_time'];             // 時間。
         
         $sql = "
         INSERT INTO

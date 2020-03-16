@@ -1,7 +1,7 @@
 $(function () {
-    var word = ["cat", "hamster", "guinea pig", "rabbit"]; // 宣告陣列放入 4 個單字。
-    var partOfSpeech = ["(n.)", "(n.)", "(n.)", "(n.)"]; // 宣告陣列放入 4 個單字詞性。
-    var definition = ["貓", "倉鼠", "天竺鼠", "兔子"]; // 宣告陣列放入 4 個單字翻譯。
+    var word = []; // 宣告陣列放入 4 個單字。
+    var partOfSpeech = []; // 宣告陣列放入 4 個單字詞性。
+    var definition = []; // 宣告陣列放入 4 個單字翻譯。
     var file_word = []; // 宣告陣列放入 4 個去除空格的單字，來命名檔案名稱。
     var order = []; // 宣告陣列放入排序。
     var sound = []; // 宣告陣列放入 4 個語音檔。
@@ -118,6 +118,39 @@ $(function () {
         });
     }
     
+    /* 抓本單元的四個單字相關資訊 */
+    function get_vocbulary(){
+        $.ajax({
+            type: "POST",
+            async: false, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/visualizing.php",
+            data: {
+                code: 2,
+                theme_code:theme,
+                title_code:title,
+                practice_code:practice
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log(json);
+                for(let i = 0 ; i<4 ; i++){
+                    word[i] = json['get_vocbulary'][i]['vl_vocabulary'];
+                    partOfSpeech[i] = json['get_vocbulary'][i]['vl_part_of_speech'];
+                    definition[i] = json['get_vocbulary'][i]['vl_definition'];
+                }
+                console.log('單字資訊載入完成。'); 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.responseText);
+            }
+
+
+               
+        });
+    }
+    
     /* 插入字卡資訊。*/
     function insert_card_information(target,base64,bg_color,br_color,filename,date){
         
@@ -137,7 +170,7 @@ $(function () {
             cache: true,
             url: "php/visualizing.php",
             data: {
-                code: 2,
+                code: 3,
                 base64:base64,
                 bg_color:bg_color,
                 br_color:br_color,
@@ -502,25 +535,25 @@ Log :
             dataType: "json",
             success: function (json) {
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
-                console.log(json);
-
-                var voice = document.createElement("audio"); //創建聲音檔元件。
-                voice.setAttribute("id", "sound_" + ns_sound_target);
-                voice.setAttribute("src", json[0].sounds[0].fileName);
-                voice.setAttribute("preload", "auto");
-                document.body.appendChild(voice); //把它添加到頁面上。
+                if(json.length != 0){
+                    let sound = document.createElement("audio"); //創建聲音檔元件。
+                    sound.setAttribute("id", "sound_" + ns_sound_target); //問題點
+                    sound.setAttribute("src", json[0].sounds[0].fileName);
+                    sound.setAttribute("preload", "auto");
+                    document.body.appendChild(sound); //把它添加到頁面上。
+                    
+                }else{
+                    let sound = document.createElement("audio"); //創建聲音檔元件。
+                    sound.setAttribute("id", "sound_" + ns_sound_target);
+                    sound.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
+                    sound.setAttribute("preload", "auto");
+                    document.body.appendChild(sound);
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("XMLHttpRequest:" + XMLHttpRequest);
                 console.log("textStatus:" + textStatus);
                 console.log("errorThrown:" + errorThrown);
-                console.log('error, use the plan B.');
-                var voice = document.createElement("audio"); //創建聲音檔元件。
-
-                voice.setAttribute("id", "sound_" + ns_sound_target);
-                voice.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
-                voice.setAttribute("preload", "auto");
-                document.body.appendChild(voice);
             }
 
 
@@ -693,7 +726,7 @@ Log :
     
     
     
-
+    get_vocbulary();
     prepare();
     dialog(0);
     

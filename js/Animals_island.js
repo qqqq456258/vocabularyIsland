@@ -8,15 +8,46 @@ $(function () {
 
     
     
-    /*抓島嶼的關卡進度。*/
-    function getStatus() {
+    /*抓每個島嶼的關卡進度。*/
+    function getStatus(theme_code,title_code){
+        console.log("開始抓島嶼的關卡進度...");
+        
+        $.ajax({
+            type: "post",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/get_island_information.php",
+            data:{
+                theme:theme_code,
+                title:title_code
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log('Success.');
+                console.log(json['percentage']);
+                
+                if(json['percentage'] == 100){
+                    
+                    $('#animal-building-image-'+title_code).attr('src','material/animal-island/building-3-2.png');
+                }else if(json['percentage'] > 50 && json['percentage'] < 100){
+                    $('#animal-building-image-'+title_code).attr('src','material/animal-island/building-2.png');
+                }else if(json['percentage'] > 0 && json['percentage'] <= 50){
+                    $('#animal-building-image-'+title_code).attr('src','material/animal-island/building-1.png');
+                }else{
+                    $('#animal-building-image-'+title_code).attr('src','material/animal-island/building-0.png');
+                }
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest.responseText);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+            }
+        });
         /* 未完成 */
     }
 
-    /*印出島嶼的樣貌。*/
-    function printIsland() {
-        /* 未完成 */
-    }
 
     /* d3.js 的功能，設定縮放事件的內容*/
     function zoomed() {
@@ -29,15 +60,15 @@ $(function () {
 
     
     /* 首先，宣告行為 d3.zoom()，再使用call來呼叫，然後設定zoom的參數，最後執行 zoomed 這個function。*/
-    if(document.body.clientHeight != 768){
+    if(document.body.clientWidth != 980 || document.body.clientHeight != 768){
         svg.call(d3.zoom()
-            .translateExtent([[0, 0], [1024, 768]]) // 設定 縮放的範圍，避免拖曳拉出視窗之外。
+            .translateExtent([[0, 0], [980, 768]]) // 設定 縮放的範圍，避免拖曳拉出視窗之外。
             .scaleExtent([1, 8]) // 設定 縮放的倍率範圍。
             .on("zoom", zoomed)); // 執行。
     }
     
     /* 進入關卡 */
-    $('.buliding_left,.buliding_right,.title').on('click',function(){
+    $('#animal-building-title-0,#animal-building-image-0').on('click',function(){
         let name = $(this).data('name');
         console.log('將要進入 '+name+' 標題');
         let icon = "";
@@ -80,9 +111,7 @@ $(function () {
     /*---------------------------------------------------------------------*/
 
 
-
-    getStatus();
-    printIsland();
+    getStatus(0,0);
 
 
 });

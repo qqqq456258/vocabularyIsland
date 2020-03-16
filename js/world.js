@@ -76,14 +76,44 @@ $(function(){
     }
     
     /*抓每個島嶼的關卡進度。*/
-    function getStatus(){
+    function getStatus(theme_code,title_code){
+        console.log("開始抓島嶼的關卡進度...");
+        
+        $.ajax({
+            type: "post",
+            async: true, //async設定true會變成異步請求。
+            cache: true,
+            url: "php/get_island_information.php",
+            data:{
+                theme:theme_code,
+                title:title_code
+            },
+            dataType: "json",
+            success: function (json) {
+                //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
+                console.log('Success.');
+                console.log(json['percentage']);
+                
+                if(json['percentage'] == 100){
+                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-3-2.png');
+                }else if(json['percentage'] > 50 && json['percentage'] < 100){
+                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-2.png');
+                }else if(json['percentage'] > 0 && json['percentage'] <= 50){
+                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-1.png');
+                }else{
+                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-0.png');
+                }
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("XMLHttpRequest:" + XMLHttpRequest.responseText);
+                console.log("textStatus:" + textStatus);
+                console.log("errorThrown:" + errorThrown);
+            }
+        });
         /* 未完成 */
     }
     
-    /*印出島嶼的樣貌。*/
-    function printWorld(){
-        /* 未完成 */
-    }
     
     /*進入島嶼*/
     $('#Animals').on('click',function(){
@@ -112,8 +142,7 @@ $(function(){
     
     
     getPersonalInformation();
-    getStatus();
-    printWorld();
+    getStatus(0,0);
     
     
         

@@ -19,8 +19,14 @@
     $stmt->bindValue(':ACCOUNT',$account); // 避免SQL injection。
     $stmt->execute() or exit("讀取card資料表時，發生錯誤。"); //執行。 
     $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
-
     $information['cardAmount'] = $row[0]['num'];
+
+    /* 子主題進度(顯示建築物狀態) */
+    $sql_find_process = "SELECT ps_theme,ps_title,count(*) as num FROM vocabularyisland.practice_status WHERE ps_account = :ACCOUNT";
+    $stmt = $pdo->prepare($sql_find_process);
+    $stmt->bindValue(':ACCOUNT',$account);
+    $stmt->execute() or exit("讀取practice_status，發生問題。");
+    $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 
     $pdo = null;

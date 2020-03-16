@@ -220,25 +220,30 @@ body {
     width: 20px;
 }
 
-#animal-building-image-0 {
+#buliding-0-0 {
     position: absolute;
     top: 57px;
     left: 33px;
 }
-#animal-building-image-1 {
+#buliding-0-1 {
     position: absolute;
     top: 73px;
     left: 59px;
 }
-#animal-building-image-2 {
+#buliding-0-2 {
     position: absolute;
     top: 88px;
     left: 86px;
 }
-#animal-building-image-3 {
+#buliding-0-3 {
     position: absolute;
     top: 86px;
     left: 131px;
+}
+#buliding-0-4 {
+    position: absolute;
+    top: 57px;
+    left: 144px;
 }
 
 #island-name-animal {
@@ -258,10 +263,4 @@ body {
 #Animals:hover,#bag:hover,#boat:hover{
     transition: .7s;
     transform: scale(1.1); 
-}
-
-#animal-building-image-4 {
-    position: absolute;
-    top: 57px;
-    left: 144px;
 }
