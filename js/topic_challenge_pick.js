@@ -20,7 +20,7 @@ $(function () {
     
     
     /* 抓資料並回傳 自主練習的每個標題，總自主練習總數、自主練習進度(星數)、未解鎖關卡起始。 */
-    console.log("開始抓取關卡資訊、進度...");
+    console.log("開始抓取關卡"+title+"資訊、進度...");
     $.ajax({
         type: "get",
         async: false, //async設定true會變成異步請求。

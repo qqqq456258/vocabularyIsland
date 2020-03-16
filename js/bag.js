@@ -113,6 +113,18 @@ $(function(){
             },
             error: function (error) {
                 console.log(error.responseText);
+                let sound;
+                let regex = /\s/;
+
+                let vocabulary = word;
+                vocabulary = vocabulary.replace(regex, '');
+                console.log('vocabulary:' + vocabulary);
+
+                sound = document.createElement("audio"); //創建聲音檔元件。
+                sound.setAttribute("id", "sound_" + vocabulary);
+                sound.setAttribute("src", "word_sound/" + vocabulary + ".mp3");
+                sound.setAttribute("preload", "auto");
+                document.body.appendChild(sound);
             }
         });
     }

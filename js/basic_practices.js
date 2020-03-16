@@ -776,20 +776,30 @@ Log :
                     sound[order[i]].setAttribute("src", json[0].sounds[0].fileName);
                     sound[order[i]].setAttribute("preload", "auto");
                     document.body.appendChild(sound[order[i]]); //把它添加到頁面上。
-                    
+                    if (i == 0) {
+                        $('#sound').css('display', 'inline-block');
+                    }
                 }else{
                     sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
                     sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
                     sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
                     sound[order[i]].setAttribute("preload", "auto");
                     document.body.appendChild(sound[order[i]]);
-                }
-                if (i == 0) {
-                    $('#sound').css('display', 'inline-block');
+                    if (i == 0) {
+                        $('#sound').css('display', 'inline-block');
+                    }
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                
+                    console.log(XMLHttpRequest.responseText);
+                    sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+                    sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
+                    sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
+                    sound[order[i]].setAttribute("preload", "auto");
+                    document.body.appendChild(sound[order[i]]);
+                    if (i == 0) {
+                        $('#sound').css('display', 'inline-block');
+                    }
             }
 
 

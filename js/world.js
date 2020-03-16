@@ -62,7 +62,7 @@ $(function(){
                 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("XMLHttpRequest:" + XMLHttpRequest.responseText);
                 console.log("textStatus:" + textStatus);
                 console.log("errorThrown:" + errorThrown);
                 console.log('Error.');
