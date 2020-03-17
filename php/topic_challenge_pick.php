@@ -5,7 +5,7 @@
     $information = array();         //最後回傳的資訊陣列。
 
     $title = $_GET['title'];        //標題。
-    $account = 0;   //使用者帳號。
+    $account = $_SESSION['user'];   //使用者帳號。
 
 
     /* 從標題抓取關卡資訊(代碼) */

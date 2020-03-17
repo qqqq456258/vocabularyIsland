@@ -15,6 +15,7 @@
              ERRMODE_EXCEPTION. 它會自動告訴PDO每次查詢失敗時拋出異常。
         */
         $pdo = new PDO($dsn,$user,$password,$options);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //錯誤訊息提醒
         $pdo->query("SET NAMES 'utf8'");  // 以UTF8編碼，SQL語法使用於資料庫。
     }catch(PDOException $e){	
         echo "資料庫連線失敗！錯誤訊息：",$e->getMessage();	

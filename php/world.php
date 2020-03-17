@@ -6,12 +6,18 @@
     $account = $_SESSION['user'];
 
     /* 使用者姓名 */
-    $sql = "SELECT pi_name FROM vocabularyisland.personal_information WHERE pi_account = :ACCOUNT";
+//    $sql = "SELECT pi_name FROM vocabularyisland.personal_information WHERE pi_account = :ACCOUNT";
+//    $stmt = $pdo->prepare($sql);
+//    $stmt->bindValue(':ACCOUNT',$account); // 避免SQL injection。
+//    $stmt->execute() or exit("讀取personal_information資料表時，發生錯誤。"); //執行。 
+//    $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
+//    $information['name'] = $row[0]['pi_name'];
+    $sql = "SELECT user_name FROM vocabularyisland.member WHERE user_account = :ACCOUNT";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':ACCOUNT',$account); // 避免SQL injection。
-    $stmt->execute() or exit("讀取personal_information資料表時，發生錯誤。"); //執行。 
+    $stmt->execute() or exit("讀取member資料表時，發生錯誤。"); //執行。 
     $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一全部取出，並以陣列放入$row。
-    $information['name'] = $row[0]['pi_name'];
+    $information['name'] = $row[0]['user_name'];
 
     /* 字卡數量 */
     $sql_find_personal_information = "SELECT count(*) as num FROM vocabularyisland.card WHERE author = :ACCOUNT";

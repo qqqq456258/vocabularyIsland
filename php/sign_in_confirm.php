@@ -32,12 +32,12 @@
         $_SESSION["psw"] = $pw;
 
         /* 抓取姓名 */
-        $sql = "SELECT pi_name FROM vocabularyisland.personal_information WHERE pi_account = :ID";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':ID',$id); // 避免SQL injection。以 :ID 代替並放入語法內。
-        $stmt->execute() or exit("讀取member資料表時，發生錯誤。"); //執行pdo物件；反之出錯。 
-        $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一取出，並以陣列放入$row。
-        $name = $row[0]['pi_name'];
+//        $sql = "SELECT pi_name FROM vocabularyisland.personal_information WHERE pi_account = :ID";
+//        $stmt = $pdo->prepare($sql);
+//        $stmt->bindValue(':ID',$id); // 避免SQL injection。以 :ID 代替並放入語法內。
+//        $stmt->execute() or exit("讀取member資料表時，發生錯誤。"); //執行pdo物件；反之出錯。 
+//        $row = $stmt->fetchALL(PDO::FETCH_ASSOC); // 將帳號資料照索引順序一一取出，並以陣列放入$row。
+        $name = $row[0]['user_name'];
         
 
         $pdo = null;

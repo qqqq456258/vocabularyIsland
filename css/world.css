@@ -47,8 +47,8 @@ body {
 
 #vi_icon {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     height: 140px;
     display:inline-block;
     margin: 0px;
@@ -56,11 +56,12 @@ body {
 
 #data {
     position: absolute;
-    top: 12px;
-    left: 140px;
-    width: 210px;
+    top: 10px;
+    right: 10px;
+    width: auto;
     text-align: left;
-    padding-left: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: white;
     border: 2px solid black;    
     margin-left: 10px;
@@ -85,7 +86,7 @@ body {
 }
 
 #name {
-    font-family: '微軟正黑體';
+    font-family: 'Microsoft JhengHei';
     font-weight: border;
     color: maroon;
     font-size: 30px;
