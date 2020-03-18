@@ -66,7 +66,7 @@ $(function () {
     }
     
     /* 進入關卡 */
-    $('#animal-building-title-0,#animal-building-image-0').on('click',function(){
+    $('#animal-building-title-0,#animal-building-image-0,#animal-building-title-1,#animal-building-image-1').on('click',function(){
         let name = $(this).data('name');
         console.log('將要進入 '+name+' 標題');
         let icon = "";
@@ -110,6 +110,7 @@ $(function () {
 
 
     getStatus(0,0,2);
+    getStatus(0,1,1);
 
 
 });

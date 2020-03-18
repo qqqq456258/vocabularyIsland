@@ -76,9 +76,9 @@ $(function(){
     }
     
     /*抓每個島嶼的關卡進度。*/
-    function getStatus(theme_code,title_code){
+    function getStatus(theme_code,title_code,building_code){
         console.log("開始抓島嶼的關卡進度...");
-        
+        /* building_code = 0~3 */
         $.ajax({
             type: "post",
             async: true, //async設定true會變成異步請求。
@@ -93,9 +93,8 @@ $(function(){
                 //jQuery會自動將結果傳入(如果有設定callback函式的話，兩者都會執行)
                 console.log('Success.');
                 console.log(json['percentage']);
-                
                 if(json['percentage'] == 100){
-                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-3-2.png');
+                    $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-3-'+building_code+'.png');
                 }else if(json['percentage'] > 50 && json['percentage'] < 100){
                     $('#buliding-'+theme_code+'-'+title_code).attr('src','material/animal-island/building-2.png');
                 }else if(json['percentage'] > 0 && json['percentage'] <= 50){
@@ -142,7 +141,8 @@ $(function(){
     
     
     getPersonalInformation();
-    getStatus(0,0);
+    getStatus(0,0,2);
+    getStatus(0,1,1);
     
     
         
