@@ -551,9 +551,16 @@ Log :
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("XMLHttpRequest:" + XMLHttpRequest);
+                console.log("XMLHttpRequest:" + XMLHttpRequest.responseText);
                 console.log("textStatus:" + textStatus);
                 console.log("errorThrown:" + errorThrown);
+                
+                let sound = document.createElement("audio"); //創建聲音檔元件。
+                sound = document.createElement("audio"); //創建聲音檔元件。
+                sound.setAttribute("id", "sound_" + ns_sound_target);
+                sound.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
+                sound.setAttribute("preload", "auto");
+                document.body.appendChild(sound);
             }
 
 

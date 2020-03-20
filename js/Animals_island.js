@@ -8,7 +8,7 @@ $(function () {
 
     
     
-    /*抓每個島嶼的關卡進度。*/
+    /* 抓每個島嶼的關卡進度。 */
     function getStatus(theme_code,title_code,building_code){
         console.log("開始抓島嶼的關卡進度...");
         /* building_code = 0~3 */
@@ -45,9 +45,16 @@ $(function () {
         });
         /* 未完成 */
     }
-
-
-    /* d3.js 的功能，設定縮放事件的內容*/
+    /* 偵測使用者裝置有沒有支援觸控。 */
+    function isMobile(){
+        try{
+            document.createEvent("TouchEvent");
+            return true;
+        }catch(e){
+            return false;
+        }
+    }
+    /* d3.js 的功能，設定縮放事件的內容 */
     function zoomed() {
         try {
             $('foreignObject').attr('transform', d3.event.transform);
@@ -58,12 +65,17 @@ $(function () {
 
     
     /* 首先，宣告行為 d3.zoom()，再使用call來呼叫，然後設定zoom的參數，最後執行 zoomed 這個function。*/
-    if(document.body.clientWidth != 980 || document.body.clientHeight != 768){
+    if(isMobile()){
+        console.log('目標為：行動設備。');
+        // 不執行任何事情。
+    }else{
+        console.log('目標為：電腦設備。');
         svg.call(d3.zoom()
             .translateExtent([[0, 0], [980, 768]]) // 設定 縮放的範圍，避免拖曳拉出視窗之外。
             .scaleExtent([1, 8]) // 設定 縮放的倍率範圍。
             .on("zoom", zoomed)); // 執行。
     }
+    
     
     /* 進入關卡 */
     $('#animal-building-title-0,#animal-building-image-0,#animal-building-title-1,#animal-building-image-1').on('click',function(){

@@ -39,7 +39,7 @@
         $vocabulary = trim($vocabulary); //去除字尾的空白
         $vocabulary = preg_replace('/\s/','%20', $vocabulary); // 將字串內的空白從 ASCII Value 替換成 URL-encode ，再放入 url 進行搜尋。
         $url = 'https://api.learningchocolate.com/resource?word='.$vocabulary.'&language=en';
-            
+        
         $information = file_get_contents($url);
         
         $pdo = null;

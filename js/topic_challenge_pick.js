@@ -44,13 +44,16 @@ $(function () {
                 if( star_array[num] == 0 ){
                     num++;
                     locked_level = num;
-                    console.log('locked_level:'+locked_level);
+                    console.log('locked_level_starting_point:'+locked_level);
                     break;
+                }else{
+                    num++;
+                    locked_level = num;
                 }
             }
             
             console.log("total_level:"+total_level);
-            console.log("locked_level:"+locked_level);
+            console.log("locked_level_starting_point:"+locked_level);
             console.log("title_array:"+title_array);
             console.log("star_array:"+star_array);
             console.log("code_array:"+code_array);
