@@ -39,21 +39,17 @@ $(function () {
             code_array = json['code_practices'];
             
             /* 找未解鎖關卡的開頭。 */
-            let num = 0;
             for( let num = 0 ; num < total_level ; num++ ){
                 if( star_array[num] == 0 ){
-                    num++;
-                    locked_level = num;
-                    console.log('locked_level_starting_point:'+locked_level);
+                    locked_level++;
                     break;
                 }else{
-                    num++;
-                    locked_level = num;
+                    locked_level++;
                 }
             }
             
             console.log("total_level:"+total_level);
-            console.log("locked_level_starting_point:"+locked_level);
+            console.log("locked_level:"+locked_level);
             console.log("title_array:"+title_array);
             console.log("star_array:"+star_array);
             console.log("code_array:"+code_array);
