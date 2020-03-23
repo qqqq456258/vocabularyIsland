@@ -452,13 +452,32 @@ Log :
             insert_select_record(round,select_target,date_time);    // 紀錄選擇的錄音選項。
             insert_delete_record(round,delete_time,date_time);      // 紀錄刪除錄音次數。
             
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-                timer: 700
+//            Swal.fire({
+//                position: 'top-end',
+//                icon: 'success',
+//                title: 'Your work has been saved',
+//                showConfirmButton: false,
+//                timer: 700
+//            })
+            
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1300,
+              timerProgressBar: true
+//              onOpen: (toast) => {
+//                toast.addEventListener('mouseenter', Swal.stopTimer)
+//                toast.addEventListener('mouseleave', Swal.resumeTimer)
+//              }
             })
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Your work has been saved'
+            })
+            
+            
         } else if (situation == 5) { // 完成基礎練習。
             swal.fire({
                     icon: "success",

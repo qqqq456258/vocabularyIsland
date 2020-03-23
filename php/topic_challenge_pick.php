@@ -28,6 +28,27 @@
     $information['amount_practices'] = $row[0]['num']; // 總自主練習數量。
 
 
+
+    /* 從標題抓取闖關紀錄資訊(代碼) */
+    $practice_records = array();
+    for( $i=0 ; $i<$information['amount_practices'] ; $i++ ){
+        $sql = "SELECT * FROM vocabularyisland.practice_status WHERE ps_account = :ps_account AND ps_theme = :ps_theme AND ps_title = :ps_title AND ps_practice = :ps_practice ORDER BY ps_save_date DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':ps_account',$account); // 避免SQL injection。
+        $stmt->bindValue(':ps_theme',$kind_of_theme); // 避免SQL injection。
+        $stmt->bindValue(':ps_title',$title_code); // 避免SQL injection。
+        $stmt->bindValue(':ps_practice',$i); // 避免SQL injection。
+        $stmt->execute() or exit("讀取 practice_status 資料表時，發生錯誤。"); //執行。 
+        $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $Rows = Count($row);
+        for( $j=0 ; $j<$Rows ; $j++ ){
+            $practice_records[$i][$j] = $row[$j]['ps_save_date'];
+        }
+        
+    }
+    $information['practices_record'] = $practice_records; // 自主練習的紀錄。
+
+
     /* 抓取每個自主練習的標題 ( 依照關卡代碼順序由小至大 ) */
     $title_practices = array();
     for( $i=0 ; $i<$information['amount_practices'] ; $i++ ){

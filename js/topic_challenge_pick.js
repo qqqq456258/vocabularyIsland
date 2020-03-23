@@ -37,6 +37,7 @@ $(function () {
             title_array = json['title_practices'];
             star_array = json['star_practices'];
             code_array = json['code_practices'];
+            record_array = json['practices_record'];
             
             /* 找未解鎖關卡的開頭。 */
             for( let num = 0 ; num < total_level ; num++ ){
@@ -53,10 +54,11 @@ $(function () {
             console.log("title_array:"+title_array);
             console.log("star_array:"+star_array);
             console.log("code_array:"+code_array);
+            console.log("record_array:"+record_array);
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("XMLHttpRequest:" + XMLHttpRequest);
+            console.log("XMLHttpRequest:" + XMLHttpRequest.responseText);
             console.log("textStatus:" + textStatus);
             console.log("errorThrown:" + errorThrown);
             console.log('Error.');
@@ -132,6 +134,29 @@ $(function () {
                         console.log("進入自主練習。");
                     }else{
                         /* 觀看上次錯誤紀錄。 */
+                        let temp = $(this).data('code').split("-");
+                        let record_content = "";
+                        console.log(record_array[temp[2]]);
+                        if(record_array[temp[2]] == undefined){
+                            record_content = "無紀錄";
+                            
+                        }else{
+                            record_content = "<ol>";
+                            for( let i = 0 ; i < record_array[temp[2]].length ; i++ ){
+                                record_content = record_content + "<li>"+record_array[temp[2]][i]+"</li>";
+                            }
+                            record_content = record_content + "</ol>";
+                            
+                        }
+                        console.log(record_content);
+                        Swal.fire({
+                          title: 'Record',
+                          html: record_content,
+                          focusConfirm: false,
+                          confirmButtonColor: 'rgb(136,169,203)',
+                          confirmButtonText:"O K"
+                        })
+
                         console.log("觀看上次錯誤紀錄。");
                     }
                         
