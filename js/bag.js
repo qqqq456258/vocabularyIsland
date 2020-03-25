@@ -69,7 +69,24 @@ $(function(){
     }
     /* 抓取字卡所需 標準 語音。*/
     function get_normal_audio(word) {
+        
+        // 先載入資料夾，直接使用語音檔。
+        let sound;
+        let regex = /\s/;
 
+        let vocabulary = word;
+        vocabulary = vocabulary.replace(regex, '');
+        console.log('vocabulary:' + vocabulary);
+
+        sound = document.createElement("audio"); //創建聲音檔元件。
+        sound.setAttribute("id", "sound_" + vocabulary);
+        sound.setAttribute("src", "word_sound/" + vocabulary + ".mp3");
+        sound.setAttribute("preload", "auto");
+        document.body.appendChild(sound);
+        
+        // 用 api 找單字語音的方式（費時）。
+        /*
+        
         $.ajax({
             type: "POST",
             async: true, //async設定true會變成異步請求。
@@ -127,6 +144,8 @@ $(function(){
                 document.body.appendChild(sound);
             }
         });
+        
+        */
     }
     /* 抓取字卡所需 自己 發音。*/
     function get_self_audio(file_name) {

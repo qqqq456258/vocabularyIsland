@@ -780,6 +780,20 @@ Log :
     /* 載入聲音檔。*/
     function loading_sound(someNumber) {
         let i = someNumber;
+
+        // 先載入資料夾內，直接使用語音檔。
+        sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
+        sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
+        sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");
+        sound[order[i]].setAttribute("preload", "auto");
+        document.body.appendChild(sound[order[i]]);
+        if (i == 0) {
+            $('#sound').css('display', 'inline-block');
+        }
+        
+        // 用api找單字語音的方式（費時）。
+        /*
+        
         $.ajax({
             type: "get",
             async: true, //async設定true會變成異步請求。
@@ -822,11 +836,10 @@ Log :
                     if (i == 0) {
                         $('#sound').css('display', 'inline-block');
                     }
-            }
-
-
-               
+            }  
         });
+        
+        */
     }
     /* 四個單字的順序洗牌。*/
     function prepare(round) {
@@ -1090,7 +1103,6 @@ Log :
                     
 //                    audioContext = new AudioContext();
                     
-                    
                     if(audioContext.state === 'running') {
                             input = audioContext.createMediaStreamSource(gumStream);
                             rec = new Recorder(input, {
@@ -1118,7 +1130,8 @@ Log :
 
             } catch (e) {
                 console.log(e);
-                startRecording();
+                alert('Microphone denied.');
+                location.reload();
             }
         })();
         

@@ -25,7 +25,7 @@ body {
     width: 980px;
     height: 768px;
     cursor: pointer;
-    background-image: url(../material/sea.svg);
+    background-image: url(../material/sea.png);
     background-repeat: no-repeat;
     -moz-background-size:cover;
     -webkit-background-size:cover;

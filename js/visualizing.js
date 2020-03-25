@@ -524,6 +524,16 @@ Log :
         var regex = /\s/;
         ns_sound_target = sound_target.replace(regex,''); //沒有空格的單字目標。
         
+        // 先載入資料夾，直接使用語音檔。
+        let sound = document.createElement("audio"); //創建聲音檔元件。
+        sound.setAttribute("id", "sound_" + ns_sound_target);
+        sound.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
+        sound.setAttribute("preload", "auto");
+        document.body.appendChild(sound);
+        
+        // 用 api 找單字語音的方式（費時）。
+        /*
+        
         $.ajax({
             type: "get",
             async: true, //async設定true會變成異步請求。
@@ -556,16 +566,14 @@ Log :
                 console.log("errorThrown:" + errorThrown);
                 
                 let sound = document.createElement("audio"); //創建聲音檔元件。
-                sound = document.createElement("audio"); //創建聲音檔元件。
                 sound.setAttribute("id", "sound_" + ns_sound_target);
                 sound.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");
                 sound.setAttribute("preload", "auto");
                 document.body.appendChild(sound);
-            }
-
-
-               
+            }    
         });
+        
+        */
     }
     /*進度條*/
     function progress() {
