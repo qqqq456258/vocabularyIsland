@@ -53,6 +53,7 @@ body {
     color: #9c453d;
     font-size: 60px;
     font-weight: 700;
+    font-family: 'support';
     text-shadow: #ffe5e5 0.1em 0.1em 0.2em;
 }
 
@@ -179,19 +180,21 @@ body {
 
 #btn_zone{
     position: absolute;
-    top: 30px;
-    left: 320px;
+    top: 22px;
+    left: 300px;
     background-color: #eff2f7;
     margin: auto;
     display: none;
 }
 #undo,#redo,#clear {
-    font-size: 25px;
+    font-size: 27px;
     padding: 20px;
     margin-top: 30px;
+    font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'support';
 }
 
 #canvas_position {
@@ -298,6 +301,7 @@ body {
     border: 8px dashed #3085d6;
     font-size: 30px;
     font-weight: 900;
+    font-family: 'Microsoft JhengHei';
     display: none;
 }
 #border_zone{
@@ -309,6 +313,7 @@ body {
     border: 8px dashed #ffb7b7;
     font-size: 30px;
     font-weight: 900;
+    font-family: 'Microsoft JhengHei';
     display: none;
 }
 

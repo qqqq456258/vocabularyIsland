@@ -51,8 +51,12 @@ $(function () {
             });
     }
 
-
-
+    $('#account,#password').bind("input propertychange", function (e) {
+        let input_value = $(this).val().toLowerCase();
+        $(this).val(input_value);
+    });
+    
+    
     $('#btn_login').on('click', function () {
         account = $('#account').val();
         password = $('#password').val();
@@ -83,5 +87,7 @@ $(function () {
                 }
             }
         });
+        
+        
     });
 });

@@ -55,9 +55,9 @@ h2 {
 #earth {
     position: absolute;
     top:30px;
-    left:40px;
-    width:140px;
-    height:140px;
+    left:30px;
+    width:120px;
+    height:120px;
 }
 #earth:hover{
     transition: .5s;

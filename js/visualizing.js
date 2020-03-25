@@ -607,7 +607,7 @@ Log :
         focus_option = "";
         
         if( move == 0 ){//第一步驟結束。
-            $('#title_en').text('Pick up a picture you favored');
+            $('#title_en').text('挑出一張最喜歡的圖片');
             $('#next_btn').hide(1000);
             $('.word').hide(1000);
             
@@ -624,7 +624,7 @@ Log :
             });
             
         }else if( move == 1 ){//第二步驟結束。
-            $('#title_en').text('Draw the picture in your style');
+            $('#title_en').text('畫出你自己風格的圖片');
             $('#next_btn').hide(1000);
             $('.picture').hide(1000);
             console.log('choose_target:'+$('#'+choose_target).text());
@@ -707,7 +707,7 @@ Log :
             $('#part_speech').text(partOfSpeech[choose_target.split("_")[2]]);
             $('#definition').text(definition[choose_target.split("_")[2]]);
             
-            $('#title_en').text('Create the card in your style');
+            $('#title_en').text('做出屬於你自己的字卡');
             $('#picture').attr('src',($('#canvas_draw')[0]).toDataURL('image/jpeg'));
             $('#palette').hide(1000);
             $('#line').hide(1000);
