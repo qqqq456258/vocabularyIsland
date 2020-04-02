@@ -782,6 +782,7 @@ Log :
         let i = someNumber;
 
         // 先載入資料夾內，直接使用語音檔。
+        
         sound[order[i]] = document.createElement("audio"); //創建聲音檔元件。
         sound[order[i]].setAttribute("id", "sound_" + file_word[order[i]]);
         sound[order[i]].setAttribute("src", "word_sound/" + file_word[order[i]] + ".mp3");

@@ -525,6 +525,7 @@ Log :
         ns_sound_target = sound_target.replace(regex,''); //沒有空格的單字目標。
         
         // 先載入資料夾，直接使用語音檔。
+        
         let sound = document.createElement("audio"); //創建聲音檔元件。
         sound.setAttribute("id", "sound_" + ns_sound_target);
         sound.setAttribute("src", "word_sound/" + ns_sound_target + ".mp3");

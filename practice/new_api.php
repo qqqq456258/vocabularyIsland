@@ -1,5 +1,5 @@
 <?php
-    $value = $_GET['value'];
+    $value = 'crab';            // 以 pig 為範例。
     $value = trim($value);      // 去除字尾空白
     $value = preg_replace('/\s/','%20', $value); //將字串內的空白從 ASCII Value 替換成 URL-encode，再放入url進行搜尋。
     $url = 'https://api.learningchocolate.com/v1/resource?word='.$value.'&language=en';
@@ -15,14 +15,5 @@
     $server_output = curl_exec($ch);
     curl_close($ch);
     print $server_output;
-
-/*  old version
-
-    $value = trim($value); //去除字尾空白
-    $value = preg_replace('/\s/','%20', $value); // 將字串內的空白從 ASCII Value 替換成 URL-encode ，再放入 url 進行搜尋。
-    $url = 'https://api.learningchocolate.com/resource?word='.$value.'&language=en';
-    echo file_get_contents($url);
-
-*/
 
 ?>

@@ -71,6 +71,7 @@ $(function(){
     function get_normal_audio(word) {
         
         // 先載入資料夾，直接使用語音檔。
+
         let sound;
         let regex = /\s/;
 
@@ -83,10 +84,10 @@ $(function(){
         sound.setAttribute("src", "word_sound/" + vocabulary + ".mp3");
         sound.setAttribute("preload", "auto");
         document.body.appendChild(sound);
+
         
         // 用 api 找單字語音的方式（費時）。
         /*
-        
         $.ajax({
             type: "POST",
             async: true, //async設定true會變成異步請求。
@@ -144,7 +145,6 @@ $(function(){
                 document.body.appendChild(sound);
             }
         });
-        
         */
     }
     /* 抓取字卡所需 自己 發音。*/
