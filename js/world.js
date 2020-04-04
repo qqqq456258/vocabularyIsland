@@ -15,26 +15,47 @@ $(function(){
             icon = "warning";
             title = "將前往";
             text = "是否前往【登入畫面】？";
-
+            swal.fire({
+                    icon: icon,
+                    title: title,
+                    text: text,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes !'
+                })
+                .then((result) => {
+                    if (result.value) {
+                        window.location.assign("index.html");
+                    }
+                });
+            
+        }else if(status == 1){
+            icon = "warning";
+            title = "哎呀！發現你沒登入哦！";
+            text = "將前往【登入畫面】";
+        
+            swal.fire({
+                    icon: icon,
+                    title: title,
+                    text: text,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'O K'
+                })
+                .then((result) => {
+                    if (result.value) {
+                        window.location.assign("index.html");
+                    }
+                });
         }
         
-        swal.fire({
-                icon: icon,
-                title: title,
-                text: text,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes !'
-            })
-            .then((result) => {
-                if (result.value) {
-                    window.location.assign("index.html");
-                }
-            });
+
         
         
         
@@ -57,6 +78,12 @@ $(function(){
                 name = json['name'];
                 number_of_card = json['cardAmount'];
                 
+                console.log('Name:'+name);
+                
+                if(name == "" || name == null){ // 帳號未登入。
+                    dialog(1);
+                }
+                
                 $('#name').text(name);
                 $('#flashcard').text(number_of_card);
                 
@@ -66,7 +93,13 @@ $(function(){
                 console.log("textStatus:" + textStatus);
                 console.log("errorThrown:" + errorThrown);
                 console.log('Error.');
-                name = "None";
+                
+                console.log('Name:'+name);
+                
+                if(name == "" || name == null){ // 帳號未登入。
+                    dialog(1);
+                }
+                
                 number_of_card = 0;
                 $('#name').text(name);
                 $('#flashcard').text(number_of_card);
