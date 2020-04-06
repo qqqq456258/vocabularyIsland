@@ -181,8 +181,8 @@ body {
 #spell_sound {
     position: absolute;
     top: -70px;
-    left: 200px;
-    width: 100px;
+    left: 168px;
+    width: 150px;
     z-index: 1;
     height: auto;
     cursor: pointer;
