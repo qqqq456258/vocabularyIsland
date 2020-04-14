@@ -573,9 +573,7 @@ Log :
                                 
                                 insert_click_sound(step-2,round,date_time);         // 點擊發音之紀錄。
                                 insert_click_tip(step-3,round,date_time);           // 紀錄點擊提示次數。
-                                if(wrong_time>0){                                   // 記錄錯誤之紀錄。
-                                    insert_wrong_time(step-3,round,wrong_time,date_time);
-                                }
+                                insert_wrong_time(step-3,round,wrong_time,date_time);// 記錄錯誤之紀錄。
                                 
                                 console.log("答對，下一階段。");
 
@@ -622,9 +620,7 @@ Log :
                                 
                                 insert_click_sound(step-2,round,date_time);         // 點擊發音之紀錄。
                                 insert_click_tip(step-3,round,date_time);           // 紀錄點擊提示次數。
-                                if(wrong_time>0){                                   // 記錄錯誤之紀錄。
-                                    insert_wrong_time(step-3,round,wrong_time,date_time);
-                                }
+                                insert_wrong_time(step-3,round,wrong_time,date_time);// 記錄錯誤之紀錄。
                                 
                                 if (move < 28) {
                                     init_content(); //初始化。

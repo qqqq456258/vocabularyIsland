@@ -112,7 +112,7 @@ $(function () {
             },
             error: function (error) {
                 console.log(error.responseText);
-                alert('insert_picture_information : Wrong。');
+                alert('insert_picture_information : '+error.responseText);
                 
             }
         });
@@ -189,7 +189,7 @@ $(function () {
             },
             error: function (error) {
                 console.log(error.responseText);
-                alert('insert_card_information : Wrong。');
+                alert('insert_card_information : '+error.responseText);
                 
             }
         });

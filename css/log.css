@@ -1,0 +1,44 @@
+table{
+    margin: 10px auto;
+}
+tr{
+    padding: 5px;
+}
+th{
+    tab-size: 30px;
+    padding: 5px;
+    font-family: '微軟正黑體';
+    font-weight: 900;
+    width: 100px;
+}
+td{
+    padding: 5px;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
+#input_zone {
+    margin: 20px;
+}
+
+#account {
+    margin: 20px;
+    height: 30px;
+    font-size: 25px;
+}
+
+#search {
+    margin: 20px;
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+#name {
+    font-family: 'Microsoft JhengHei';
+    font-weight: border;
+    color: maroon;
+    font-size: 55px;
+    text-align: center;
+    margin: 20px;
+}
